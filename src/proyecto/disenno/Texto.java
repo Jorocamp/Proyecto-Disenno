@@ -10,5 +10,10 @@ package proyecto.disenno;
  * @author MICHA
  */
 public class Texto implements TipoFormato {
+
+    @Override
+    public void guardarArchivo() {
+  
+    }
     
 }

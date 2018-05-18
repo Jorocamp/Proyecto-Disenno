@@ -12,4 +12,8 @@ package proyecto.disenno;
 public interface TipoFormato {
     
     
+    /**
+     * Metodos de la intefaz
+     */
+    public void guardarArchivo();
 }

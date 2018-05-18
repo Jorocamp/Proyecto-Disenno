@@ -18,6 +18,39 @@ public class Simulador {
     private int velocidadActual;
 
     
+    /**
+     * Metodos de la clase
+     * ******************************************************************************
+     */
+    
+     private void iniciarSimulacion() {
+        // TODO implement here
+    }
+
+    private void finalizarSimulacion() {
+        // TODO implement here
+    }
+
+    private void pausarSimulacion() {
+        // TODO implement here
+    }
+
+    private void reanudarSimulacion() {
+        // TODO implement here
+    }
+
+    private void cambiarVelocidad() {
+        // TODO implement here
+    }
+
+    private void ejecutarPaso() {
+        // TODO implement here
+    }
+
+    private void procesarSimulacion() {
+        // TODO implement here
+    }
+    
     
     
         

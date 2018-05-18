@@ -21,6 +21,24 @@ public class Controlador {
     private ArrayList<Interrupcion> colaInterrupciones;
 
     
+    /**
+     * Metodos de la clase
+     * ********************************************************************************
+     */
+    
+    
+    
+     private void mover() {
+        // TODO implement here
+    }
+
+    private void procesarInterrupcion() {
+        // TODO implement here
+    }
+
+    private void revisarSiguienteMovimiento() {
+        // TODO implement here
+    }
     
     
      /**

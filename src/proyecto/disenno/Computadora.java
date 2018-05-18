@@ -34,7 +34,18 @@ public class Computadora {
     }
     
     
+    /**
+     * Metodos de la clase
+     * ********************************************************************************
+     */
     
+    private void asignarInterrupcionDestino() {
+        // TODO implement here
+    }
+
+    private void asignarInterrupcionLlamada() {
+        // TODO implement here
+    }
     
     
     

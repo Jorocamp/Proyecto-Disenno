@@ -10,5 +10,10 @@ package proyecto.disenno;
  * @author MICHA
  */
 public class XML implements TipoFormato{
+
+    @Override
+    public void guardarArchivo() {
+        
+    }
     
 }

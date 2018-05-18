@@ -16,7 +16,22 @@ public class MotorElevador {
     private Elevador elevador;
 
     
+    /**
+     * Metodos de la clase
+     */
     
+
+    private void subir() {
+        // TODO implement here
+    }
+
+    private void bajar() {
+        // TODO implement here
+    }
+
+    private void detener() {
+        // TODO implement here
+    }
     
     
     /**

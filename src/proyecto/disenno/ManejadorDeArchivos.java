@@ -16,7 +16,22 @@ public class ManejadorDeArchivos {
     private String nombreArchivo;
     private String ubicacion;
     private String formato;
+    
+    
+    
+    
+    /**
+     * Metodos de la clase
+     * *******************************************************************
+     */
+    
+     private void guardarArchivoConfiguracion() {
+        // TODO implement here
+    }
 
+     private void cargarArchivoConfiguracion() {
+        // TODO implement here
+    }
     
     /**
      * Getters and Setters para los atributos de la clase
