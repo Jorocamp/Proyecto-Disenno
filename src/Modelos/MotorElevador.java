@@ -5,8 +5,6 @@
  */
 package Modelos;
 
-import proyecto.disenno.Elevador;
-
 /**DESCRIPCION:
  * Clase usada para manejar el movimiento de un elevador.
  *

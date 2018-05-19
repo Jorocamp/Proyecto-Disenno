@@ -5,8 +5,6 @@
  */
 package Modelos;
 
-import proyecto.disenno.Edificio;
-
 /**
  *
  * @author MICHA

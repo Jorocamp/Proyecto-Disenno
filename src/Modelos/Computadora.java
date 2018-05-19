@@ -10,7 +10,6 @@ package Modelos;
 //Imports************************************************************
 import Controladores.Controlador;
 import java.util.*;
-import proyecto.disenno.Interrupcion;
 
 /**DESCRIPCION:
  * 

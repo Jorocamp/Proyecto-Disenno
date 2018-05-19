@@ -7,8 +7,8 @@ package Controladores;
 
 
 import java.util.*;
-import proyecto.disenno.Calendarizador;
-import proyecto.disenno.Interrupcion;
+import Modelos.Calendarizador;
+import Modelos.Interrupcion;
 import Modelos.MotorElevador;
 
 /**DESCRIPCION:

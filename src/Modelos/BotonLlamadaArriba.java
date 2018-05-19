@@ -3,12 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto.disenno;
+package Modelos;
 
 /**
  *
  * @author Raul
  */
-public class InterrupcionLlamada extends Interrupcion {
+public class BotonLlamadaArriba  extends Boton {
+
+    public BotonLlamadaArriba(Bombillo pBombillo) {
+        super(pBombillo);
+    }
+    
     
 }

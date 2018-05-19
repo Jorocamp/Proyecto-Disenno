@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto.disenno;
-import proyecto.disenno.ConstruirElevador;
+package Modelos;
+import Modelos.ConstruirElevador;
 /**
  *
  * @author Andres
