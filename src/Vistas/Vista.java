@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto.disenno;
+package Vistas;
 
 /**
  *
  * @author MICHA
  */
-public class VistaConsola implements Vista{
+public interface Vista {
     
 }

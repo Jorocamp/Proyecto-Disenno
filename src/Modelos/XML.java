@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto.disenno;
+package Modelos;
 
 /**
  *
  * @author MICHA
  */
-public class JSON implements TipoFormato{
+public class XML implements TipoFormato{
 
     @Override
     public void guardarArchivo() {

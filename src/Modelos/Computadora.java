@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 
-package proyecto.disenno;
+package Modelos;
 
 
 //Imports************************************************************
+import Controladores.Controlador;
 import java.util.*;
+import proyecto.disenno.Interrupcion;
 
 /**DESCRIPCION:
  * 

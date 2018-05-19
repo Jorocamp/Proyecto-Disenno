@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto.disenno;
+package Modelos;
 
-/**DESCRIPCION:
- * 
- * Enumeration para tener en cuenta las direcciones posibles a las
- * que puede ir un elevador.
+/**
  *
  * @author MICHA
  */
-public enum Direccion {
-    arriba,
-    abajo,
-    ninguna
+public interface TipoFormato {
+    
+    
+    /**
+     * Metodos de la intefaz
+     */
+    public void guardarArchivo();
 }

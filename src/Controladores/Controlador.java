@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto.disenno;
+package Controladores;
 
 
 import java.util.*;
+import proyecto.disenno.Calendarizador;
+import proyecto.disenno.Interrupcion;
+import Modelos.MotorElevador;
 
 /**DESCRIPCION:
  * 

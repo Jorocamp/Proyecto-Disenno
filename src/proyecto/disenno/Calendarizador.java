@@ -5,6 +5,7 @@
  */
 package proyecto.disenno;
 
+import Modelos.Direccion;
 import java.util.ArrayList;
 
 /**

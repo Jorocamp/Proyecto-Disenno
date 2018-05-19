@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto.disenno;
+package Modelos;
+
+import proyecto.disenno.Elevador;
 
 /**DESCRIPCION:
  * Clase usada para manejar el movimiento de un elevador.
