@@ -13,19 +13,19 @@ import java.util.ArrayList;
  */
 public class PanelDestino {
     
-    ArrayList<Boton> botones = new ArrayList<Boton>();
+    ArrayList<BotonDestino> botones = new ArrayList<BotonDestino>();
     BotonDetenerse botonDetenerse;
     
-    public PanelDestino(ArrayList<Boton> pBotones, BotonDetenerse pBoton){
+    public PanelDestino(ArrayList<BotonDestino> pBotones, BotonDetenerse pBoton){
         this.setBotones(pBotones);
         this.setBotonDetenerse(pBoton);
     }
 
-    public ArrayList<Boton> getBotones() {
+    public ArrayList<BotonDestino> getBotones() {
         return botones;
     }
 
-    public void setBotones(ArrayList<Boton> botones) {
+    public void setBotones(ArrayList<BotonDestino> botones) {
         this.botones = botones;
     }
 

@@ -17,6 +17,10 @@ public class Bombillo {
         this.setEncendido(pEncendido);
     }
 
+    Bombillo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public boolean isEncendido() {
         return encendido;
     }

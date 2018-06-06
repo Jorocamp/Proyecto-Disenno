@@ -8,7 +8,7 @@ package Modelos;
 /**
  *
  * @author Andres
- * Clase abstracta para el Builder de Elevadores
+ * Clase abstracta Builder
  */
 public abstract class ConstruirElevador {
     protected Elevador elevador;
@@ -25,7 +25,10 @@ public abstract class ConstruirElevador {
     public void construirPuerta(){
         
     }
-    public void getResultado(){
-        
+    public Elevador getElevador(){
+        return elevador;
+    }
+    public void crearElevador(){
+        elevador = new Elevador();
     }
 }

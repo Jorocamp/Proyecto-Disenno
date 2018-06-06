@@ -13,6 +13,11 @@ package Modelos;
 public class MotorElevador {
     
     private Direccion direccionActual;
+
+    public MotorElevador(Direccion direccionActual, Elevador elevador) {
+        this.direccionActual = direccionActual;
+        this.elevador = elevador;
+    }
     private Elevador elevador;
 
     

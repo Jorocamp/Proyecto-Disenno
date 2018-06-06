@@ -16,6 +16,7 @@ public class Elevador {
     private int utPorPuertas;
     private ElevadorInterior interior;
     private ElevadorExterior exterior;
+    private Puerta puerta;
 
     public Elevador(float probabilidadBoton, float probabilidadInterruptor, int utPorMovimiento, int utPorPuertas, ElevadorInterior interior, ElevadorExterior exterior) {
         this.probabilidadBoton = probabilidadBoton;
@@ -25,7 +26,10 @@ public class Elevador {
         this.interior = interior;
         this.exterior = exterior;
     }
-
+    
+    public Elevador(){
+        
+    }
     public float getProbabilidadBoton() {
         return probabilidadBoton;
     }

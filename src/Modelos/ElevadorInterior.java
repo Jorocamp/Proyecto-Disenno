@@ -19,7 +19,9 @@ public class ElevadorInterior {
         this.panelDestino = panelDestino;
         this.elevador = elevador;
     }
-
+    public ElevadorInterior(){
+        
+    }
     public Cabina getCabina() {
         return cabina;
     }
