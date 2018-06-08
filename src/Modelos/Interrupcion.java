@@ -11,4 +11,5 @@ package Modelos;
  */
 public class Interrupcion {
     
+    
 }

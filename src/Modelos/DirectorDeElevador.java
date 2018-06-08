@@ -43,11 +43,11 @@ public class DirectorDeElevador {
         return this.constructorElevador.getElevador();
     }
     
-    public static void main(String[] args) {
+  /*  public static void main(String[] args) {
         
         DirectorDeElevador director = new DirectorDeElevador();
         director.setConstructorElevador(new ConstruirElevadorNormal());
         director.construirElevador(3, 50, 60, 8, 9);
         Elevador elevador = director.getElevador();
-    }
+    }*/
 }

@@ -7,9 +7,7 @@ package Controladores;
 
 
 import java.util.*;
-import Modelos.Calendarizador;
-import Modelos.Interrupcion;
-import Modelos.MotorElevador;
+import Modelos.*;
 
 /**DESCRIPCION:
  * 
@@ -31,8 +29,23 @@ public class Controlador {
     
     
     
-     private void mover() {
-        // TODO implement here
+     private void mover(Direccion direccionMover) {
+        // TODO implement here4
+        switch(direccionMover){
+            case abajo:
+                motor.bajar();
+                break;
+            case arriba:
+                motor.subir();
+                break;
+            case ninguna:
+                motor.detener();
+                break;
+            default:
+                break;
+                
+        }
+        
     }
 
     private void procesarInterrupcion() {
@@ -41,6 +54,10 @@ public class Controlador {
 
     private void revisarSiguienteMovimiento() {
         // TODO implement here
+        Direccion prevista = calendarizador.getDireccionPrevista();
+        this.mover(prevista);
+        
+        
     }
     
     

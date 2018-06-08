@@ -11,4 +11,22 @@ package Modelos;
  */
 public class InterrupcionSensor extends Interrupcion {
     
+    private int piso;
+
+    public InterrupcionSensor(int piso) {
+        this.piso = piso;
+    }
+    
+    
+
+    public int getPiso() {
+        return piso;
+    }
+
+    public void setPiso(int piso) {
+        this.piso = piso;
+    }
+    
+    
+    
 }

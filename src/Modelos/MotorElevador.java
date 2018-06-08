@@ -26,16 +26,26 @@ public class MotorElevador {
      */
     
 
-    private void subir() {
+    public void subir() {
         // TODO implement here
+        direccionActual = Direccion.arriba;
+        int pisoActual = elevador.getExterior().getSensorPiso().getPisoActual();
+        elevador.getExterior().getSensorPiso().setPisoActual(pisoActual + 1);
+        elevador.getExterior().getSensorPiso().crearInterrupcion();
+        
     }
 
-    private void bajar() {
+    public void bajar() {
         // TODO implement here
+        direccionActual = Direccion.abajo;
+        int pisoActual = elevador.getExterior().getSensorPiso().getPisoActual();
+        elevador.getExterior().getSensorPiso().setPisoActual(pisoActual - 1);
+        elevador.getExterior().getSensorPiso().crearInterrupcion();
     }
 
-    private void detener() {
+    public void detener() {
         // TODO implement here
+        direccionActual = Direccion.ninguna;
     }
     
     

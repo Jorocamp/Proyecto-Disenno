@@ -27,8 +27,10 @@ public class SensorPiso {
     
     
     
-    private void crearInterrupcion() {
-
+    public void crearInterrupcion() {
+         InterrupcionSensor iPiso = new InterrupcionSensor(pisoActual);
+         Computadora compu = Computadora.getInstance();
+         compu.nuevaInterrupcion(iPiso);
     }
     
 }
