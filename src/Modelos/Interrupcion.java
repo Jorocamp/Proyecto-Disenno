@@ -10,5 +10,6 @@ package Modelos;
  * @author Raul
  */
 public class Interrupcion {
+
     
 }

@@ -21,7 +21,9 @@ public class Pasajero {
         this.setPisoDestino(pPisoDestino);
         this.setCabinaActual(pCabina);
     }
-    
+    public Pasajero(){
+        
+    }
     
     public void seleccionarPiso(){
         

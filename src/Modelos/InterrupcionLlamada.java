@@ -10,5 +10,12 @@ package Modelos;
  * @author Raul
  */
 public class InterrupcionLlamada extends Interrupcion {
+    private int piso;
     
+    public InterrupcionLlamada(){
+        
+    }
+    public InterrupcionLlamada(int piso, Computadora computadora){
+        this.piso = piso;
+    }
 }

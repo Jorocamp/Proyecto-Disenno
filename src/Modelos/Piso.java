@@ -86,39 +86,26 @@ public class Piso {
         return (rand.nextInt(100) + 0) <= probSobreCien;
     }
     
-/*
- * Funcion para crear pasajeros en el piso actual
- * cantidadPasajeros es el numero de nuevos pasajeros que se crean 
- * Los pasajeros se crean con el piso distino igual al actual y sin cabinaActual (o sea null)
- */     
-    public void crearPasajeros(int cantidadPasajeros){
-
-    }
  /*
  * Funcion para tocar algun boton de llamada
  * 
  */ 
-    public void pulsarBotonLlamada(int numPiso){
-        if(numPiso == 1)
-            panelLlamada.botonArriba.crearInterrupcion();// si es el primer piso solo se puede arriba
+    public void pulsarBotonLlamada(int pisoActual,int pisoDestino){
+        if(pisoDestino > pisoActual)
+            panelLlamada.botonArriba.crearInterrupcion();// si es mayor, pide subir
         else
-        if(numPiso == 6)
-            panelLlamada.botonAbajo.crearInterrupcion();// sexto solo abajo
-        else
-            if(probabilidad(50))// casos del 2 al 5 hay 1/2 probabilidad de escoger algun boton
-                panelLlamada.botonAbajo.crearInterrupcion();
-            else
-                panelLlamada.botonArriba.crearInterrupcion();
+            panelLlamada.botonAbajo.crearInterrupcion();// si es menor, pide bajar
     }
+    
+
 /*
- * Funcion para solicitar elevador en un piso
+ * Funcion para crear pasajero y solicitar elevador en un piso
  * 
  */ 
-    public void solicitarElevador(int numeroElevador){
-        if(probabilidad(probabilidadSolicitud)){
-            Pasajero nuevo = new Pasajero(numeroPiso, numeroPiso, null);// Creacion del pasajero
-            pulsarBotonLlamada(numeroPiso);// manda la interrupcion a la computadora
-            colaPasajeros.add(nuevo);// Añadir a la lista de espera
+    public void solicitarElevador(Pasajero pasajero,int pisoMaximo){
+        if(probabilidad(probabilidadSolicitud)){// Si se da la probabilidad, se solicita el elevador
+            pulsarBotonLlamada(pasajero.pisoActual,pasajero.pisoDestino);// manda la interrupcion a la computadora
+            colaPasajeros.add(pasajero);// Agrega el pasajero a la cola de espera
         }
     }
 }

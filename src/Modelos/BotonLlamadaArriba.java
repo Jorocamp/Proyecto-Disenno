@@ -15,8 +15,8 @@ public class BotonLlamadaArriba  extends Boton {
         super(pBombillo);
     }
 
-    @Override
-    public void crearInterrupcion() {
+    public void crearInterrupcion(int piso) {
+        InterrupcionLlamada inter = new InterrupcionLlamada();
         
     }
     

@@ -19,7 +19,7 @@ public class Boton {
 
     public void crearInterrupcion(){
         
-    }
+    };
     
     public Bombillo getBombillo() {
         return bombillo;
