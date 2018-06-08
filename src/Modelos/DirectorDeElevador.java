@@ -9,7 +9,7 @@ package Modelos;
 /**
  *
  * @author Andres
- * 
+ * Clase Directora de construir elevadores.
  */
 public class DirectorDeElevador {
     private ConstruirElevador constructorElevador;
@@ -23,12 +23,12 @@ public class DirectorDeElevador {
 /*
     Metodo que llama al builder (ConstruirElevador) para construir el elevador    
 */
-    public void construirElevador(){
+    public void construirElevador(int cantidadPisos,float probabilidadBoton, float probabilidadInterruptor,int utPorMovimiento, int utPorPuertas){
         constructorElevador.crearElevador();
-        constructorElevador.construirExterior();
-        constructorElevador.construirInterior();
-        constructorElevador.construirMotor();
-        constructorElevador.construirPuerta();
+        constructorElevador.construirExterior(cantidadPisos);
+        constructorElevador.construirInterior(cantidadPisos,probabilidadBoton,probabilidadInterruptor);
+        constructorElevador.construirMotor(utPorMovimiento);
+        constructorElevador.construirPuerta(utPorPuertas);
     }
     
     public ConstruirElevador getConstructorElevador() {
@@ -41,5 +41,13 @@ public class DirectorDeElevador {
     
     public Elevador getElevador(){
         return this.constructorElevador.getElevador();
+    }
+    
+    public static void main(String[] args) {
+        
+        DirectorDeElevador director = new DirectorDeElevador();
+        director.setConstructorElevador(new ConstruirElevadorNormal());
+        director.construirElevador(3, 50, 60, 8, 9);
+        Elevador elevador = director.getElevador();
     }
 }

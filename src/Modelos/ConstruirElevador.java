@@ -13,18 +13,11 @@ package Modelos;
 public abstract class ConstruirElevador {
     protected Elevador elevador;
     
-    public void construirExterior(){
-        
-    }
-    public void construirInterior(){
-        
-    }
-    public void construirMotor(){
-        
-    }
-    public void construirPuerta(){
-        
-    }
+    public abstract void construirExterior(int cantidadPisos);
+    public abstract void construirInterior(int cantidadPisos,float probabilidadBoton,float probabilidadInterruptor);
+    public abstract void construirMotor(int utPorMovimiento);
+    public abstract void construirPuerta(int utPorPuertas);
+    
     public Elevador getElevador(){
         return elevador;
     }

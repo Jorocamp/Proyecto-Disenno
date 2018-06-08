@@ -10,5 +10,6 @@ package Modelos;
  * @author Andres
  */
 public class PanelLlamada {
-    
+    BotonLlamadaArriba botonArriba;
+    BotonLlamadaAbajo botonAbajo;
 }

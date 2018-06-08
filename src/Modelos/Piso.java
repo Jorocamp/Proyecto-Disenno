@@ -6,6 +6,7 @@
 package Modelos;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -76,8 +77,48 @@ public class Piso {
     public void setColaPasajeros(ArrayList<Pasajero> colaPasajeros) {
         this.colaPasajeros = colaPasajeros;
     }
+/*
+ * Funcion de Probabilidad para ejecutar o no una accion. Retorna boolean
+ * probSobreCien es la probabilidad sobre 100 que se busca   
+ */    
+    public boolean probabilidad(float probSobreCien){
+        Random rand = new Random();
+        return (rand.nextInt(100) + 0) <= probSobreCien;
+    }
+    
+/*
+ * Funcion para crear pasajeros en el piso actual
+ * cantidadPasajeros es el numero de nuevos pasajeros que se crean 
+ * Los pasajeros se crean con el piso distino igual al actual y sin cabinaActual (o sea null)
+ */     
+    public void crearPasajeros(int cantidadPasajeros){
 
-
-
-
+    }
+ /*
+ * Funcion para tocar algun boton de llamada
+ * 
+ */ 
+    public void pulsarBotonLlamada(int numPiso){
+        if(numPiso == 1)
+            panelLlamada.botonArriba.crearInterrupcion();// si es el primer piso solo se puede arriba
+        else
+        if(numPiso == 6)
+            panelLlamada.botonAbajo.crearInterrupcion();// sexto solo abajo
+        else
+            if(probabilidad(50))// casos del 2 al 5 hay 1/2 probabilidad de escoger algun boton
+                panelLlamada.botonAbajo.crearInterrupcion();
+            else
+                panelLlamada.botonArriba.crearInterrupcion();
+    }
+/*
+ * Funcion para solicitar elevador en un piso
+ * 
+ */ 
+    public void solicitarElevador(int numeroElevador){
+        if(probabilidad(probabilidadSolicitud)){
+            Pasajero nuevo = new Pasajero(numeroPiso, numeroPiso, null);// Creacion del pasajero
+            pulsarBotonLlamada(numeroPiso);// manda la interrupcion a la computadora
+            colaPasajeros.add(nuevo);// Añadir a la lista de espera
+        }
+    }
 }
