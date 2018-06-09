@@ -16,8 +16,9 @@ public class BotonLlamadaArriba  extends Boton {
     }
 
     public void crearInterrupcion(int piso) {
-        InterrupcionLlamada inter = new InterrupcionLlamada();
-        
+        InterrupcionLlamada inter = new InterrupcionLlamada(piso);
+        Computadora compu = Computadora.getInstance();
+        compu.nuevaInterrupcion(inter);
     }
     
     

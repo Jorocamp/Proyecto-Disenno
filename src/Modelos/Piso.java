@@ -92,7 +92,7 @@ public class Piso {
  */ 
     public void pulsarBotonLlamada(int pisoActual,int pisoDestino){
         if(pisoDestino > pisoActual)
-            panelLlamada.botonArriba.crearInterrupcion();// si es mayor, pide subir
+            panelLlamada.botonArriba.crearInterrupcion(pisoActual);// si es mayor, pide subir
         else
             panelLlamada.botonAbajo.crearInterrupcion();// si es menor, pide bajar
     }

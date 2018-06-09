@@ -15,7 +15,7 @@ public class InterrupcionLlamada extends Interrupcion {
     public InterrupcionLlamada(){
         
     }
-    public InterrupcionLlamada(int piso, Computadora computadora){
+    public InterrupcionLlamada(int piso){
         this.piso = piso;
     }
 }
