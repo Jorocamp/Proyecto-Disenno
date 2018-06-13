@@ -108,4 +108,20 @@ public class Piso {
             colaPasajeros.add(pasajero);// Agrega el pasajero a la cola de espera
         }
     }
+    
+    public void ingresoElevador(){
+        for(int i = 0;i < this.elevadores.size() ;i ++){// Para cada elevador del piso:
+            // Revisa todos los que estan con puerta abierta y con espacio para mas personas
+            if(this.elevadores.get(i).getElevador().getPuerta().isEstado() || this.elevadores.get(i).getElevador().getInterior().getCabina().getPasajeros().size() < this.elevadores.get(i).getElevador().getInterior().getCabina().getSensorPeso().getMaximaCantidadPersonas()){
+                // Mientras la capacidad maxima no sea alcanzada:
+                while(this.elevadores.get(i).getElevador().getInterior().getCabina().getPasajeros().size() < this.elevadores.get(i).getElevador().getInterior().getCabina().getSensorPeso().getMaximaCantidadPersonas()){
+                    // Agrega el pasajero a la cabina
+                    this.elevadores.get(i).getElevador().getInterior().getCabina().getPasajeros().add(this.colaPasajeros.get(0));
+                    // Remueve el pasajero de la cola de espera
+                    this.colaPasajeros.remove(0);
+                }
+            }
+        }
+    }
+
 }

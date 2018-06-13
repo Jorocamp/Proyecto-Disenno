@@ -18,13 +18,14 @@ public class Elevador {
     private ElevadorExterior exterior;
     private Puerta puerta;
 
-    public Elevador(float probabilidadBoton, float probabilidadInterruptor, int utPorMovimiento, int utPorPuertas, ElevadorInterior interior, ElevadorExterior exterior) {
+    public Elevador(float probabilidadBoton, float probabilidadInterruptor, int utPorMovimiento, int utPorPuertas, ElevadorInterior interior, ElevadorExterior exterior, Puerta puerta) {
         this.probabilidadBoton = probabilidadBoton;
         this.probabilidadInterruptor = probabilidadInterruptor;
         this.utPorMovimiento = utPorMovimiento;
         this.utPorPuertas = utPorPuertas;
         this.interior = interior;
         this.exterior = exterior;
+        this.puerta = puerta;
     }
     
     public Elevador(){
@@ -78,5 +79,11 @@ public class Elevador {
         this.exterior = exterior;
     }
 
-    
+    public Puerta getPuerta() {
+        return puerta;
+    }
+
+    public void setPuerta(Puerta puerta) {
+        this.puerta = puerta;
+    }
 }

@@ -14,10 +14,12 @@ import java.util.ArrayList;
 public class Cabina {
     private ArrayList<Pasajero> pasajeros;
     private ElevadorInterior elevador;
+    private SensorPeso sensorPeso;
 
-    public Cabina(ArrayList<Pasajero> pasajeros, ElevadorInterior elevador) {
+    public Cabina(ArrayList<Pasajero> pasajeros, ElevadorInterior elevador, SensorPeso sensorPeso) {
         this.pasajeros = pasajeros;
         this.elevador = elevador;
+        this.sensorPeso = sensorPeso;
     }
 
     public ArrayList<Pasajero> getPasajeros() {
@@ -36,7 +38,12 @@ public class Cabina {
         this.elevador = elevador;
     }
 
+    public SensorPeso getSensorPeso() {
+        return sensorPeso;
+    }
 
-    
-    
+    public void setSensorPeso(SensorPeso sensorPeso) {
+        this.sensorPeso = sensorPeso;
+    }
+
 }

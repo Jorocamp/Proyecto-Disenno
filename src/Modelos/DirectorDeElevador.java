@@ -23,10 +23,10 @@ public class DirectorDeElevador {
 /*
     Metodo que llama al builder (ConstruirElevador) para construir el elevador    
 */
-    public void construirElevador(int cantidadPisos,float probabilidadBoton, float probabilidadInterruptor,int utPorMovimiento, int utPorPuertas){
+    public void construirElevador(int cantidadPisos,float probabilidadBoton, float probabilidadInterruptor,int utPorMovimiento, int utPorPuertas,int maximaCantidadPersonas){
         constructorElevador.crearElevador();
         constructorElevador.construirExterior(cantidadPisos);
-        constructorElevador.construirInterior(cantidadPisos,probabilidadBoton,probabilidadInterruptor);
+        constructorElevador.construirInterior(cantidadPisos,probabilidadBoton,probabilidadInterruptor,maximaCantidadPersonas);
         constructorElevador.construirMotor(utPorMovimiento);
         constructorElevador.construirPuerta(utPorPuertas);
     }

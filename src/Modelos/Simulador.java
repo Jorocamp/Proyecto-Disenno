@@ -5,25 +5,41 @@
  */
 package Modelos;
 
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author MICHA
  */
 public class Simulador {
 
-
     private Edificio edificio;
     private int cantidadPisos;
     private int cantidadElevadores;
     private int velocidadActual;
-
-    
+    private boolean pausa;
+    private boolean debug;
     /**
      * Metodos de la clase
      * ******************************************************************************
      */
     
-     private void iniciarSimulacion() {
+     public Simulador(Edificio edificio, int cantidadPisos, int cantidadElevadores, int velocidadActual, boolean pausa) {
+        this.edificio = edificio;
+        this.cantidadPisos = cantidadPisos;
+        this.cantidadElevadores = cantidadElevadores;
+        this.velocidadActual = velocidadActual;
+        this.pausa = pausa;
+        // TODO implement here
+    }
+
+    public Simulador() {
+    }
+
+    private void iniciarSimulacion() {
         // TODO implement here
     }
 
@@ -43,17 +59,27 @@ public class Simulador {
         // TODO implement here
     }
 
-    private void ejecutarPaso() {
-        // TODO implement here
+    private void ejecutarPaso(int retraso) throws InterruptedException {
+        while(!pausa){
+            ejecutarUT();// Ejecutar Acciones en la UT
+            TimeUnit.SECONDS.sleep(retraso);// Lag
+            try {
+                System.in.read();
+            } catch (IOException ex) {
+                Logger.getLogger(Simulador.class.getName()).log(Level.SEVERE, null, ex);
+            }   
+        }
     }
 
-    private void procesarSimulacion() {
-        // TODO implement here
+    private void ejecutarUT(){
+        System.out.println("UT ejecutando...");
     }
-    
-    
-    
-        
+    public void procesarSimulacion(int retraso) throws InterruptedException {
+        while(!pausa){
+            ejecutarUT();// Ejecutar Acciones en la UT
+            TimeUnit.SECONDS.sleep(retraso);// Lag 
+        }
+    }  
     /**
      * Getters and Setters para los atributos para la clase
      * ********************************************************************************
@@ -90,7 +116,12 @@ public class Simulador {
         this.velocidadActual = velocidadActual;
     }
 
+    public static void main(String[] args) throws InterruptedException {
+        
+        Simulador sim = new Simulador();
+        int retraso = 1;
+        sim.ejecutarPaso(retraso);
+    }
     
-    
-    
+  
 }
