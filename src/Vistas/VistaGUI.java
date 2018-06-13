@@ -39,8 +39,11 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private ArrayList<JSpinner> utPisosLista = new ArrayList<>();
     private ArrayList<JSpinner> maxPersonasLista = new ArrayList<>();   
     
-    boolean pisosInit = false;
-    boolean elevadoresInit = false;
+    private boolean pisosInit = false;
+    private boolean elevadoresInit = false;
+    
+    private boolean simPausa = false;
+    
 
     /**
      * Creates new form VistaGUI
@@ -52,6 +55,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         btn_iniciarS.setEnabled(false);
         btn_guardarA.setEnabled(false);
         btn_fin.setEnabled(false);
+        btn_stop.setEnabled(false);
         configSpinner(spn_nPisos,256);
         configSpinner(spn_nElevadores, Integer.MAX_VALUE);
         
@@ -116,6 +120,9 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         btn_start = new javax.swing.JButton();
         btn_next = new javax.swing.JButton();
         btn_stop = new javax.swing.JButton();
+        btn_config = new javax.swing.JButton();
+        txt_utContador = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SSCE");
@@ -538,6 +545,27 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             }
         });
 
+        btn_config.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/config.png"))); // NOI18N
+        btn_config.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_configActionPerformed(evt);
+            }
+        });
+
+        txt_utContador.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        txt_utContador.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_utContador.setText("0");
+        txt_utContador.setEnabled(false);
+        txt_utContador.setSelectionColor(new java.awt.Color(102, 102, 102));
+        txt_utContador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_utContadorActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        jLabel1.setText("UT Actual");
+
         javax.swing.GroupLayout pnl_simulacionLayout = new javax.swing.GroupLayout(pnl_simulacion);
         pnl_simulacion.setLayout(pnl_simulacionLayout);
         pnl_simulacionLayout.setHorizontalGroup(
@@ -552,7 +580,12 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
                         .addComponent(btn_next, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_stop, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_config, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_utContador, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnl_simulacionLayout.setVerticalGroup(
@@ -562,10 +595,13 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
                 .addComponent(bnr_sceTitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_start)
-                    .addComponent(btn_next)
-                    .addComponent(btn_stop))
-                .addContainerGap(606, Short.MAX_VALUE))
+                    .addComponent(btn_start, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_next, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_stop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_config, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_utContador)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(606, 606, 606))
         );
 
         getContentPane().add(pnl_simulacion, "card4");
@@ -699,8 +735,19 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
 
     private void btn_startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_startActionPerformed
         // TODO add your handling code here:
-        btn_start.setIcon(new ImageIcon("src/Imagenes/pause.png"));
-        btn_next.setEnabled(false);
+        btn_stop.setEnabled(true);
+        btn_config.setEnabled(false);
+        if(simPausa){
+            btn_start.setIcon(new ImageIcon("src/Imagenes/play.png"));
+            btn_next.setEnabled(true);            
+            simPausa = false;
+        }
+        else{
+            btn_start.setIcon(new ImageIcon("src/Imagenes/pause.png"));
+            btn_next.setEnabled(false);
+            simPausa = true;
+        }
+
         
     }//GEN-LAST:event_btn_startActionPerformed
 
@@ -710,12 +757,35 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
 
     private void btn_stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_stopActionPerformed
         // TODO add your handling code here:
+         btn_start.setEnabled(false);
+         btn_next.setEnabled(false);
+         btn_config.setEnabled(true);
     }//GEN-LAST:event_btn_stopActionPerformed
 
     private void btn_iniciarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarSActionPerformed
         pnl_principal.setVisible(false);
         pnl_simulacion.setVisible(true);
+        btn_start.setEnabled(true);
+        btn_next.setEnabled(true);
+        btn_config.setEnabled(true);
+        btn_stop.setEnabled(false);
+        btn_start.setIcon(new ImageIcon("src/Imagenes/play.png"));
+            
+        
     }//GEN-LAST:event_btn_iniciarSActionPerformed
+
+    private void btn_configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_configActionPerformed
+        // TODO add your handling code here:
+          btn_iniciarS.setEnabled(false);
+          lbl_warning.setVisible(true);
+          img_warning.setVisible(true);
+          pnl_principal.setVisible(true);
+          pnl_simulacion.setVisible(false);
+    }//GEN-LAST:event_btn_configActionPerformed
+
+    private void txt_utContadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_utContadorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_utContadorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -773,6 +843,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private javax.swing.JLabel bnr_sceTitle;
     private javax.swing.JLabel bnr_sceTitle1;
     private javax.swing.JButton btn_cargarA;
+    private javax.swing.JButton btn_config;
     private javax.swing.JButton btn_configS;
     private javax.swing.JButton btn_fin;
     private javax.swing.JButton btn_guardarA;
@@ -785,6 +856,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private javax.swing.JButton btn_volver;
     private javax.swing.JLabel img_ssce;
     private javax.swing.JLabel img_warning;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lbl_nElevadores;
     private javax.swing.JLabel lbl_nPisos;
     private javax.swing.JLabel lbl_p1;
@@ -816,6 +888,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private javax.swing.JSeparator sep_num1;
     private javax.swing.JSpinner spn_nElevadores;
     private javax.swing.JSpinner spn_nPisos;
+    private javax.swing.JTextField txt_utContador;
     // End of variables declaration//GEN-END:variables
 
     @Override
