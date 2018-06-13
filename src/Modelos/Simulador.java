@@ -89,8 +89,5 @@ public class Simulador {
     public void setVelocidadActual(int velocidadActual) {
         this.velocidadActual = velocidadActual;
     }
-
-    
-    
     
 }
