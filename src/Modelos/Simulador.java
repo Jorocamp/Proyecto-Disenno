@@ -116,12 +116,12 @@ public class Simulador {
         this.velocidadActual = velocidadActual;
     }
     
-    public static void main(String[] args) throws InterruptedException {
+   /* public static void main(String[] args) throws InterruptedException {
         
         Simulador sim = new Simulador();
         int retraso = 1;
         sim.ejecutarPaso(retraso);
-    }
+    }*/
     
   
 }
