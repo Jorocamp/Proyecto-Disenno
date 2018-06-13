@@ -14,7 +14,7 @@ public abstract class ConstruirElevador {
     protected Elevador elevador;
     
     public abstract void construirExterior(int cantidadPisos);
-    public abstract void construirInterior(int cantidadPisos,float probabilidadBoton,float probabilidadInterruptor);
+    public abstract void construirInterior(int cantidadPisos,float probabilidadBoton,float probabilidadInterruptor, int maximaCantidadPersonas);
     public abstract void construirMotor(int utPorMovimiento);
     public abstract void construirPuerta(int utPorPuertas);
     

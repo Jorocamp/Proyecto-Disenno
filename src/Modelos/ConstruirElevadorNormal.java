@@ -26,7 +26,7 @@ public class ConstruirElevadorNormal extends ConstruirElevador{
         this.elevador.setExterior(elevadorExterior);// Agrega elevadorExterior al elevador en construccion
     }
 
-    public void construirInterior(int cantidadPiso,float probabilidadBoton,float probabilidadInterruptor){
+    public void construirInterior(int cantidadPiso,float probabilidadBoton,float probabilidadInterruptor,int maximaCantidadPersonas){
 
         ArrayList<BotonDestino> botonesDestino = new ArrayList<BotonDestino>();// ArrayList de botones de destino
         
@@ -40,9 +40,11 @@ public class ConstruirElevadorNormal extends ConstruirElevador{
         PanelDestino panelDestino = new PanelDestino(botonesDestino, botonDetenerse);//se crea panel destino con botones  
         ArrayList<Pasajero> pasajeros = new ArrayList<Pasajero>();// Lista de pasajeros en la cabina
         
-        ElevadorInterior elevadorInterior = new ElevadorInterior();  // se crea nuevo elevador interior   
+        ElevadorInterior elevadorInterior = new ElevadorInterior();  // se crea nuevo elevador interior  
         
-        Cabina cabina = new Cabina(pasajeros,elevadorInterior);// Cabina tiene el elevador interior y los pasajeros
+        SensorPeso sensorPeso = new SensorPeso(maximaCantidadPersonas);
+        
+        Cabina cabina = new Cabina(pasajeros,elevadorInterior,sensorPeso);// Cabina tiene el elevador interior y los pasajeros
         
         elevadorInterior.setPanelDestino(panelDestino);
         elevadorInterior.setElevador(this.elevador);
