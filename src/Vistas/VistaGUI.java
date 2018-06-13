@@ -123,6 +123,10 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         btn_config = new javax.swing.JButton();
         txt_utContador = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        btn_speeddown = new javax.swing.JButton();
+        btn_speedup = new javax.swing.JButton();
+        lbl_veocidadA = new javax.swing.JLabel();
+        txt_velocidadA = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SSCE");
@@ -566,6 +570,34 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         jLabel1.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         jLabel1.setText("UT Actual");
 
+        btn_speeddown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/speeddown.png"))); // NOI18N
+        btn_speeddown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_speeddownActionPerformed(evt);
+            }
+        });
+
+        btn_speedup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/speedup.png"))); // NOI18N
+        btn_speedup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_speedupActionPerformed(evt);
+            }
+        });
+
+        lbl_veocidadA.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        lbl_veocidadA.setText("Velocidad Actual");
+
+        txt_velocidadA.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        txt_velocidadA.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_velocidadA.setText("0");
+        txt_velocidadA.setEnabled(false);
+        txt_velocidadA.setSelectionColor(new java.awt.Color(102, 102, 102));
+        txt_velocidadA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_velocidadAActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnl_simulacionLayout = new javax.swing.GroupLayout(pnl_simulacion);
         pnl_simulacion.setLayout(pnl_simulacionLayout);
         pnl_simulacionLayout.setHorizontalGroup(
@@ -574,8 +606,12 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
                 .addContainerGap()
                 .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bnr_sceTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, 1147, Short.MAX_VALUE)
-                    .addGroup(pnl_simulacionLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_simulacionLayout.createSequentialGroup()
+                        .addComponent(btn_speeddown, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_start, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_speedup, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_next, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -583,9 +619,15 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_config, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_utContador, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(pnl_simulacionLayout.createSequentialGroup()
+                                .addComponent(lbl_veocidadA)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_velocidadA, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnl_simulacionLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txt_utContador, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         pnl_simulacionLayout.setVerticalGroup(
@@ -595,13 +637,20 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
                 .addComponent(bnr_sceTitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_start, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_start, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                     .addComponent(btn_next, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_stop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_config, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_utContador)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(606, 606, 606))
+                    .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_utContador, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_speeddown, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_speedup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_veocidadA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_velocidadA, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(552, 552, 552))
         );
 
         getContentPane().add(pnl_simulacion, "card4");
@@ -759,6 +808,8 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         // TODO add your handling code here:
          btn_start.setEnabled(false);
          btn_next.setEnabled(false);
+         btn_speeddown.setEnabled(false);
+         btn_speedup.setEnabled(false);
          btn_config.setEnabled(true);
     }//GEN-LAST:event_btn_stopActionPerformed
 
@@ -769,6 +820,9 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         btn_next.setEnabled(true);
         btn_config.setEnabled(true);
         btn_stop.setEnabled(false);
+        btn_speeddown.setEnabled(true);
+         btn_speedup.setEnabled(true);
+         
         btn_start.setIcon(new ImageIcon("src/Imagenes/play.png"));
             
         
@@ -786,6 +840,18 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private void txt_utContadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_utContadorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_utContadorActionPerformed
+
+    private void btn_speeddownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_speeddownActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_speeddownActionPerformed
+
+    private void btn_speedupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_speedupActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_speedupActionPerformed
+
+    private void txt_velocidadAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_velocidadAActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_velocidadAActionPerformed
 
     /**
      * @param args the command line arguments
@@ -851,6 +917,8 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private javax.swing.JButton btn_nElevadores;
     private javax.swing.JButton btn_nPisos;
     private javax.swing.JButton btn_next;
+    private javax.swing.JButton btn_speeddown;
+    private javax.swing.JButton btn_speedup;
     private javax.swing.JButton btn_start;
     private javax.swing.JButton btn_stop;
     private javax.swing.JButton btn_volver;
@@ -866,6 +934,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private javax.swing.JLabel lbl_p5;
     private javax.swing.JLabel lbl_p6;
     private javax.swing.JLabel lbl_p8;
+    private javax.swing.JLabel lbl_veocidadA;
     private javax.swing.JLabel lbl_warning;
     private javax.swing.JLabel lbl_welcome;
     private javax.swing.JPanel pnl_config;
@@ -889,6 +958,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private javax.swing.JSpinner spn_nElevadores;
     private javax.swing.JSpinner spn_nPisos;
     private javax.swing.JTextField txt_utContador;
+    private javax.swing.JTextField txt_velocidadA;
     // End of variables declaration//GEN-END:variables
 
     @Override
