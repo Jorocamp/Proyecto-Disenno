@@ -7,6 +7,8 @@ package Vistas;
 
 
 
+import Controladores.Controlador;
+import Modelos.Simulador;
 import java.awt.BorderLayout;
 import javax.swing.JFileChooser;
 import java.io.File;
@@ -769,6 +771,13 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private void btn_finActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finActionPerformed
         // TODO add your handling code here:
         
+        Controlador controlador = new Controlador();
+                
+        Simulador simulador = new Simulador();
+        ArrayList<Object> arrayParametros = new ArrayList<Object>();
+
+        arrayParametros.add((Integer) spn_nPisos.getValue());
+        controlador.configurarSimulacion(simulador, arrayParametros);
         
         //VALIDACIONES AQUI
         JOptionPane.showMessageDialog(this, "Datos registrados correctamente (ahora es posible guardar la configuración actual)", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
@@ -884,6 +893,8 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VistaGUI().setVisible(true);
+                
+                
             }
         });
         
