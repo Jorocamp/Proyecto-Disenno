@@ -5,10 +5,12 @@
  */
 package Controladores;
 
+import Modelos.Simulador;
+
 /**
  *
  * @author MICHA
  */
 public class ControladorSimulador {
-    
+    private Simulador sim;
 }
