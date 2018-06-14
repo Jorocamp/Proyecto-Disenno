@@ -9,13 +9,16 @@ package Vistas;
 
 import Controladores.Controlador;
 import Modelos.Simulador;
+import Vistas.Utilidades.BitacoraRenderer;
 import java.awt.BorderLayout;
 import javax.swing.JFileChooser;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -40,6 +43,11 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private ArrayList<JSpinner> utPuertasLista = new ArrayList<>();
     private ArrayList<JSpinner> utPisosLista = new ArrayList<>();
     private ArrayList<JSpinner> maxPersonasLista = new ArrayList<>();   
+    
+    private ArrayList<JTextField> pisoActualLista  = new ArrayList<>();
+    private ArrayList<JTextField> direccionesLista  = new ArrayList<>();
+    private ArrayList<JTextField> numeroPasajerosLista  = new ArrayList<>();
+
     
     private boolean pisosInit = false;
     private boolean elevadoresInit = false;
@@ -75,6 +83,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnl_scrPrincipal = new javax.swing.JScrollPane();
         pnl_principal = new javax.swing.JPanel();
         bnr_sceTitle = new javax.swing.JLabel();
         lbl_welcome = new javax.swing.JLabel();
@@ -85,6 +94,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         lbl_warning = new javax.swing.JLabel();
         img_warning = new javax.swing.JLabel();
         btn_iniciarS = new javax.swing.JButton();
+        pnl_scrConfig = new javax.swing.JScrollPane();
         pnl_config = new javax.swing.JPanel();
         bnr_configTitle = new javax.swing.JLabel();
         lbl_nPisos = new javax.swing.JLabel();
@@ -117,6 +127,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         lbl_p8 = new javax.swing.JLabel();
         btn_volver = new javax.swing.JButton();
         btn_fin = new javax.swing.JButton();
+        pnl_scrSimulacion = new javax.swing.JScrollPane();
         pnl_simulacion = new javax.swing.JPanel();
         bnr_sceTitle1 = new javax.swing.JLabel();
         btn_start = new javax.swing.JButton();
@@ -129,6 +140,34 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         btn_speedup = new javax.swing.JButton();
         lbl_veocidadA = new javax.swing.JLabel();
         txt_velocidadA = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        pnl_bitacora = new javax.swing.JScrollPane();
+        lst_bitacora = new javax.swing.JList<>();
+        lbl_bitacora = new javax.swing.JLabel();
+        pnl_pisoActual = new javax.swing.JScrollPane();
+        pnl_listaPisoActual = new javax.swing.JPanel();
+        lbl_pisoActual = new javax.swing.JLabel();
+        pnl_direccion = new javax.swing.JScrollPane();
+        pnl_listaDireccion = new javax.swing.JPanel();
+        lbl_direccion = new javax.swing.JLabel();
+        pnl_numPasajeros = new javax.swing.JScrollPane();
+        pnl_listaNumPasajeros = new javax.swing.JPanel();
+        lbl_numPasajeros = new javax.swing.JLabel();
+        lbl_Pasajeros = new javax.swing.JLabel();
+        lbl_filtrar = new javax.swing.JLabel();
+        chk_cb01 = new javax.swing.JCheckBox();
+        chk_cb02 = new javax.swing.JCheckBox();
+        chk_cb03 = new javax.swing.JCheckBox();
+        chk_cb04 = new javax.swing.JCheckBox();
+        chk_cb05 = new javax.swing.JCheckBox();
+        chk_cb06 = new javax.swing.JCheckBox();
+        chk_cb07 = new javax.swing.JCheckBox();
+        chk_cb08 = new javax.swing.JCheckBox();
+        chk_cb09 = new javax.swing.JCheckBox();
+        chk_cb10 = new javax.swing.JCheckBox();
+        chk_cb11 = new javax.swing.JCheckBox();
+        pnl_Pasajeros = new javax.swing.JScrollPane();
+        lst_Pasajeros = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SSCE");
@@ -209,7 +248,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
                                         .addComponent(img_ssce)
                                         .addGap(308, 308, 308))
                                     .addComponent(btn_configS, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 358, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 375, Short.MAX_VALUE)
                                 .addComponent(img_warning))
                             .addGroup(pnl_principalLayout.createSequentialGroup()
                                 .addComponent(btn_cargarA, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -243,12 +282,14 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
                         .addGroup(pnl_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(img_warning)
                             .addComponent(lbl_warning))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 320, Short.MAX_VALUE)
                 .addComponent(lbl_welcome)
                 .addContainerGap())
         );
 
-        getContentPane().add(pnl_principal, "card2");
+        pnl_scrPrincipal.setViewportView(pnl_principal);
+
+        getContentPane().add(pnl_scrPrincipal, "card5");
 
         pnl_config.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -519,7 +560,9 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
                 .addContainerGap())
         );
 
-        getContentPane().add(pnl_config, "card3");
+        pnl_scrConfig.setViewportView(pnl_config);
+
+        getContentPane().add(pnl_scrConfig, "card5");
 
         pnl_simulacion.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -600,6 +643,172 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             }
         });
 
+        lst_bitacora.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        lst_bitacora.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "CB01", "CB02", "CB03", "CB04", "CB05", "CB06", "CB07", "CB08", "CB09", "CB10", "CB11" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        pnl_bitacora.setViewportView(lst_bitacora);
+
+        lbl_bitacora.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        lbl_bitacora.setText("Bitácora");
+
+        javax.swing.GroupLayout pnl_listaPisoActualLayout = new javax.swing.GroupLayout(pnl_listaPisoActual);
+        pnl_listaPisoActual.setLayout(pnl_listaPisoActualLayout);
+        pnl_listaPisoActualLayout.setHorizontalGroup(
+            pnl_listaPisoActualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 193, Short.MAX_VALUE)
+        );
+        pnl_listaPisoActualLayout.setVerticalGroup(
+            pnl_listaPisoActualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 374, Short.MAX_VALUE)
+        );
+
+        pnl_pisoActual.setViewportView(pnl_listaPisoActual);
+
+        lbl_pisoActual.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        lbl_pisoActual.setText("Piso Actual");
+
+        javax.swing.GroupLayout pnl_listaDireccionLayout = new javax.swing.GroupLayout(pnl_listaDireccion);
+        pnl_listaDireccion.setLayout(pnl_listaDireccionLayout);
+        pnl_listaDireccionLayout.setHorizontalGroup(
+            pnl_listaDireccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 193, Short.MAX_VALUE)
+        );
+        pnl_listaDireccionLayout.setVerticalGroup(
+            pnl_listaDireccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 374, Short.MAX_VALUE)
+        );
+
+        pnl_direccion.setViewportView(pnl_listaDireccion);
+
+        lbl_direccion.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        lbl_direccion.setText("Direccion Actual/Prevista");
+
+        javax.swing.GroupLayout pnl_listaNumPasajerosLayout = new javax.swing.GroupLayout(pnl_listaNumPasajeros);
+        pnl_listaNumPasajeros.setLayout(pnl_listaNumPasajerosLayout);
+        pnl_listaNumPasajerosLayout.setHorizontalGroup(
+            pnl_listaNumPasajerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 193, Short.MAX_VALUE)
+        );
+        pnl_listaNumPasajerosLayout.setVerticalGroup(
+            pnl_listaNumPasajerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 374, Short.MAX_VALUE)
+        );
+
+        pnl_numPasajeros.setViewportView(pnl_listaNumPasajeros);
+
+        lbl_numPasajeros.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        lbl_numPasajeros.setText("Número de pasajeros");
+
+        lbl_Pasajeros.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        lbl_Pasajeros.setText("Detalles pasajeros");
+
+        lbl_filtrar.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        lbl_filtrar.setText("Filtrar bitácora");
+
+        chk_cb01.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        chk_cb01.setSelected(true);
+        chk_cb01.setText("CB01: Solicitud de elevador");
+        chk_cb01.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_cb01ActionPerformed(evt);
+            }
+        });
+
+        chk_cb02.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        chk_cb02.setSelected(true);
+        chk_cb02.setText("CB02: Salir de elevador");
+        chk_cb02.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_cb02ActionPerformed(evt);
+            }
+        });
+
+        chk_cb03.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        chk_cb03.setSelected(true);
+        chk_cb03.setText("CB03: Entrar a elevador");
+        chk_cb03.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_cb03ActionPerformed(evt);
+            }
+        });
+
+        chk_cb04.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        chk_cb04.setSelected(true);
+        chk_cb04.setText("CB04: Botón destino");
+        chk_cb04.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_cb04ActionPerformed(evt);
+            }
+        });
+
+        chk_cb05.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        chk_cb05.setSelected(true);
+        chk_cb05.setText("CB05: Luces");
+        chk_cb05.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_cb05ActionPerformed(evt);
+            }
+        });
+
+        chk_cb06.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        chk_cb06.setSelected(true);
+        chk_cb06.setText("CB06: Sensor piso");
+        chk_cb06.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_cb06ActionPerformed(evt);
+            }
+        });
+
+        chk_cb07.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        chk_cb07.setSelected(true);
+        chk_cb07.setText("CB07: Calendarizador");
+        chk_cb07.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_cb07ActionPerformed(evt);
+            }
+        });
+
+        chk_cb08.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        chk_cb08.setSelected(true);
+        chk_cb08.setText("CB08: Puertas");
+        chk_cb08.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_cb08ActionPerformed(evt);
+            }
+        });
+
+        chk_cb09.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        chk_cb09.setSelected(true);
+        chk_cb09.setText("CB09: Emergencia");
+        chk_cb09.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_cb09ActionPerformed(evt);
+            }
+        });
+
+        chk_cb10.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        chk_cb10.setSelected(true);
+        chk_cb10.setText("CB10: Detener");
+        chk_cb10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_cb10ActionPerformed(evt);
+            }
+        });
+
+        chk_cb11.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        chk_cb11.setSelected(true);
+        chk_cb11.setText("CB11: Máxima capacidad");
+        chk_cb11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_cb11ActionPerformed(evt);
+            }
+        });
+
+        pnl_Pasajeros.setViewportView(lst_Pasajeros);
+
         javax.swing.GroupLayout pnl_simulacionLayout = new javax.swing.GroupLayout(pnl_simulacion);
         pnl_simulacion.setLayout(pnl_simulacionLayout);
         pnl_simulacionLayout.setHorizontalGroup(
@@ -607,7 +816,11 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             .addGroup(pnl_simulacionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bnr_sceTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, 1147, Short.MAX_VALUE)
+                    .addGroup(pnl_simulacionLayout.createSequentialGroup()
+                        .addComponent(chk_cb11, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(bnr_sceTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_simulacionLayout.createSequentialGroup()
                         .addComponent(btn_speeddown, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -629,7 +842,38 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
                             .addGroup(pnl_simulacionLayout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txt_utContador, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txt_utContador, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_simulacionLayout.createSequentialGroup()
+                        .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_bitacora)
+                            .addComponent(chk_cb01, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_filtrar)
+                            .addComponent(chk_cb02, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chk_cb03, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chk_cb04, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chk_cb05, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chk_cb06, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chk_cb07, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chk_cb08, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chk_cb09, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chk_cb10, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pnl_bitacora, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbl_Pasajeros)
+                            .addGroup(pnl_simulacionLayout.createSequentialGroup()
+                                .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(pnl_pisoActual, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_pisoActual))
+                                .addGap(18, 18, 18)
+                                .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(pnl_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_direccion))
+                                .addGap(18, 18, 18)
+                                .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_numPasajeros)
+                                    .addComponent(pnl_numPasajeros, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(pnl_Pasajeros))))
                 .addContainerGap())
         );
         pnl_simulacionLayout.setVerticalGroup(
@@ -639,7 +883,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
                 .addComponent(bnr_sceTitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_start, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addComponent(btn_start, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_next, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_stop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_config, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -652,10 +896,55 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
                 .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_veocidadA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txt_velocidadA, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(552, 552, 552))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_bitacora)
+                    .addComponent(lbl_pisoActual)
+                    .addComponent(lbl_direccion)
+                    .addComponent(lbl_numPasajeros))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnl_pisoActual)
+                    .addComponent(pnl_bitacora)
+                    .addComponent(pnl_direccion)
+                    .addComponent(pnl_numPasajeros))
+                .addGap(26, 26, 26)
+                .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_Pasajeros)
+                    .addComponent(lbl_filtrar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_simulacionLayout.createSequentialGroup()
+                        .addComponent(chk_cb01)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chk_cb02)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chk_cb03)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chk_cb04)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chk_cb05)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chk_cb06)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chk_cb07)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chk_cb08)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chk_cb09)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chk_cb10))
+                    .addComponent(pnl_Pasajeros, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chk_cb11)
+                .addGap(73, 73, 73))
         );
 
-        getContentPane().add(pnl_simulacion, "card4");
+        pnl_scrSimulacion.setViewportView(pnl_simulacion);
+
+        getContentPane().add(pnl_scrSimulacion, "card5");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -687,8 +976,8 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     }//GEN-LAST:event_btn_cargarAActionPerformed
 
     private void btn_configSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_configSActionPerformed
-        pnl_principal.setVisible(false);
-        pnl_config.setVisible(true);
+        pnl_scrPrincipal.setVisible(false);
+        pnl_scrConfig.setVisible(true);
         
     }//GEN-LAST:event_btn_configSActionPerformed
 
@@ -755,6 +1044,10 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         crearUTPuertas(numElevadores);
         crearMaxPersonas(numElevadores);
         
+        crearPisoActual(numElevadores);
+        crearDireccionE(numElevadores);
+        crearNumPersonas(numElevadores);
+        
         
         if(pisosInit)
             btn_fin.setEnabled(true);
@@ -764,8 +1057,8 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
 
     private void btn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_volverActionPerformed
         // TODO add your handling code here:
-        pnl_config.setVisible(false);
-        pnl_principal.setVisible(true);
+        pnl_scrConfig.setVisible(false);
+        pnl_scrPrincipal.setVisible(true);
     }//GEN-LAST:event_btn_volverActionPerformed
 
     private void btn_finActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finActionPerformed
@@ -783,8 +1076,8 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         JOptionPane.showMessageDialog(this, "Datos registrados correctamente (ahora es posible guardar la configuración actual)", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
             //Se cambian aspectos de la interfaz
             
-            pnl_config.setVisible(false);
-            pnl_principal.setVisible(true);
+            pnl_scrConfig.setVisible(false);
+            pnl_scrPrincipal.setVisible(true);
             lbl_warning.setVisible(false);
             img_warning.setVisible(false);
             btn_iniciarS.setEnabled(true);
@@ -823,17 +1116,18 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     }//GEN-LAST:event_btn_stopActionPerformed
 
     private void btn_iniciarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarSActionPerformed
-        pnl_principal.setVisible(false);
-        pnl_simulacion.setVisible(true);
+        pnl_scrPrincipal.setVisible(false);
+        pnl_scrSimulacion.setVisible(true);
         btn_start.setEnabled(true);
         btn_next.setEnabled(true);
         btn_config.setEnabled(true);
         btn_stop.setEnabled(false);
         btn_speeddown.setEnabled(true);
-         btn_speedup.setEnabled(true);
+        btn_speedup.setEnabled(true);
          
         btn_start.setIcon(new ImageIcon("src/Imagenes/play.png"));
-            
+        
+        lst_bitacora.setCellRenderer(new BitacoraRenderer());
         
     }//GEN-LAST:event_btn_iniciarSActionPerformed
 
@@ -842,8 +1136,8 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
           btn_iniciarS.setEnabled(false);
           lbl_warning.setVisible(true);
           img_warning.setVisible(true);
-          pnl_principal.setVisible(true);
-          pnl_simulacion.setVisible(false);
+          pnl_scrPrincipal.setVisible(true);
+          pnl_scrSimulacion.setVisible(false);
     }//GEN-LAST:event_btn_configActionPerformed
 
     private void txt_utContadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_utContadorActionPerformed
@@ -861,6 +1155,50 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private void txt_velocidadAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_velocidadAActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_velocidadAActionPerformed
+
+    private void chk_cb01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb01ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_cb01ActionPerformed
+
+    private void chk_cb02ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb02ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_cb02ActionPerformed
+
+    private void chk_cb03ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb03ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_cb03ActionPerformed
+
+    private void chk_cb04ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb04ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_cb04ActionPerformed
+
+    private void chk_cb05ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb05ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_cb05ActionPerformed
+
+    private void chk_cb06ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb06ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_cb06ActionPerformed
+
+    private void chk_cb07ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb07ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_cb07ActionPerformed
+
+    private void chk_cb08ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb08ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_cb08ActionPerformed
+
+    private void chk_cb09ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb09ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_cb09ActionPerformed
+
+    private void chk_cb10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_cb10ActionPerformed
+
+    private void chk_cb11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_cb11ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -933,11 +1271,28 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private javax.swing.JButton btn_start;
     private javax.swing.JButton btn_stop;
     private javax.swing.JButton btn_volver;
+    private javax.swing.JCheckBox chk_cb01;
+    private javax.swing.JCheckBox chk_cb02;
+    private javax.swing.JCheckBox chk_cb03;
+    private javax.swing.JCheckBox chk_cb04;
+    private javax.swing.JCheckBox chk_cb05;
+    private javax.swing.JCheckBox chk_cb06;
+    private javax.swing.JCheckBox chk_cb07;
+    private javax.swing.JCheckBox chk_cb08;
+    private javax.swing.JCheckBox chk_cb09;
+    private javax.swing.JCheckBox chk_cb10;
+    private javax.swing.JCheckBox chk_cb11;
     private javax.swing.JLabel img_ssce;
     private javax.swing.JLabel img_warning;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lbl_Pasajeros;
+    private javax.swing.JLabel lbl_bitacora;
+    private javax.swing.JLabel lbl_direccion;
+    private javax.swing.JLabel lbl_filtrar;
     private javax.swing.JLabel lbl_nElevadores;
     private javax.swing.JLabel lbl_nPisos;
+    private javax.swing.JLabel lbl_numPasajeros;
     private javax.swing.JLabel lbl_p1;
     private javax.swing.JLabel lbl_p2;
     private javax.swing.JLabel lbl_p3;
@@ -945,23 +1300,37 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private javax.swing.JLabel lbl_p5;
     private javax.swing.JLabel lbl_p6;
     private javax.swing.JLabel lbl_p8;
+    private javax.swing.JLabel lbl_pisoActual;
     private javax.swing.JLabel lbl_veocidadA;
     private javax.swing.JLabel lbl_warning;
     private javax.swing.JLabel lbl_welcome;
+    private javax.swing.JList<String> lst_Pasajeros;
+    private javax.swing.JList<String> lst_bitacora;
+    private javax.swing.JScrollPane pnl_Pasajeros;
+    private javax.swing.JScrollPane pnl_bitacora;
     private javax.swing.JPanel pnl_config;
     private javax.swing.JScrollPane pnl_configP1;
     private javax.swing.JScrollPane pnl_configP2;
     private javax.swing.JScrollPane pnl_configP3;
     private javax.swing.JScrollPane pnl_configP4;
+    private javax.swing.JScrollPane pnl_direccion;
+    private javax.swing.JPanel pnl_listaDireccion;
     private javax.swing.JPanel pnl_listaMaxP;
+    private javax.swing.JPanel pnl_listaNumPasajeros;
     private javax.swing.JPanel pnl_listaP1;
     private javax.swing.JPanel pnl_listaP2;
     private javax.swing.JPanel pnl_listaP3;
     private javax.swing.JPanel pnl_listaP4;
+    private javax.swing.JPanel pnl_listaPisoActual;
     private javax.swing.JPanel pnl_listaPisos;
     private javax.swing.JPanel pnl_listaPuertas;
     private javax.swing.JScrollPane pnl_maxPersonas;
+    private javax.swing.JScrollPane pnl_numPasajeros;
+    private javax.swing.JScrollPane pnl_pisoActual;
     private javax.swing.JPanel pnl_principal;
+    private javax.swing.JScrollPane pnl_scrConfig;
+    private javax.swing.JScrollPane pnl_scrPrincipal;
+    private javax.swing.JScrollPane pnl_scrSimulacion;
     private javax.swing.JPanel pnl_simulacion;
     private javax.swing.JScrollPane pnl_utPisos;
     private javax.swing.JScrollPane pnl_utPuertas;
@@ -1136,4 +1505,67 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             pnl_listaMaxP.repaint();
         }
     }
+    
+    public void crearPisoActual(int pNumPisos){
+        int contador = 0;
+        //Se configura el txt
+        pisoActualLista.removeAll(pisoActualLista);
+        pnl_listaPisoActual.removeAll();
+        pnl_listaPisoActual.setLayout(new BoxLayout(pnl_listaPisoActual, BoxLayout.PAGE_AXIS));
+        
+        while(contador < pNumPisos){
+            pisoActualLista.add(new JTextField(20));
+            contador = contador + 1;
+        }
+        for(int i = 0; i < pisoActualLista.size(); i++){
+            pisoActualLista.get(i).setEnabled(false);
+            pnl_listaPisoActual.add(new JLabel("Elevador "  + (i+1)));
+            pnl_listaPisoActual.add(pisoActualLista.get(i));
+            pnl_listaPisoActual.add(new JLabel("   "));
+            pnl_listaPisoActual.repaint();
+        }
+    }
+    
+    
+    public void crearNumPersonas(int pNumPisos){
+        int contador = 0;
+        //Se configura el txt
+        numeroPasajerosLista.removeAll(numeroPasajerosLista);
+        pnl_listaNumPasajeros.removeAll();
+        pnl_listaNumPasajeros.setLayout(new BoxLayout(pnl_listaNumPasajeros, BoxLayout.PAGE_AXIS));
+        
+        while(contador < pNumPisos){
+            numeroPasajerosLista.add(new JTextField(20));
+            contador = contador + 1;
+        }
+        for(int i = 0; i < numeroPasajerosLista.size(); i++){
+            numeroPasajerosLista.get(i).setEnabled(false);
+            pnl_listaNumPasajeros.add(new JLabel("Elevador "  + (i+1)));
+            pnl_listaNumPasajeros.add(numeroPasajerosLista.get(i));
+            pnl_listaNumPasajeros.add(new JLabel("   "));
+            pnl_listaNumPasajeros.repaint();
+        }
+    }
+    
+        public void crearDireccionE(int pNumPisos){
+        int contador = 0;
+        //Se configura el txt
+        direccionesLista.removeAll(direccionesLista);
+        pnl_listaDireccion.removeAll();
+        pnl_listaDireccion.setLayout(new BoxLayout(pnl_listaDireccion, BoxLayout.PAGE_AXIS));
+        
+        while(contador < pNumPisos){
+            direccionesLista.add(new JTextField(20));
+            contador = contador + 1;
+        }
+        for(int i = 0; i < direccionesLista.size(); i++){
+            direccionesLista.get(i).setEnabled(false);
+            pnl_listaDireccion.add(new JLabel("Elevador "  + (i+1)));
+            pnl_listaDireccion.add(direccionesLista.get(i));
+            pnl_listaDireccion.add(new JLabel("   "));
+            pnl_listaDireccion.repaint();
+        }
+    }
+    
+ 
 }
