@@ -24,8 +24,7 @@ public class SensorPiso {
     public void setPisoActual(int pisoActual) {
         this.pisoActual = pisoActual;
     }
-    
-    
+
     
     public void crearInterrupcion() {
          InterrupcionSensor iPiso = new InterrupcionSensor(pisoActual);

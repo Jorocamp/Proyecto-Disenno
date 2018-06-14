@@ -115,7 +115,7 @@ public class Simulador {
     public void setVelocidadActual(int velocidadActual) {
         this.velocidadActual = velocidadActual;
     }
-
+    
     public static void main(String[] args) throws InterruptedException {
         
         Simulador sim = new Simulador();
