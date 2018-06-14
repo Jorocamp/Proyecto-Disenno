@@ -34,7 +34,7 @@ public class Puerta {
         this.contadorUT = contadorUT;
     }
     
-    public void aumentarUT(){
+    public void aumentarUT(int uT){
         
     }
     public void disminuirUT(){
