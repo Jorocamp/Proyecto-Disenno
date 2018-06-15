@@ -60,7 +60,7 @@ public class Controlador {
         
     }
     
-    private void configurarSimulacion(Simulador simulador,ArrayList<Object> parametrosConfiguracion){
+    public void configurarSimulacion(Simulador simulador,ArrayList<Object> parametrosConfiguracion){
         /* El ArrayList parametrosConfiguracion contiene todos los parametros que se utilizaran para la configuracion
             del sistema de simulacion. Entre estos parametros estan: cantidad pisos, ArrayList con la probabilidad #1,
             ArrayList con la probabilidad #2, ArrayList con la probabilidad #3, ArrayList con la probabilidad #4, la cantidad de
