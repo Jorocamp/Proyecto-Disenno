@@ -9,7 +9,7 @@ package Vistas;
  *
  * @author MICHA
  */
-public interface Vista {
+public interface Vista{
     
 
     

@@ -5,6 +5,7 @@
  */
 package Modelos;
 
+import Controladores.ControladorSimulador;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,6 +28,8 @@ public class Simulador extends Thread{
     private boolean debug;
     private boolean next;
     private boolean finalizar;
+    private ControladorSimulador cs;
+    
     /**
      * Metodos de la clase
      * ******************************************************************************
@@ -57,12 +60,12 @@ public class Simulador extends Thread{
         // TODO implement here
     }
 
-    protected void pausarSimulacion() {
+    public void pausarSimulacion() {
         this.pausa = true;
         // TODO implement here
     }
 
-    protected void reanudarSimulacion() {
+    public void reanudarSimulacion() {
         this.pausa = false;
         // TODO implement here
     }
@@ -84,26 +87,31 @@ public class Simulador extends Thread{
     private void ejecutarUT(){
         System.out.println("UT ejecutando...");
     }
-    private void procesarSimulacionConsola() throws InterruptedException {
+    public void run(){
         while(!finalizar){
-            TimeUnit.SECONDS.sleep(this.velocidadActual);// Lag
-            ejecutarUT();// Ejecutar Acciones en la UT
-             
-            while(pausa){
-                //En PAUSA
-                TimeUnit.SECONDS.sleep(1);// Lag
-            }
-            if(debug){
-                while(this.isNext()){
-
-                    while(pausa){
-                        // En PAUSA 2
-                        TimeUnit.SECONDS.sleep(1);// Lag
-                    }
-                    TimeUnit.SECONDS.sleep(1);// Lag
+            try {
+                Thread.sleep(this.velocidadActual);// Lag
+                  
+                while(pausa){
+                    //En PAUSA
+                    Thread.sleep(1);// Lag
                 }
-                this.setNext(true);
-            } 
+                if(debug){
+                    while(this.isNext()){
+                        
+                        while(pausa){// En PAUSA dentro de debug
+                            
+                            Thread.sleep(1);// Lag para sincronizar prints
+                        }
+                        Thread.sleep(1);// Lag para sincronizar prints
+                    }
+                    this.setNext(true);
+                }
+                ejecutarUT();// Ejecutar Acciones en la UT
+                
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Simulador.class.getName()).log(Level.SEVERE, null, ex); 
+            }
         }
     }  
     
@@ -111,74 +119,7 @@ public class Simulador extends Thread{
         
     }
     
-    public void run(){
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Scanner sc = new Scanner(System.in);
-        int input = 0;
-        String sec = " segundos";
-        
-        while(true){
-            switch(sc.nextInt()){            
-                case 0:{// ENTER para pausar
-                System.out.println("\nPAUSA\n");
-                
-                pausarSimulacion();
-                
-                System.out.println("Valor de pausa cambiado a:\t" + isPausa());
-                System.out.println("");
-                
-                while(isPausa()){// Pausa => Menu de simulador
-                    
-                    System.out.println("\nMenú de Simulación\n");
-                    System.out.println("1. Reanudar");
-                    System.out.println("2. Cambiar Raul");
-                    System.out.println("3. Cambiar Modalidad");
-                    System.out.println("");
-                    System.out.print("Elija una opción: ");
-                    input = sc.nextInt();
-                    
-                    switch (input){
-                        case 1:{        // REANUDAR
-                            reanudarSimulacion();
-                            System.out.println("\nValor de pausa cambiado a:\t" + isPausa());
-                            break;
-                        }
-                        case 2:{        // CAMBIAR RETARDO
-                            System.out.println("\nRetardo actual: "+ getVelocidadActual());
-                            System.out.print("Digite un nuevo retardo(segundos): ");
-                            input = sc.nextInt();
-                            if(input <= 0){
-                                System.out.println("\nERROR: El retardo debe ser positivo.");
-                                break;
-                            }
-                            if(input==1)
-                                sec=" segundo";
-                            setVelocidadActual(input);
-                            System.out.println("\nEl nuevo retardo es "+ input + sec);
-                            sec = " segundos";
-                            break;
-                        }
-                        case 3:{        // CAMBIAR MODALIDAD
-                            setDebug(!isDebug());
-                            if(isDebug())
-                                System.out.println("\nSe ha cambiado a Modo Depurador.\n");
-                            else
-                                System.out.println("\nSe ha cambiado a Modo Normal.\n");
-                            break;
-                        }
-                    }
-                }
-            }
-            case 1:{
-                //sc.next();
-                if(isDebug()){
-                    setNext(false);
-                    System.out.println("next is false");
-                }
-            }
-            }
-        }
-    }
+    
     /**
      * Getters and Setters para los atributos para la clase
      * ********************************************************************************
@@ -247,12 +188,20 @@ public class Simulador extends Thread{
         this.finalizar = finalizar;
     }
 
+    public ControladorSimulador getCs() {
+        return cs;
+    }
+
+    public void setCs(ControladorSimulador cs) {
+        this.cs = cs;
+    }
+
     public static void main(String[] args) throws InterruptedException {
         Simulador sim = new Simulador();
         Simulador simInput = sim;
         simInput.start();
         sim.setVelocidadActual(1);
-        sim.procesarSimulacionConsola();// correr simulacion
+        sim.run();// correr simulacion
     }
 
 }

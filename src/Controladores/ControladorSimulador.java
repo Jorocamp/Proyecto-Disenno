@@ -6,6 +6,7 @@
 package Controladores;
 
 import Modelos.Simulador;
+import Vistas.VistaConsola;
 
 /**
  *
@@ -13,4 +14,31 @@ import Modelos.Simulador;
  */
 public class ControladorSimulador {
     private Simulador sim;
+    private VistaConsola vc;
+
+    public ControladorSimulador(Simulador sim, VistaConsola vc) {
+        this.sim = sim;
+        this.vc = vc;
+    }
+
+    public ControladorSimulador() {
+    }
+
+    public Simulador getSim() {
+        return sim;
+    }
+
+    public void setSim(Simulador sim) {
+        this.sim = sim;
+    }
+
+    public VistaConsola getVc() {
+        return vc;
+    }
+
+    public void setVc(VistaConsola vc) {
+        this.vc = vc;
+    }
+    
+    
 }

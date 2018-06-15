@@ -5,11 +5,13 @@
  */
 package Vistas;
 
+import Controladores.ControladorSimulador;
 import Modelos.Simulador;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +19,8 @@ import java.util.logging.Logger;
  *
  * @author MICHA
  */
-public class VistaConsola implements Vista{
+public class VistaConsola extends Thread implements Vista{
+    private ControladorSimulador cs;
     private ArrayList<Object> parametros = new ArrayList<>();
     private ArrayList<Float> probSolicitudPisos = new ArrayList<>();
     private ArrayList<Float> probDestinoPisos = new ArrayList<>();
@@ -29,7 +32,7 @@ public class VistaConsola implements Vista{
 
     public void inicioSimulador() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("------------------------------------------------------------------------------------------------------- \n");
+        System.out.println("------------------------------------------------------------------------------------------------------- \n");
         System.out.println("Bienvenido al simulador de SCE (Sistema de Control de Elevadores) \n");
         System.out.println("------------------------------------------------------------------------------------------------------- \n \n");
         System.out.println("Menu Principal: \n");
@@ -38,10 +41,11 @@ public class VistaConsola implements Vista{
         System.out.println("3. Cargar archivo de configuraciónr \n");
         System.out.print("Digite la opción que desea realizar:  ");
         try{
-            parametros.removeAll(parametros);
+            
             int input = Integer.parseInt(br.readLine());
             switch(input){
                 case 1:{
+                    parametros.removeAll(parametros);
                     System.out.println("\n{==== Configuración del Simulador ====}\n");
                     
                     System.out.print("Digite el número de pisos para el edificio: ");
@@ -93,8 +97,8 @@ public class VistaConsola implements Vista{
                     
                     System.out.print("\nDigite el numero de elevadores del edificio: ");
                     int elevadores = Integer.parseInt(br.readLine());
-                    if(elevadores < 2){
-                        System.err.println("\nDeben haber por lo menos dos elevadores");
+                    if(elevadores < 1){
+                        System.err.println("\nDebe haber por lo menos un elevador");
                         break;
                     }
                     System.out.println("\n--- Probabilidades de Detener Elevadores ---\n");
@@ -172,6 +176,7 @@ public class VistaConsola implements Vista{
                     }
                     parametros.add(maxCantidadPersonasElevadores);
                     System.out.println("\nMaxima cantidad de personas ingresadas correctamente.\n");
+                    System.out.println(parametros);
                     System.out.println("\nConfiguración Exitosa!\n");
                     break; // Break final Caso 1
                 }
@@ -179,6 +184,58 @@ public class VistaConsola implements Vista{
                     if(parametros.size() < 8){
                         System.err.println("\nDebe crear o cargar una configuración para guardarla.\n");
                         break;
+                    }
+                    else{
+                        System.out.println("\nLa configuración a guardar tiene los siguientes parametros:");
+                        int pisos = (Integer)parametros.get(0);
+                        System.out.print("\nPisos: ");
+                        System.out.println(parametros.get(0));
+                        System.out.println("\nProbabilidades de Solicitud: ");
+                        ArrayList<Float> probs = (ArrayList<Float>)parametros.get(1);
+                        for(int i=0; i< pisos; i++){
+                            System.out.print("\tPiso "+ (i+1) +" : ");
+                            System.out.println(probs.get(i));
+                        }
+                        System.out.println("\nProbabilidades de Destino: ");
+                        probs = (ArrayList<Float>)parametros.get(2);
+                        for(int i=0; i< pisos; i++){
+                            System.out.print("\tPiso "+ (i+1) +" : ");
+                            System.out.println(probs.get(i));
+                        }
+                        
+                        System.out.println("\nProbabilidades de Detenerse: ");
+                        probs = (ArrayList<Float>)parametros.get(3);
+                        int elevadores = probs.size();
+                        for(int i=0; i< elevadores; i++){
+                            System.out.print("\tElevador "+ (i+1) +" : ");
+                            System.out.println(probs.get(i));
+                        }
+                        System.out.println("\nProbabilidades de Emergencia: ");
+                        probs = (ArrayList<Float>)parametros.get(4);
+                        for(int i=0; i< elevadores; i++){
+                            System.out.print("\tElevador "+ (i+1) +" : ");
+                            System.out.println(probs.get(i));
+                        }
+                        System.out.println("\nUTs Entre Pisos: ");
+                        ArrayList<Integer> uts = (ArrayList<Integer>)parametros.get(5);
+                        for(int i=0; i< elevadores; i++){
+                            System.out.print("\tElevador "+ (i+1) +" : ");
+                            System.out.println(probs.get(i));
+                        }
+                        System.out.println("\nUTs Puertas Abiertas: ");
+                        uts = (ArrayList<Integer>)parametros.get(6);
+                        for(int i=0; i< elevadores; i++){
+                            System.out.print("\tElevador "+ (i+1) +" : ");
+                            System.out.println(uts.get(i));
+                        }
+                        System.out.println("\nMaxima Cantidad de Personas: ");
+                        uts = (ArrayList<Integer>)parametros.get(7);
+                        for(int i=0; i< elevadores; i++){
+                            System.out.print("\tElevador "+ (i+1) +" : ");
+                            System.out.println(uts.get(i));
+                        }
+                        System.out.println("\nSi la información es correcta presione 1 para guardar.");
+                        System.out.println("Si no lo es, presione 2 para voler al menú.\n");
                     }
                     break;
                 }
@@ -200,7 +257,73 @@ public class VistaConsola implements Vista{
     }
     
     
-    
+    public void run(){
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Scanner sc = new Scanner(System.in);
+        int input = 0;
+        String sec = " segundos";
+        System.out.println("Input Time!");
+        while(true){
+            switch(sc.nextInt()){            
+                case 0:{// ENTER para pausar
+                System.out.println("\nPAUSA\n");
+                
+                cs.getSim().pausarSimulacion();
+                
+                System.out.println("Valor de pausa cambiado a:\t" + cs.getSim().isPausa());
+                System.out.println("");
+                
+                while(cs.getSim().isPausa()){// Pausa => Menu de simulador
+                    
+                    System.out.println("\nMenú de Simulación\n");
+                    System.out.println("1. Reanudar");
+                    System.out.println("2. Cambiar Raul");
+                    System.out.println("3. Cambiar Modalidad");
+                    System.out.println("");
+                    System.out.print("Elija una opción: ");
+                    input = sc.nextInt();
+                    
+                    switch (input){
+                        case 1:{        // REANUDAR
+                            cs.getSim().reanudarSimulacion();
+                            System.out.println("\nValor de pausa cambiado a:\t" + cs.getSim().isPausa());
+                            break;
+                        }
+                        case 2:{        // CAMBIAR RETARDO
+                            System.out.println("\nRetardo actual: "+ cs.getSim().getVelocidadActual());
+                            System.out.print("Digite un nuevo retardo(segundos): ");
+                            input = sc.nextInt();
+                            if(input <= 0){
+                                System.out.println("\nERROR: El retardo debe ser positivo.");
+                                break;
+                            }
+                            if(input==1)
+                                sec=" segundo";
+                            cs.getSim().setVelocidadActual(input);
+                            System.out.println("\nEl nuevo retardo es "+ input + sec);
+                            sec = " segundos";
+                            break;
+                        }
+                        case 3:{        // CAMBIAR MODALIDAD
+                            cs.getSim().setDebug(!cs.getSim().isDebug());
+                            if(cs.getSim().isDebug())
+                                System.out.println("\nSe ha cambiado a Modo Depurador.\n");
+                            else
+                                System.out.println("\nSe ha cambiado a Modo Normal.\n");
+                            break;
+                        }
+                    }
+                }
+            }
+            case 1:{
+                //sc.next();
+                if(cs.getSim().isDebug()){
+                    cs.getSim().setNext(false);
+                }
+            }
+            }
+        }
+    }
 
     @Override
     public void getConfiguracion() {
@@ -241,10 +364,95 @@ public class VistaConsola implements Vista{
     public void crearMaxPersonas(int pNumPisos) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public ControladorSimulador getCs() {
+        return cs;
+    }
+
+    public void setCs(ControladorSimulador cs) {
+        this.cs = cs;
+    }
+
+    public ArrayList<Object> getParametros() {
+        return parametros;
+    }
+
+    public void setParametros(ArrayList<Object> parametros) {
+        this.parametros = parametros;
+    }
+
+    public ArrayList<Float> getProbSolicitudPisos() {
+        return probSolicitudPisos;
+    }
+
+    public void setProbSolicitudPisos(ArrayList<Float> probSolicitudPisos) {
+        this.probSolicitudPisos = probSolicitudPisos;
+    }
+
+    public ArrayList<Float> getProbDestinoPisos() {
+        return probDestinoPisos;
+    }
+
+    public void setProbDestinoPisos(ArrayList<Float> probDestinoPisos) {
+        this.probDestinoPisos = probDestinoPisos;
+    }
+
+    public ArrayList<Float> getProbDetnerElevadores() {
+        return probDetnerElevadores;
+    }
+
+    public void setProbDetnerElevadores(ArrayList<Float> probDetnerElevadores) {
+        this.probDetnerElevadores = probDetnerElevadores;
+    }
+
+    public ArrayList<Float> getProbEmergenciaElevadores() {
+        return probEmergenciaElevadores;
+    }
+
+    public void setProbEmergenciaElevadores(ArrayList<Float> probEmergenciaElevadores) {
+        this.probEmergenciaElevadores = probEmergenciaElevadores;
+    }
+
+    public ArrayList<Integer> getUtEntrePisosElevadores() {
+        return utEntrePisosElevadores;
+    }
+
+    public void setUtEntrePisosElevadores(ArrayList<Integer> utEntrePisosElevadores) {
+        this.utEntrePisosElevadores = utEntrePisosElevadores;
+    }
+
+    public ArrayList<Integer> getUtPuertasDetenerseElevadores() {
+        return utPuertasDetenerseElevadores;
+    }
+
+    public void setUtPuertasDetenerseElevadores(ArrayList<Integer> utPuertasDetenerseElevadores) {
+        this.utPuertasDetenerseElevadores = utPuertasDetenerseElevadores;
+    }
+
+    public ArrayList<Integer> getMaxCantidadPersonasElevadores() {
+        return maxCantidadPersonasElevadores;
+    }
+
+    public void setMaxCantidadPersonasElevadores(ArrayList<Integer> maxCantidadPersonasElevadores) {
+        this.maxCantidadPersonasElevadores = maxCantidadPersonasElevadores;
+    }
+
+    public VistaConsola(ControladorSimulador cs) {
+        this.cs = cs;
+    }
+
+    public VistaConsola() {
+    }
     
     public static void main(String[] args) throws InterruptedException {
         VistaConsola vc = new VistaConsola();
+        Simulador sim = new Simulador();
+        sim.setVelocidadActual(1);
+        ControladorSimulador cs = new ControladorSimulador(sim, vc);
+        vc.setCs(cs);
+        sim.setCs(cs);
         vc.inicioSimulador();
+        //sim.start();
+        //vc.start();
     }
-    
 }
