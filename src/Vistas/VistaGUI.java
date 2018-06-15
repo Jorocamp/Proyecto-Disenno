@@ -1069,7 +1069,43 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         Simulador simulador = new Simulador();
         ArrayList<Object> arrayParametros = new ArrayList<Object>();
 
-        arrayParametros.add((Integer) spn_nPisos.getValue());
+        int cantPisos = (Integer) spn_nPisos.getValue();
+        arrayParametros.add(cantPisos);
+        
+        ArrayList<Float> arrayListProbSolicitud = new ArrayList<Float>();
+            
+        ArrayList<Float> arrayListProbDestino = new ArrayList<Float>();
+        
+        ArrayList<Float> arrayListProbBoton = new ArrayList<Float>();
+            
+        ArrayList<Float> arrayListProbPalanca = new ArrayList<Float>();
+
+        ArrayList<Integer> arrayListUTMovimiento = new ArrayList<Integer>();
+
+        ArrayList<Integer> arrayListUTPuertas = new ArrayList<Integer>();
+
+        ArrayList<Integer> arrayListCantidadPersonas = new ArrayList<Integer>();
+
+        for(int i = 0; i<cantPisos; i++){
+            arrayListProbSolicitud.add((Float) p1Lista.get(i).getValue());
+            arrayListProbDestino.add((Float) p2Lista.get(i).getValue());
+            arrayListProbBoton.add((Float) p3Lista.get(i).getValue());
+            arrayListProbPalanca.add((Float) p4Lista.get(i).getValue());
+            arrayListUTMovimiento.add((Integer) utPuertasLista.get(i).getValue());
+            arrayListUTPuertas.add((Integer) utPisosLista.get(i).getValue());
+            arrayListCantidadPersonas.add((Integer) maxPersonasLista.get(i).getValue());
+        }
+        
+        arrayParametros.add(arrayListProbSolicitud);
+        arrayParametros.add(arrayListProbDestino);
+        arrayParametros.add(arrayListProbBoton);
+        arrayParametros.add(arrayListProbPalanca);
+        arrayParametros.add(arrayListUTMovimiento);
+        arrayParametros.add(arrayListUTPuertas);
+        arrayParametros.add(arrayListCantidadPersonas);
+        
+ 
+        
         controlador.configurarSimulacion(simulador, arrayParametros);
         
         //VALIDACIONES AQUI
