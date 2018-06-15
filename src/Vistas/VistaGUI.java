@@ -8,6 +8,7 @@ package Vistas;
 
 
 import Controladores.Controlador;
+import Modelos.Edificio;
 import Modelos.Simulador;
 import Vistas.Utilidades.BitacoraRenderer;
 import java.awt.BorderLayout;
@@ -1066,7 +1067,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         
         Controlador controlador = new Controlador();
                 
-        Simulador simulador = new Simulador();
+        Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false);
         ArrayList<Object> arrayParametros = new ArrayList<Object>();
 
         int cantPisos = (Integer) spn_nPisos.getValue();
@@ -1089,6 +1090,11 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         for(int i = 0; i<cantPisos; i++){
             arrayListProbSolicitud.add((Float) p1Lista.get(i).getValue());
             arrayListProbDestino.add((Float) p2Lista.get(i).getValue());
+        }
+        
+        int cantElev = (Integer) spn_nElevadores.getValue();
+        
+        for(int i = 0; i<cantElev; i++){
             arrayListProbBoton.add((Float) p3Lista.get(i).getValue());
             arrayListProbPalanca.add((Float) p4Lista.get(i).getValue());
             arrayListUTMovimiento.add((Integer) utPuertasLista.get(i).getValue());
