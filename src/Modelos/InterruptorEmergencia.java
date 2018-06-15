@@ -18,7 +18,7 @@ public class InterruptorEmergencia {
     }
     
     public void activarAlarma(){
-        
+        this.estado = true;
     }
 
     public boolean isEstado() {

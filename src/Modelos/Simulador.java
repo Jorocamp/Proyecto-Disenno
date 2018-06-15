@@ -254,4 +254,5 @@ public class Simulador extends Thread{
         sim.setVelocidadActual(1);
         sim.procesarSimulacionConsola();// correr simulacion
     }
+
 }

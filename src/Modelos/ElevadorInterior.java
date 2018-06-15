@@ -13,12 +13,24 @@ public class ElevadorInterior {
     private Cabina cabina;
     private PanelDestino panelDestino;
     private Elevador elevador;
+    private InterruptorEmergencia interruptor;
 
-    public ElevadorInterior(Cabina cabina, PanelDestino panelDestino, Elevador elevador) {
+    
+    public ElevadorInterior(Cabina cabina, PanelDestino panelDestino, Elevador elevador, InterruptorEmergencia interruptor) {
         this.cabina = cabina;
         this.panelDestino = panelDestino;
         this.elevador = elevador;
+        this.interruptor = interruptor;
     }
+    
+    public InterruptorEmergencia getInterruptor() {
+        return interruptor;
+    }
+
+    public void setInterruptor(InterruptorEmergencia interruptor) {
+        this.interruptor = interruptor;
+    }
+
     public ElevadorInterior(){
         
     }

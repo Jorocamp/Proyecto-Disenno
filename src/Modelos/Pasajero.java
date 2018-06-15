@@ -6,6 +6,8 @@
 package Modelos;
 
 import Modelos.Cabina;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -25,16 +27,25 @@ public class Pasajero {
         
     }
     
-    public void seleccionarPiso(){
-        
+    public void seleccionarPiso(ArrayList<Piso> arrayPisos){
+        for(int i = 0; i<arrayPisos.size(); i++){
+            if(arrayPisos.get(i).probabilidad(arrayPisos.get(i).getProbabilidadDestino())){
+                this.setPisoDestino(arrayPisos.get(i).getNumeroPiso());
+                break;
+            }
+        }
     }
     
-    public void presionarBotonDetenerse(){
-        
+    public void presionarBotonDetenerse(Elevador elevadorActual){
+        elevadorActual.getPuerta().aumentarUT(elevadorActual.getUtPorPuertas());
     }
     
-    public void usarInterruptorEmergencia(){
-        
+    public void usarInterruptorEmergencia(Elevador elevadorActual){
+        Random rand = new Random();
+        int porcentajeProbabilidad = rand.nextInt(100 + 1);
+        if(porcentajeProbabilidad <= (elevadorActual.getProbabilidadInterruptor()*100)){
+            elevadorActual.getInterior().getInterruptor().activarAlarma();
+        }
     }
 
     public int getPisoActual() {

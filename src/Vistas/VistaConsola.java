@@ -29,8 +29,8 @@ public class VistaConsola implements Vista{
 
     public void inicioSimulador() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("------------------------------------------------------------------------------------------------------- \n");
-        System.out.println("Bienvenido al simulador de SCE (Sistema de Control de Elevadores) \n ");
+        System.out.print("------------------------------------------------------------------------------------------------------- \n");
+        System.out.println("Bienvenido al simulador de SCE (Sistema de Control de Elevadores) \n");
         System.out.println("------------------------------------------------------------------------------------------------------- \n \n");
         System.out.println("Menu Principal: \n");
         System.out.println("1. Configurar simulador \n");
@@ -38,10 +38,11 @@ public class VistaConsola implements Vista{
         System.out.println("3. Cargar archivo de configuraciónr \n");
         System.out.print("Digite la opción que desea realizar:  ");
         try{
+            parametros.removeAll(parametros);
             int input = Integer.parseInt(br.readLine());
             switch(input){
                 case 1:{
-                    System.out.println("\n==== Configuración del Simulador ====\n");
+                    System.out.println("\n{==== Configuración del Simulador ====}\n");
                     
                     System.out.print("Digite el número de pisos para el edificio: ");
                     int pisos = Integer.parseInt(br.readLine());
@@ -49,6 +50,7 @@ public class VistaConsola implements Vista{
                         System.err.println("\nDeben haber por lo menos dos pisos");
                         break;
                     }
+                    parametros.add(pisos);
                     System.out.println("\n--- Probabilidades de Solicitud ---");
                     float prob = 0;
                     for(int i = 0; i < pisos; i++){// Probabilidades de Solicitud para cada piso
@@ -57,12 +59,12 @@ public class VistaConsola implements Vista{
                         prob = Float.parseFloat(br.readLine());
                         if(prob > 1.0){// Total excedido
                             System.err.println("\nLa probabilidad no debe exceder el 1.0");
-                            break;
+                            inicioSimulador();
                         }
                         
                         if(prob < 0){// Dato negativo
                             System.err.println("\nIngrese decimales positivos del 0 al 1");
-                            break;
+                            inicioSimulador();
                         }
                         probSolicitudPisos.add(prob); 
                     }                    
@@ -78,11 +80,11 @@ public class VistaConsola implements Vista{
                         total += prob;
                         if(total > 1.0){// Total excedido
                             System.err.println("\nEl total no debe exceder el 1.0");
-                            break;
+                            inicioSimulador();
                         }
                         if(prob < 0){// Dato negativo
                             System.err.println("\nIngrese decimales positivos del 0 al 1");
-                            break;
+                            inicioSimulador();
                         }
                         probDestinoPisos.add(prob);
                     }
@@ -101,11 +103,11 @@ public class VistaConsola implements Vista{
                         prob = Float.parseFloat(br.readLine());
                         if(prob > 1.0){// Total excedido
                             System.err.println("\nLa probabilidad no debe exceder el 1.0");
-                            break;
+                            inicioSimulador();
                         }
                         if(prob < 0){// Dato negativo
                             System.err.println("\nIngrese decimales positivos del 0 al 1");
-                            break;
+                            inicioSimulador();
                         }
                         probDetnerElevadores.add(prob);
                     }
@@ -118,16 +120,17 @@ public class VistaConsola implements Vista{
                         prob = Float.parseFloat(br.readLine());
                         if(prob > 1.0){// Total excedido
                             System.err.println("\nLa probabilidad no debe exceder el 1.0");
-                            break;
+                            inicioSimulador();
                         }
                         if(prob < 0){// Dato negativo
                             System.err.println("\nIngrese decimales positivos del 0 al 1");
-                            break;
+                            inicioSimulador();
                         }
                         probEmergenciaElevadores.add(prob);
                     }
                     parametros.add(probEmergenciaElevadores);
                     System.out.println("\nProbabilidades de emergencia en elevadores ingresadas correctamente.\n");
+                    
                     System.out.println("\n--- UT Entre Pisos ---\n");
                     int ut = 1;
                     for(int i = 0; i < elevadores; i++){
@@ -135,7 +138,7 @@ public class VistaConsola implements Vista{
                         ut = Integer.parseInt(br.readLine());
                         if(ut < 1){// Dato menor
                             System.err.println("\nIngrese enteros mayores que 1");
-                            break;
+                            inicioSimulador();
                         }
                         utEntrePisosElevadores.add(ut);
                     }
@@ -149,7 +152,7 @@ public class VistaConsola implements Vista{
                         ut = Integer.parseInt(br.readLine());
                         if(ut < 1){// Dato menor
                             System.err.println("\nIngrese enteros mayores que 1");
-                            break;
+                            inicioSimulador();
                         }
                         utPuertasDetenerseElevadores.add(ut);
                     }
@@ -163,16 +166,20 @@ public class VistaConsola implements Vista{
                         max = Integer.parseInt(br.readLine());
                         if(max < 1){// Dato menor
                             System.err.println("\nIngrese enteros mayores que 1");
-                            break;
+                            inicioSimulador();
                         }
                         maxCantidadPersonasElevadores.add(max);
                     }
                     parametros.add(maxCantidadPersonasElevadores);
                     System.out.println("\nMaxima cantidad de personas ingresadas correctamente.\n");
-                    
+                    System.out.println("\nConfiguración Exitosa!\n");
                     break; // Break final Caso 1
                 }
                 case 2:{
+                    if(parametros.size() < 8){
+                        System.err.println("\nDebe crear o cargar una configuración para guardarla.\n");
+                        break;
+                    }
                     break;
                 }
                 case 3:{
@@ -184,9 +191,10 @@ public class VistaConsola implements Vista{
         } catch (IOException ex) {
             System.err.println("Error de entrada");
         }
-        if(parametros.size() == 7){
-            System.out.println("\nConfiguración Exitosa!");
+        if(parametros.size() == 8){
+            
         }
+        
         inicioSimulador();
 
     }
