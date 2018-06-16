@@ -56,6 +56,11 @@ public class ControladorSimulador {
             ArrayList con la probabilidad #2, ArrayList con la probabilidad #3, ArrayList con la probabilidad #4, la cantidad de
             UT que tarda un elevador de un piso a otro, la canridad de UT que tarda un elevador con las puertas abiertas y 
             la cantidad de personas que entran en un elevador*/
+        ArrayList<Interrupcion>interrupciones = new ArrayList<Interrupcion>();
+        ArrayList<Controlador>controladores = new ArrayList<Controlador>();
+        Computadora computadora = Computadora.getInstance();
+        computadora.setColaInterrupciones(interrupciones);
+        computadora.setControladores(controladores);
         simulador.setCantidadPisos((Integer)parametrosConfiguracion.get(0));
         simulador.setCantidadElevadores((Integer) parametrosConfiguracion.get(3));
         Edificio edificio = simulador.getEdificio();
