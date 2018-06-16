@@ -56,6 +56,8 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     
     private boolean simPausa = false;
     
+    private ControladorSimulador controlador = new ControladorSimulador();
+    
 
     /**
      * Creates new form VistaGUI
@@ -1066,56 +1068,66 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private void btn_finActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finActionPerformed
         // TODO add your handling code here:
         
+
         ControladorSimulador controlador = new ControladorSimulador();
+
+
+
+        if(validarProbabilidadDestino()){
                 
-        Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false);
-        ArrayList<Object> arrayParametros = new ArrayList<Object>();
+            Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false);
+            ArrayList<Object> arrayParametros = new ArrayList<Object>();
 
-        int cantPisos = (Integer) spn_nPisos.getValue();
-        arrayParametros.add(cantPisos);
+
+            int cantPisos = (Integer) spn_nPisos.getValue();
+            arrayParametros.add(cantPisos);
+
+            ArrayList<Float> arrayListProbSolicitud = new ArrayList<Float>();
+
+            ArrayList<Float> arrayListProbDestino = new ArrayList<Float>();
+
+            ArrayList<Float> arrayListProbBoton = new ArrayList<Float>();
+
+            ArrayList<Float> arrayListProbPalanca = new ArrayList<Float>();
+
+            ArrayList<Integer> arrayListUTMovimiento = new ArrayList<Integer>();
+
+            ArrayList<Integer> arrayListUTPuertas = new ArrayList<Integer>();
+
+            ArrayList<Integer> arrayListCantidadPersonas = new ArrayList<Integer>();
+
+            for(int i = 0; i<cantPisos; i++){
+                arrayListProbSolicitud.add((Float) p1Lista.get(i).getValue());
+                arrayListProbDestino.add((Float) p2Lista.get(i).getValue());
+            }
+
+            int cantElev = (Integer) spn_nElevadores.getValue();
+
+            for(int i = 0; i<cantElev; i++){
+                arrayListProbBoton.add((Float) p3Lista.get(i).getValue());
+                arrayListProbPalanca.add((Float) p4Lista.get(i).getValue());
+                arrayListUTMovimiento.add((Integer) utPuertasLista.get(i).getValue());
+                arrayListUTPuertas.add((Integer) utPisosLista.get(i).getValue());
+                arrayListCantidadPersonas.add((Integer) maxPersonasLista.get(i).getValue());
+            }
         
-        ArrayList<Float> arrayListProbSolicitud = new ArrayList<Float>();
+
+            arrayParametros.add(arrayListProbSolicitud);
+            arrayParametros.add(arrayListProbDestino);
+            arrayParametros.add(arrayListProbBoton);
+            arrayParametros.add(arrayListProbPalanca);
+            arrayParametros.add(arrayListUTMovimiento);
+            arrayParametros.add(arrayListUTPuertas);
+            arrayParametros.add(arrayListCantidadPersonas);
+        
             
-        ArrayList<Float> arrayListProbDestino = new ArrayList<Float>();
-        
-        ArrayList<Float> arrayListProbBoton = new ArrayList<Float>();
-            
-        ArrayList<Float> arrayListProbPalanca = new ArrayList<Float>();
+        controlador.configurarSimulacion(arrayParametros);
 
-        ArrayList<Integer> arrayListUTMovimiento = new ArrayList<Integer>();
-
-        ArrayList<Integer> arrayListUTPuertas = new ArrayList<Integer>();
-
-        ArrayList<Integer> arrayListCantidadPersonas = new ArrayList<Integer>();
-
-        for(int i = 0; i<cantPisos; i++){
-            arrayListProbSolicitud.add((Float) p1Lista.get(i).getValue());
-            arrayListProbDestino.add((Float) p2Lista.get(i).getValue());
-        }
-        
-        int cantElev = (Integer) spn_nElevadores.getValue();
-        
-        for(int i = 0; i<cantElev; i++){
-            arrayListProbBoton.add((Float) p3Lista.get(i).getValue());
-            arrayListProbPalanca.add((Float) p4Lista.get(i).getValue());
-            arrayListUTMovimiento.add((Integer) utPuertasLista.get(i).getValue());
-            arrayListUTPuertas.add((Integer) utPisosLista.get(i).getValue());
-            arrayListCantidadPersonas.add((Integer) maxPersonasLista.get(i).getValue());
-        }
-        
-        arrayParametros.add(arrayListProbSolicitud);
-        arrayParametros.add(arrayListProbDestino);
-        arrayParametros.add(arrayListProbBoton);
-        arrayParametros.add(arrayListProbPalanca);
-        arrayParametros.add(arrayListUTMovimiento);
-        arrayParametros.add(arrayListUTPuertas);
-        arrayParametros.add(arrayListCantidadPersonas);
-        
-        controlador.configurarSimulacion(simulador, arrayParametros);
         
         //VALIDACIONES AQUI
         JOptionPane.showMessageDialog(this, "Datos registrados correctamente (ahora es posible guardar la configuración actual)", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
             //Se cambian aspectos de la interfaz
+
             
             pnl_scrConfig.setVisible(false);
             pnl_scrPrincipal.setVisible(true);
@@ -1123,6 +1135,11 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             img_warning.setVisible(false);
             btn_iniciarS.setEnabled(true);
             btn_guardarA.setEnabled(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Probabilidad de destino de los pisos no es igual a 1\n Por favor corregir este detalle", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btn_finActionPerformed
 
     private void btn_startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_startActionPerformed
@@ -1565,6 +1582,21 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             pnl_listaPisoActual.add(new JLabel("   "));
             pnl_listaPisoActual.repaint();
         }
+    }
+    
+    
+    public boolean validarProbabilidadDestino(){
+        int cantPisos = (Integer) spn_nPisos.getValue();
+        float probabilidad = 0;
+
+        for(int i = 0; i<cantPisos; i++){
+            probabilidad += (Float) p2Lista.get(i).getValue();
+        }
+        
+        if(probabilidad == 1.0){
+            return true;
+        }
+        return false;
     }
     
     

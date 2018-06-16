@@ -60,9 +60,6 @@ public class Controlador {
         
     }
     
-    
-    
-    
      /**
      * Getters and Setters para la clase
      */
