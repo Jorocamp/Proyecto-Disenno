@@ -87,13 +87,7 @@ public class ControladorSimulador {
         
     }
 
-    public Simulador getSimulador() {
-        return simulador;
-    }
 
-    public void setSimulador(Simulador simulador) {
-        this.simulador = simulador;
-    }
     
      
 }
