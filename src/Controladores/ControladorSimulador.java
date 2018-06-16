@@ -33,7 +33,7 @@ public class ControladorSimulador {
 
     public ControladorSimulador() {
     }
-    
+
     public VistaConsola getVc() {
         return vc;
     }
