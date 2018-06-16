@@ -178,7 +178,7 @@ public class VistaConsola extends Thread implements Vista{
                     parametros.add(maxCantidadPersonasElevadores);
                     System.out.println("\nMaxima cantidad de personas ingresadas correctamente.\n");
                     System.out.println(parametros);
-                    cs.configurarSimulacion(cs.getSim(), parametros);
+                    cs.configurarSimulacion(parametros);
                     System.out.println("\nConfiguración Exitosa!\n");
                     break; // Break final Caso 1
                 }
@@ -255,7 +255,7 @@ public class VistaConsola extends Thread implements Vista{
                 }
                 case 4:{
                     if(parametros.size()<8){
-                        this.cs.getSim().start();
+                        this.cs.getSimulador().start();
                         this.cs.getVc().start();
                         return;
                     }
@@ -289,12 +289,12 @@ public class VistaConsola extends Thread implements Vista{
                 case 0:{// ENTER para pausar
                 System.out.println("\nPAUSA\n");
                 
-                cs.getSim().pausarSimulacion();
+                cs.getSimulador().pausarSimulacion();
                 
-                System.out.println("Valor de pausa cambiado a:\t" + cs.getSim().isPausa());
+                System.out.println("Valor de pausa cambiado a:\t" + cs.getSimulador().isPausa());
                 System.out.println("");
                 
-                while(cs.getSim().isPausa()){// Pausa => Menu de simulador
+                while(cs.getSimulador().isPausa()){// Pausa => Menu de simulador
                     
                     System.out.println("\nMenú de Simulación\n");
                     System.out.println("1. Reanudar");
@@ -306,12 +306,12 @@ public class VistaConsola extends Thread implements Vista{
                     
                     switch (input){
                         case 1:{        // REANUDAR
-                            cs.getSim().reanudarSimulacion();
-                            System.out.println("\nValor de pausa cambiado a:\t" + cs.getSim().isPausa());
+                            cs.getSimulador().reanudarSimulacion();
+                            System.out.println("\nValor de pausa cambiado a:\t" + cs.getSimulador().isPausa());
                             break;
                         }
                         case 2:{        // CAMBIAR RETARDO
-                            System.out.println("\nRetardo actual: "+ cs.getSim().getVelocidadActual());
+                            System.out.println("\nRetardo actual: "+ cs.getSimulador().getVelocidadActual());
                             System.out.print("Digite un nuevo retardo(segundos): ");
                             input = sc.nextInt();
                             if(input <= 0){
@@ -320,14 +320,14 @@ public class VistaConsola extends Thread implements Vista{
                             }
                             if(input==1)
                                 sec=" segundo";
-                            cs.getSim().setVelocidadActual(input);
+                            cs.getSimulador().setVelocidadActual(input);
                             System.out.println("\nEl nuevo retardo es "+ input + sec);
                             sec = " segundos";
                             break;
                         }
                         case 3:{        // CAMBIAR MODALIDAD
-                            cs.getSim().setDebug(!cs.getSim().isDebug());
-                            if(cs.getSim().isDebug())
+                            cs.getSimulador().setDebug(!cs.getSimulador().isDebug());
+                            if(cs.getSimulador().isDebug())
                                 System.out.println("\nSe ha cambiado a Modo Depurador.\n");
                             else
                                 System.out.println("\nSe ha cambiado a Modo Normal.\n");
@@ -338,8 +338,8 @@ public class VistaConsola extends Thread implements Vista{
             }
             case 1:{
                 //sc.next();
-                if(cs.getSim().isDebug()){
-                    cs.getSim().setNext(false);
+                if(cs.getSimulador().isDebug()){
+                    cs.getSimulador().setNext(false);
                 }
             }
             }
