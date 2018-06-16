@@ -242,7 +242,7 @@ public class VistaConsola extends Thread implements Vista{
                             System.out.println(uts.get(i));
                         }
                         System.out.println("\nSi la información es correcta presione 1 para guardar.");
-                        System.out.println("Si no lo es, digite otro numero para voler al menú.\n");
+                        System.out.println("Si no lo es, digite otro numero para volver al menú.\n");
                         
                         input = Integer.parseInt(br.readLine());                                    
                                     

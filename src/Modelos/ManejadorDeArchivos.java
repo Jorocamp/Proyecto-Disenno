@@ -84,13 +84,13 @@ public class ManejadorDeArchivos {
             }
             else{
                 if(extension.equals("txt") && txtFormat.cargarArchivo(nombreArchivo, ubicacion, datos)){
+                    return true;
                 }
                 else{
                     return false;
                 }
             }
         }
-        return false;
         
     }
 

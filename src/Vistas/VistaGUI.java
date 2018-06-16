@@ -979,12 +979,16 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
 
             ManejadorDeArchivos manejador = new ManejadorDeArchivos();
             manejador.setNombreArchivo(file.getName());
-            manejador.setUbicacion(file.getParent()+"/");
+
+            manejador.setUbicacion(file.getParent() + "/");
             
-            manejador.cargarArchivoConfiguracion();
+            if(manejador.cargarArchivoConfiguracion()){
+
             
             ArrayList<Object> arrayDatos = manejador.getDatos();
             controlador.configurarSimulacion(arrayDatos);
+                
+            
             
 //        System.out.println(controlador.getSimulador().getCantidadPisos());
 //        System.out.println(controlador.getSimulador().getCantidadElevadores());
@@ -1003,7 +1007,11 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             lbl_warning.setVisible(false);
             img_warning.setVisible(false);
             btn_iniciarS.setEnabled(true);
-            btn_guardarA.setEnabled(true);
+            btn_guardarA.setEnabled(true);}
+            else{
+                JOptionPane.showMessageDialog(this, "Archivo inválido", "¡Ups!", JOptionPane.ERROR_MESSAGE);
+            
+            }
         } else {
             //accion cancelada
         }
@@ -1144,7 +1152,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
 
         if(validarProbabilidadDestino()){
                 
-            
+
             ArrayList<Object> arrayParametros = new ArrayList<Object>();
 
 
