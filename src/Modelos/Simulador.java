@@ -9,6 +9,7 @@ import Controladores.ControladorSimulador;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -204,4 +205,21 @@ public class Simulador extends Thread{
         sim.run();// correr simulacion
     }
 
+    public ArrayList<String> getProbabilidadLlamadaPisos(){
+
+        ArrayList<String> arrayProbabilidadLlamada = new ArrayList<String>();
+        for(int i = 0; i<cantidadPisos; i++){
+            arrayProbabilidadLlamada.add(String.valueOf(edificio.getArrayPisos().get(i).getProbabilidadSolicitud()));
+        }
+        return arrayProbabilidadLlamada;
+    }
+    
+    public ArrayList<String> getProbabilidadDestinoPisos(){
+
+        ArrayList<String> arrayProbabilidadDestino = new ArrayList<String>();
+        for(int i = 0; i<cantidadPisos; i++){
+            arrayProbabilidadDestino.add(String.valueOf(edificio.getArrayPisos().get(i).getProbabilidadDestino()));
+        }
+        return arrayProbabilidadDestino;
+    }
 }
