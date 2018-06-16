@@ -41,7 +41,7 @@ public class Computadora {
     public static Computadora getInstance() {
         return INSTANCE;
     }
-    
+
     /**
      * Metodos de la clase
      * ********************************************************************************
@@ -62,8 +62,6 @@ public class Computadora {
 
         colaInterrupciones.add(nueva);
     }
-    
-   
     
     /**
      * Getters and setters para los atributos de la clase

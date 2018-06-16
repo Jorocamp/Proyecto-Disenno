@@ -86,9 +86,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
         configSpinner(spn_nElevadores, Integer.MAX_VALUE, 1);
         controlador.setVg(this);
         lst_bitacora.ensureIndexIsVisible( lst_bitacora.getModel().getSize() -1 );
-        
-        
-
+      
     }
 
     /**
@@ -987,6 +985,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
 
             ManejadorDeArchivos manejador = new ManejadorDeArchivos();
             manejador.setNombreArchivo(file.getName());
+
             manejador.setUbicacion(file.getParent() + "/");
             
             if(manejador.cargarArchivoConfiguracion()){
@@ -995,8 +994,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
             ArrayList<Object> arrayDatos = manejador.getDatos();
             controlador.configurarSimulacion(arrayDatos);
                 
-            
-            
+
             JOptionPane.showMessageDialog(this, "Archivo de configuración cargado correctamente", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
             //Se cambian aspectos de la interfaz
             lbl_warning.setVisible(false);
@@ -1151,6 +1149,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
             
         if(validarProbabilidadDestino()){
                 
+
             ArrayList<Object> arrayParametros = new ArrayList<Object>();
 
 
