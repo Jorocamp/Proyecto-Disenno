@@ -1071,11 +1071,10 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
 
         ControladorSimulador controlador = new ControladorSimulador();
 
-
-
         if(validarProbabilidadDestino()){
                 
             Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false);
+            controlador.setSimulador(simulador);
             ArrayList<Object> arrayParametros = new ArrayList<Object>();
 
 
@@ -1137,7 +1136,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             btn_guardarA.setEnabled(true);
         }
         else{
-            JOptionPane.showMessageDialog(this, "Probabilidad de destino de los pisos no es igual a 1\n Por favor corregir este detalle", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Probabilidad de destino de los pisos no es igual a 1\n Por favor corregir este detalle", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_btn_finActionPerformed
