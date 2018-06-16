@@ -62,7 +62,7 @@ public class ManejadorDeArchivos {
         return false;
     }
 
-     private boolean cargarArchivoConfiguracion() {
+     public boolean cargarArchivoConfiguracion() {
         JSON jsonFormat = new JSON();
         XML xmlFormat = new XML();
         Texto txtFormat = new Texto();
@@ -89,6 +89,14 @@ public class ManejadorDeArchivos {
         }
         return false;
         
+    }
+
+    public ArrayList<Object> getDatos() {
+        return datos;
+    }
+
+    public void setDatos(ArrayList<Object> datos) {
+        this.datos = datos;
     }
     
     /**

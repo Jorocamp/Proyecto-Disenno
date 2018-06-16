@@ -10,6 +10,11 @@ package Vistas;
 import Controladores.Controlador;
 import Controladores.ControladorSimulador;
 import Modelos.Edificio;
+import Modelos.Elevador;
+import Modelos.ElevadorExterior;
+import Modelos.ManejadorDeArchivos;
+import Modelos.PanelLlamada;
+import Modelos.Pasajero;
 import Modelos.Piso;
 import Modelos.Simulador;
 import Vistas.Utilidades.BitacoraRenderer;
@@ -969,6 +974,16 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             //Se abre el archivo
             File file = fc.getSelectedFile();
             //Aqui se valida
+            ManejadorDeArchivos manejador = new ManejadorDeArchivos();
+            manejador.setNombreArchivo(file.getName());
+            manejador.setUbicacion(file.getParent());
+            
+            manejador.cargarArchivoConfiguracion();
+            
+            ArrayList<Object> arrayDatos = manejador.getDatos();
+            controlador.configurarSimulacion(arrayDatos);
+            
+            
             JOptionPane.showMessageDialog(this, "Archivo de configuración cargado correctamente", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
             //Se cambian aspectos de la interfaz
             lbl_warning.setVisible(false);
@@ -1073,8 +1088,6 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         // TODO add your handling code here:
         
 
-        ControladorSimulador controlador = new ControladorSimulador();
-
         if(validarProbabilidadDestino()){
                 
             Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false);
@@ -1123,7 +1136,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             arrayParametros.add(arrayListUTPuertas);
             arrayParametros.add(arrayListCantidadPersonas);
         
-            
+        
         controlador.configurarSimulacion(arrayParametros);
 
         

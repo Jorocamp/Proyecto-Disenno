@@ -61,40 +61,38 @@ public class ControladorSimulador {
         simulador.setCantidadPisos((Integer)parametrosConfiguracion.get(0));
         Edificio edificio = simulador.getEdificio();
         
+        ArrayList<Float> arrayListProbSolicitud = new ArrayList<Float>();
+        arrayListProbSolicitud = (ArrayList<Float>) parametrosConfiguracion.get(1);
+
+        ArrayList<Float> arrayListProbDestino = new ArrayList<Float>();
+        arrayListProbDestino = (ArrayList<Float>) parametrosConfiguracion.get(2);
+        
         ArrayList<Piso> arrayPisos = new ArrayList<Piso>();
-        for(int i=0; i<simulador.getCantidadPisos(); i++){
-            
-            
-            ArrayList<Float> arrayListProbSolicitud = new ArrayList<Float>();
-            arrayListProbSolicitud = (ArrayList<Float>) parametrosConfiguracion.get(1);
-            
-            ArrayList<Float> arrayListProbDestino = new ArrayList<Float>();
-            arrayListProbDestino = (ArrayList<Float>) parametrosConfiguracion.get(2);
-            
+        for(int i=0; i<simulador.getCantidadPisos(); i++){         
             arrayPisos.add(new Piso(i, arrayListProbSolicitud.get(i), arrayListProbDestino.get(i), new ArrayList<ElevadorExterior>(), new PanelLlamada(), new ArrayList<Pasajero>()));
         }
         
+        
+        DirectorDeElevador director = new DirectorDeElevador();
+        director.setConstructorElevador(new ConstruirElevadorNormal());
+
+        ArrayList<Float> arrayListProbBoton = new ArrayList<Float>();
+        arrayListProbBoton = (ArrayList<Float>) parametrosConfiguracion.get(3);
+
+        ArrayList<Float> arrayListProbPalanca = new ArrayList<Float>();
+        arrayListProbPalanca = (ArrayList<Float>) parametrosConfiguracion.get(4);
+
+        ArrayList<Integer> arrayListUTMovimiento = new ArrayList<Integer>();
+        arrayListUTMovimiento = (ArrayList<Integer>) parametrosConfiguracion.get(5);
+
+        ArrayList<Integer> arrayListUTPuertas = new ArrayList<Integer>();
+        arrayListUTPuertas = (ArrayList<Integer>) parametrosConfiguracion.get(6);
+
+        ArrayList<Integer> arrayListCantidadPersonas = new ArrayList<Integer>();
+        arrayListCantidadPersonas = (ArrayList<Integer>) parametrosConfiguracion.get(7);
+        
         ArrayList<Elevador> arrayElevadores = new ArrayList<Elevador>();
-        for(int i=0; i<simulador.getCantidadElevadores(); i++){
-            DirectorDeElevador director = new DirectorDeElevador();
-            director.setConstructorElevador(new ConstruirElevadorNormal());
-            
-            ArrayList<Float> arrayListProbBoton = new ArrayList<Float>();
-            arrayListProbBoton = (ArrayList<Float>) parametrosConfiguracion.get(3);
-            
-            ArrayList<Float> arrayListProbPalanca = new ArrayList<Float>();
-            arrayListProbPalanca = (ArrayList<Float>) parametrosConfiguracion.get(4);
-            
-            ArrayList<Integer> arrayListUTMovimiento = new ArrayList<Integer>();
-            arrayListUTMovimiento = (ArrayList<Integer>) parametrosConfiguracion.get(5);
-            
-            ArrayList<Integer> arrayListUTPuertas = new ArrayList<Integer>();
-            arrayListUTPuertas = (ArrayList<Integer>) parametrosConfiguracion.get(6);
-            
-            ArrayList<Integer> arrayListCantidadPersonas = new ArrayList<Integer>();
-            arrayListCantidadPersonas = (ArrayList<Integer>) parametrosConfiguracion.get(7);
-            
-            
+        for(int i=0; i<simulador.getCantidadElevadores(); i++){        
             director.construirElevador(Integer.parseInt(parametrosConfiguracion.get(0).toString()), arrayListProbBoton.get(i), 
                     arrayListProbPalanca.get(i), arrayListUTMovimiento.get(i), arrayListUTPuertas.get(i), arrayListCantidadPersonas.get(i));
             arrayElevadores.add(director.getElevador());
