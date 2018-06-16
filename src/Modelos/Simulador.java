@@ -84,34 +84,44 @@ public class Simulador extends Thread{
         
     }
     
-    private void ejecutarUT(){
-        System.out.println("UT ejecutando...");
+    private void ejecutarUT(int ut){
+        this.cs.getVc().printInicioUT(ut);
+        for(int i=0; i < cantidadPisos; i++){
+            this.edificio.crearPasajero(i);// Crear Pasajeros
+            this.cs.getVc().informeCreacionPasajeros(i, this.edificio.getContadorPasajeros()-1);
+            Pasajero pasajero = this.edificio.getArrayPisos().get(i).getColaPasajeros().get(0);
+            if(this.edificio.getArrayPisos().get(i).solicitarElevador(pasajero))// Solicitar Elevador
+                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());
+        }
+        this.cs.getVc().printFinnalUT(ut);
     }
     public void run(){
+        int ut = 0;// Contador de UT
         while(!finalizar){
             try {
-                Thread.sleep(this.velocidadActual);// Lag
+                Thread.sleep(this.velocidadActual*1000);// Lag
                   
                 while(pausa){
                     //En PAUSA
-                    Thread.sleep(1);// Lag
+                    Thread.sleep(1000);// Lag
                 }
                 if(debug){
                     while(this.isNext()){
                         
                         while(pausa){// En PAUSA dentro de debug
                             
-                            Thread.sleep(1);// Lag para sincronizar prints
+                            Thread.sleep(1000);// Lag para sincronizar prints
                         }
-                        Thread.sleep(1);// Lag para sincronizar prints
+                        Thread.sleep(1000);// Lag para sincronizar prints
                     }
                     this.setNext(true);
                 }
-                ejecutarUT();// Ejecutar Acciones en la UT
+                ejecutarUT(ut);// Ejecutar Acciones en la UT
                 
             } catch (InterruptedException ex) {
                 Logger.getLogger(Simulador.class.getName()).log(Level.SEVERE, null, ex); 
             }
+            ut++;
         }
     }  
     

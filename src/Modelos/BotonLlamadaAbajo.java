@@ -14,6 +14,7 @@ public class BotonLlamadaAbajo  extends Boton {
     public BotonLlamadaAbajo(Bombillo pBombillo) {
         super(pBombillo);
     }
+    
     public void crearInterrupcion(int piso) {
         InterrupcionLlamada inter = new InterrupcionLlamada(piso);
         Computadora compu = Computadora.getInstance();

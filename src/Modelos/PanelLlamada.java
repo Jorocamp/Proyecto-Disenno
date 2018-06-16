@@ -12,4 +12,11 @@ package Modelos;
 public class PanelLlamada {
     BotonLlamadaArriba botonArriba;
     BotonLlamadaAbajo botonAbajo;
+
+    public PanelLlamada(BotonLlamadaArriba botonArriba, BotonLlamadaAbajo botonAbajo) {
+        this.botonArriba = botonArriba;
+        this.botonAbajo = botonAbajo;
+    }
+    
+    
 }

@@ -6,8 +6,10 @@
 package Vistas;
 
 import Controladores.ControladorSimulador;
+import Modelos.Edificio;
 import Modelos.Simulador;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class VistaConsola extends Thread implements Vista{
 
     public void inicioSimulador() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         System.out.println("------------------------------------------------------------------------------------------------------- \n");
         System.out.println("Bienvenido al simulador de SCE (Sistema de Control de Elevadores) \n");
         System.out.println("------------------------------------------------------------------------------------------------------- \n \n");
@@ -39,14 +42,15 @@ public class VistaConsola extends Thread implements Vista{
         System.out.println("1. Configurar simulador \n");
         System.out.println("2. Guardar archivo de configuración \n");
         System.out.println("3. Cargar archivo de configuraciónr \n");
-        System.out.println("4. Simular");
+        System.out.println("4. Simular\n");
+        System.out.println("5. Salir\n");
         System.out.print("Digite la opción que desea realizar:  ");
         try{
             
             int input = Integer.parseInt(br.readLine());
             switch(input){
                 case 1:{
-                    parametros.removeAll(parametros);
+                    parametros.clear();
                     System.out.println("\n{==== Configuración del Simulador ====}\n");
                     
                     System.out.print("Digite el número de pisos para el edificio: ");
@@ -178,12 +182,12 @@ public class VistaConsola extends Thread implements Vista{
                     parametros.add(maxCantidadPersonasElevadores);
                     System.out.println("\nMaxima cantidad de personas ingresadas correctamente.\n");
                     System.out.println(parametros);
-                    cs.configurarSimulacion(cs.getSim(), parametros);
+                    cs.configurarSimulacion(parametros);
                     System.out.println("\nConfiguración Exitosa!\n");
                     break; // Break final Caso 1
                 }
                 case 2:{
-                    if(parametros.size() < 8){
+                    if(parametros.size() < 7){
                         System.err.println("\nDebe crear o cargar una configuración para guardarla.\n");
                         break;
                     }
@@ -239,10 +243,42 @@ public class VistaConsola extends Thread implements Vista{
                         System.out.println("\nSi la información es correcta presione 1 para guardar.");
                         System.out.println("Si no lo es, digite otro numero para voler al menú.\n");
                         
-                        input = Integer.parseInt(br.readLine());
+                        input = Integer.parseInt(br.readLine());                                    
+                                    
                         if(input == 1){
+                            System.out.println("Escriba el directorio donde se va a guardar el archivo: ");
+                            String path = br.readLine();
+
+                            System.out.print("\nEscriba el nombre del archivo(sin extensión): ");
+                            String fileName = br.readLine();
                             
-                            System.out.println("Datos configurados en la simulacion correctamente. Listo para Simular!");
+                            System.out.println("\n1. txt");
+                            System.out.println("2. json");
+                            System.out.println("3. xml");
+                            System.out.print("\nElija la extensión del archivo:");
+                            
+                            input = Integer.parseInt(br.readLine());
+                            switch(input){
+                                case 1:{
+                                    File f = new File(path + File.separator + fileName + ".txt");
+                                    f.getParentFile().mkdir();
+                                    f.createNewFile();
+                                }
+                                case 2:{
+                                    File f = new File(path + File.separator + fileName + ".json");
+                                    f.getParentFile().mkdir();
+                                    f.createNewFile();
+                                }
+                                case 3:{
+                                    File f = new File(path + File.separator + fileName + ".xml");
+                                    f.getParentFile().mkdir();
+                                    f.createNewFile();
+                                }
+                            }
+
+                            System.out.println("\nArchivo de configuracion creado exitosamente!");
+                            break;
+                            //C:\Users\Andres\Desktop\Proyectos Github\Proyecto-Disenno\test.json
                         }
                         else{
                             inicioSimulador();
@@ -254,16 +290,26 @@ public class VistaConsola extends Thread implements Vista{
                     break;
                 }
                 case 4:{
-                    if(parametros.size()<8){
-                        this.cs.getSim().start();
-                        this.cs.getVc().start();
-                        return;
-                    }
-                    else{
+                    if(parametros.size()<7){
                         System.err.println("\nDebe crear o cargar una configuración para simular.\n");
                         inicioSimulador();
                     }
+                    else{
+                        ArrayList<Float> probs = (ArrayList<Float>)parametros.get(3);
+                        int elevadores = probs.size();
+                        int pisos = (Integer)parametros.get(0);
+                        this.cs.getSimulador().setCantidadPisos(pisos);
+                        this.cs.getSimulador().setCantidadElevadores(elevadores);
+                        this.cs.getSimulador().setVelocidadActual(1);
+                        this.cs.getSimulador().start();
+                        this.cs.getVc().start();
+                        return;
+                    }
                     break;
+                }
+                default:{
+                    System.out.println("\nAdiós!");
+                    return;
                 }
             }
         }catch(NumberFormatException nfe){
@@ -271,10 +317,7 @@ public class VistaConsola extends Thread implements Vista{
         } catch (IOException ex) {
             System.err.println("Error de entrada");
         }
-
-        
         inicioSimulador();
-
     }
     
     
@@ -289,12 +332,12 @@ public class VistaConsola extends Thread implements Vista{
                 case 0:{// ENTER para pausar
                 System.out.println("\nPAUSA\n");
                 
-                cs.getSim().pausarSimulacion();
+                cs.getSimulador().pausarSimulacion();
                 
-                System.out.println("Valor de pausa cambiado a:\t" + cs.getSim().isPausa());
+                System.out.println("Valor de pausa cambiado a:\t" + cs.getSimulador().isPausa());
                 System.out.println("");
                 
-                while(cs.getSim().isPausa()){// Pausa => Menu de simulador
+                while(cs.getSimulador().isPausa()){// Pausa => Menu de simulador
                     
                     System.out.println("\nMenú de Simulación\n");
                     System.out.println("1. Reanudar");
@@ -306,12 +349,12 @@ public class VistaConsola extends Thread implements Vista{
                     
                     switch (input){
                         case 1:{        // REANUDAR
-                            cs.getSim().reanudarSimulacion();
-                            System.out.println("\nValor de pausa cambiado a:\t" + cs.getSim().isPausa());
+                            cs.getSimulador().reanudarSimulacion();
+                            System.out.println("\nValor de pausa cambiado a:\t" + cs.getSimulador().isPausa());
                             break;
                         }
                         case 2:{        // CAMBIAR RETARDO
-                            System.out.println("\nRetardo actual: "+ cs.getSim().getVelocidadActual());
+                            System.out.println("\nRetardo actual: "+ cs.getSimulador().getVelocidadActual());
                             System.out.print("Digite un nuevo retardo(segundos): ");
                             input = sc.nextInt();
                             if(input <= 0){
@@ -320,14 +363,14 @@ public class VistaConsola extends Thread implements Vista{
                             }
                             if(input==1)
                                 sec=" segundo";
-                            cs.getSim().setVelocidadActual(input);
+                            cs.getSimulador().setVelocidadActual(input);
                             System.out.println("\nEl nuevo retardo es "+ input + sec);
                             sec = " segundos";
                             break;
                         }
                         case 3:{        // CAMBIAR MODALIDAD
-                            cs.getSim().setDebug(!cs.getSim().isDebug());
-                            if(cs.getSim().isDebug())
+                            cs.getSimulador().setDebug(!cs.getSimulador().isDebug());
+                            if(cs.getSimulador().isDebug())
                                 System.out.println("\nSe ha cambiado a Modo Depurador.\n");
                             else
                                 System.out.println("\nSe ha cambiado a Modo Normal.\n");
@@ -338,14 +381,26 @@ public class VistaConsola extends Thread implements Vista{
             }
             case 1:{
                 //sc.next();
-                if(cs.getSim().isDebug()){
-                    cs.getSim().setNext(false);
+                if(cs.getSimulador().isDebug()){
+                    cs.getSimulador().setNext(false);
                 }
             }
             }
         }
     }
 
+    public void printInicioUT(int ut){
+        System.out.println("==== Empezando a ejecutar UT: "+ut+" ====");
+    }
+    public void printFinnalUT(int ut){
+        System.out.println("Terminando de ejecutar UT: "+ut);
+    }
+    public void informeCreacionPasajeros(int piso, int idPasajero){
+        System.out.println("Se ha creado el pasajero "+idPasajero+" en el piso "+piso+".");
+    }
+    public void informeSolicitud(int idPasajero,String direccion){
+        System.out.println("El pasajero "+idPasajero+" ha solicitado un elevador hacia "+direccion+".");
+    }
     @Override
     public void getConfiguracion() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -467,13 +522,14 @@ public class VistaConsola extends Thread implements Vista{
     
     public static void main(String[] args) throws InterruptedException {
         VistaConsola vc = new VistaConsola();
-        Simulador sim = new Simulador();
-        sim.setVelocidadActual(1);
+        Simulador sim = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false);
+        
         ControladorSimulador cs = new ControladorSimulador(sim, vc);
         vc.setCs(cs);
         sim.setCs(cs);
         vc.inicioSimulador();
         //sim.start();
+        //[2,[0.0, 0.0],[0.5, 0.5],[0.0],[0.0],[1],[1],[6]]
         //vc.start();
     }
 }

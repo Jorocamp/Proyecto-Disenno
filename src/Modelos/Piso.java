@@ -83,7 +83,7 @@ public class Piso {
  */    
     public boolean probabilidad(float probSobreCien){
         Random rand = new Random();
-        return (rand.nextInt(100) + 0) <= probSobreCien;
+        return (rand.nextInt(100) + 0) <= probSobreCien*100;
     }
     
  /*
@@ -94,7 +94,7 @@ public class Piso {
         if(pisoDestino > pisoActual)
             panelLlamada.botonArriba.crearInterrupcion(pisoActual);// si es mayor, pide subir
         else
-            panelLlamada.botonAbajo.crearInterrupcion();// si es menor, pide bajar
+            panelLlamada.botonAbajo.crearInterrupcion(pisoActual);// si es menor, pide bajar
     }
     
 
@@ -102,11 +102,13 @@ public class Piso {
  * Funcion para crear pasajero y solicitar elevador en un piso
  * 
  */ 
-    public void solicitarElevador(Pasajero pasajero,int pisoMaximo){
+    public boolean solicitarElevador(Pasajero pasajero){
         if(probabilidad(probabilidadSolicitud)){// Si se da la probabilidad, se solicita el elevador
             pulsarBotonLlamada(pasajero.pisoActual,pasajero.pisoDestino);// manda la interrupcion a la computadora
-            colaPasajeros.add(pasajero);// Agrega el pasajero a la cola de espera
+            System.out.println("Si hay solicitud del pasajero "+pasajero.getId());
+            return true;
         }
+        return false;
     }
     
     public void ingresoElevador(){
