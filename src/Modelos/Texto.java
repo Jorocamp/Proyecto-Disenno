@@ -25,6 +25,8 @@ public class Texto implements TipoFormato {
         
         String filename = pUbicacion + pNombre;
         
+        System.out.println(filename);
+        
         BufferedWriter bw = null;
 	FileWriter fw = null;
         
@@ -79,6 +81,7 @@ public class Texto implements TipoFormato {
                 return true;
 
             } catch (IOException ex) {
+                
                 return false;
             }   
         }
