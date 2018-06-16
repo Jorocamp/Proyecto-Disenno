@@ -29,16 +29,11 @@ public class Pasajero {
         
     }
     
-    public String seleccionarPiso(ArrayList<Piso> arrayPisos){
-        String msjs = "";
-        for(int i = 0; i<arrayPisos.size(); i++){
-            if(arrayPisos.get(i).probabilidad(arrayPisos.get(i).getProbabilidadDestino())){
-                this.setPisoDestino(arrayPisos.get(i).getNumeroPiso());
-                msjs = "El pasajero "+this.getId()+" ha elejido el piso "+i+".";
-                break;
-            }
-        }
-        return msjs;
+    public String seleccionarPiso(){
+        BotonDestino boton = cabinaActual.getElevador().getPanelDestino().getBotones().get(pisoDestino);
+        boton.crearInterrupcion(pisoDestino);
+        
+        return new String("El pasajero "+ id +" seleccionó el piso "+ pisoDestino);
     }
     
     public void presionarBotonDetenerse(Elevador elevadorActual){

@@ -38,6 +38,8 @@ public class Calendarizador {
     }
 
 
-    
+    private void calendarizarPiso(){
+        
+    }
     
 }

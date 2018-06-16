@@ -49,10 +49,34 @@ public class Computadora {
     
     public void asignarInterrupcionDestino() {
         // TODO implement here
+        for(int i = 0; i<colaInterrupciones.size(); i++){
+            InterrupcionDestino inter = (InterrupcionDestino) colaInterrupciones.get(i);
+            if(inter.getTipo() == 1){
+                int calificacion = 0;
+                for(int j = 0; j<controladores.size(); j++){
+                    Controlador contr = controladores.get(j);
+                    if(contr.getMotor().getDireccionActual() == )
+                    inter.getPiso();
+                }
+            }
+            
+        }
     }
 
     public void asignarInterrupcionLlamada() {
         // TODO implement here
+        for(int i = 0; i<colaInterrupciones.size(); i++){
+            InterrupcionLlamada inter = (InterrupcionLlamada) colaInterrupciones.get(i);
+            if(inter.getTipo() == 1){
+                int calificacion = 0;
+                for(int j = 0; j<controladores.size(); j++){
+                    Controlador contr = controladores.get(j);
+                    if(contr.getMotor().getDireccionActual() == )
+                    inter.getPiso();
+                }
+            }
+            
+        }
     }
     
     

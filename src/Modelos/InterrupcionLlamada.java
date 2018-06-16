@@ -12,10 +12,9 @@ package Modelos;
 public class InterrupcionLlamada extends Interrupcion {
     private int piso;
     
-    public InterrupcionLlamada(){
-        
-    }
-    public InterrupcionLlamada(int piso){
+
+    public InterrupcionLlamada(int piso, int tipo){
+        super(tipo);
         this.piso = piso;
     }
 }
