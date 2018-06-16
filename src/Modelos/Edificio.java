@@ -16,6 +16,7 @@ public class Edificio {
     private ArrayList<Piso> arrayPisos;
     private ArrayList<Elevador> arrayElevadores;
     private int contadorPasajeros = 0;
+    private ArrayList<Pasajero> personas = new ArrayList<>();
     
     public Edificio(ArrayList<Piso> arrayPisos,ArrayList<Elevador> arrayElevadores) {
         this.arrayPisos = arrayPisos;
@@ -80,6 +81,44 @@ public class Edificio {
     }
     
     
+    public void generarPasajeros(){
+        for(int i = 0; i < arrayPisos.size(); i++){
+            if(arrayPisos.get(i).probabilidad(arrayPisos.get(i).getProbabilidadSolicitud())){
+                Pasajero temp = new Pasajero(i,asignarDestino(i,this.arrayPisos.size()-1),null,this.contadorPasajeros);
+                if(personas.size() > 500){
+                    personas.remove(0);
+                }
+                personas.add(temp);
+                this.arrayPisos.get(i).getColaPasajeros().add(temp);// Agrega el pasajero a la cola de espera del piso respectivo
+                this.contadorPasajeros++;
+        
+            }
+        }
+    }
+    
+    public ArrayList<String> enviarPasajeros(){
+        ArrayList<String> resultado = new ArrayList<>();
+        
+        for(int i = 0; i < personas.size(); i++){
+            String temp = "Pasajero: ";
+            temp = temp + String.valueOf(personas.get(i).id);
+            temp = temp + " | Piso Actual: ";
+            temp = temp + String.valueOf(personas.get(i).pisoActual);
+            temp = temp + " | Piso Destino: ";
+            temp = temp + String.valueOf(personas.get(i).pisoDestino);
+            temp = temp + " | Elevador Actual: ";
+            if(personas.get(i).elevadorActual == -1){
+                temp = temp + "Esperando elevador ";
+            }
+            else{
+                temp = temp + String.valueOf(personas.get(i).elevadorActual);
+            }
+            
+            resultado.add(0, temp);
+            
+        }
+        return resultado; 
+    }
     
 
 }
