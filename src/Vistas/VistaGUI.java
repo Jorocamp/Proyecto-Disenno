@@ -10,6 +10,7 @@ package Vistas;
 import Controladores.Controlador;
 import Controladores.ControladorSimulador;
 import Modelos.Edificio;
+import Modelos.Piso;
 import Modelos.Simulador;
 import Vistas.Utilidades.BitacoraRenderer;
 import java.awt.BorderLayout;
