@@ -108,7 +108,7 @@ public class Simulador extends Thread{
                     }
                     this.setNext(true);
                 }
-                ejecutarUT();// Ejecutar Acciones en la UT
+                ejecutarUT(); // Ejecutar Acciones en la UT
                 
             } catch (InterruptedException ex) {
                 Logger.getLogger(Simulador.class.getName()).log(Level.SEVERE, null, ex); 
