@@ -34,9 +34,6 @@ public class ControladorSimulador {
     public ControladorSimulador() {
     }
 
-    
-    
-
     public VistaConsola getVc() {
         return vc;
     }
@@ -45,9 +42,6 @@ public class ControladorSimulador {
         this.vc = vc;
     }
     
-    
-
-
 
     public Simulador getSimulador() {
         return simulador;
