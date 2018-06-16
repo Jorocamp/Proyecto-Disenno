@@ -5,6 +5,15 @@
  */
 package Controladores;
 
+import Modelos.ConstruirElevadorNormal;
+import Modelos.DirectorDeElevador;
+import Modelos.Edificio;
+import Modelos.Elevador;
+import Modelos.ElevadorExterior;
+import Modelos.PanelLlamada;
+import Modelos.Pasajero;
+import Modelos.Piso;
+import Modelos.Simulador;
 import Modelos.*;
 import java.util.ArrayList;
 
@@ -14,6 +23,7 @@ import java.util.ArrayList;
  */
 public class ControladorSimulador {
     
+
     private Simulador simulador;
 
     public Simulador getSimulador() {
@@ -76,5 +86,14 @@ public class ControladorSimulador {
         edificio.setArrayElevadores(arrayElevadores);
         
     }
+
+    public Simulador getSimulador() {
+        return simulador;
+    }
+
+    public void setSimulador(Simulador simulador) {
+        this.simulador = simulador;
+    }
     
+     
 }
