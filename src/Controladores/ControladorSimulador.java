@@ -15,6 +15,14 @@ import java.util.ArrayList;
 public class ControladorSimulador {
     
     private Simulador simulador;
+
+    public Simulador getSimulador() {
+        return simulador;
+    }
+
+    public void setSimulador(Simulador simulador) {
+        this.simulador = simulador;
+    }
     
     
      public void configurarSimulacion(ArrayList<Object> parametrosConfiguracion){
@@ -23,7 +31,7 @@ public class ControladorSimulador {
             ArrayList con la probabilidad #2, ArrayList con la probabilidad #3, ArrayList con la probabilidad #4, la cantidad de
             UT que tarda un elevador de un piso a otro, la canridad de UT que tarda un elevador con las puertas abiertas y 
             la cantidad de personas que entran en un elevador*/
-        simulador.setCantidadPisos(Integer.parseInt(parametrosConfiguracion.get(0).toString()));
+        simulador.setCantidadPisos((Integer)parametrosConfiguracion.get(0));
         Edificio edificio = simulador.getEdificio();
         
         ArrayList<Piso> arrayPisos = new ArrayList<Piso>();

@@ -1068,26 +1068,25 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private void btn_finActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finActionPerformed
         // TODO add your handling code here:
         
-        
-        Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false);
-        ArrayList<Object> arrayParametros = new ArrayList<Object>();
+        controlador.setSimulador(new Simulador(new Edificio(null, null), 0, 0, 0, false));
+        ArrayList<Object> arrayParametros = new ArrayList<>();
 
         int cantPisos = (Integer) spn_nPisos.getValue();
         arrayParametros.add(cantPisos);
         
-        ArrayList<Float> arrayListProbSolicitud = new ArrayList<Float>();
+        ArrayList<Float> arrayListProbSolicitud = new ArrayList<>();
             
-        ArrayList<Float> arrayListProbDestino = new ArrayList<Float>();
+        ArrayList<Float> arrayListProbDestino = new ArrayList<>();
         
-        ArrayList<Float> arrayListProbBoton = new ArrayList<Float>();
+        ArrayList<Float> arrayListProbBoton = new ArrayList<>();
             
-        ArrayList<Float> arrayListProbPalanca = new ArrayList<Float>();
+        ArrayList<Float> arrayListProbPalanca = new ArrayList<>();
 
-        ArrayList<Integer> arrayListUTMovimiento = new ArrayList<Integer>();
+        ArrayList<Integer> arrayListUTMovimiento = new ArrayList<>();
 
-        ArrayList<Integer> arrayListUTPuertas = new ArrayList<Integer>();
+        ArrayList<Integer> arrayListUTPuertas = new ArrayList<>();
 
-        ArrayList<Integer> arrayListCantidadPersonas = new ArrayList<Integer>();
+        ArrayList<Integer> arrayListCantidadPersonas = new ArrayList<>();
 
         for(int i = 0; i<cantPisos; i++){
             arrayListProbSolicitud.add((Float) p1Lista.get(i).getValue());
