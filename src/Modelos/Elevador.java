@@ -10,6 +10,7 @@ package Modelos;
  * @author Andres
  */
 public class Elevador {
+    private int numElevador;
     private float probabilidadBoton;
     private float probabilidadInterruptor;
     private int utPorMovimiento;
@@ -86,4 +87,14 @@ public class Elevador {
     public void setPuerta(Puerta puerta) {
         this.puerta = puerta;
     }
+
+    public int getNumElevador() {
+        return numElevador;
+    }
+
+    public void setNumElevador(int numElevador) {
+        this.numElevador = numElevador;
+    }
+    
+    
 }

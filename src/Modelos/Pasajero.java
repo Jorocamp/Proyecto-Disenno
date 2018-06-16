@@ -17,6 +17,7 @@ public class Pasajero {
     int pisoActual;
     int pisoDestino;
     Cabina cabinaActual;
+    int elevadorActual = -1;
     int id;
     
     public Pasajero(int pPisoActual, int pPisoDestino, Cabina pCabina, int id){

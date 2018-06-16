@@ -16,7 +16,9 @@ import Modelos.Piso;
 import Modelos.Simulador;
 import Vistas.VistaConsola;
 import Modelos.*;
+import Vistas.VistaGUI;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -26,6 +28,15 @@ public class ControladorSimulador {
 
     private VistaConsola vc;
     private Simulador simulador;
+    private VistaGUI vg;
+
+    public VistaGUI getVg() {
+        return vg;
+    }
+
+    public void setVg(VistaGUI vg) {
+        this.vg = vg;
+    }
 
     public ControladorSimulador(Simulador simulador, VistaConsola vc) {
         this.simulador = simulador;
@@ -102,12 +113,40 @@ public class ControladorSimulador {
 
             director.construirElevador(Integer.parseInt(parametrosConfiguracion.get(0).toString()), arrayListProbBoton.get(i), 
                     arrayListProbPalanca.get(i), arrayListUTMovimiento.get(i), arrayListUTPuertas.get(i), arrayListCantidadPersonas.get(i));
+            director.getElevador().setNumElevador(i);
             arrayElevadores.add(director.getElevador());
         }
         edificio.setArrayPisos(arrayPisos);
         edificio.setArrayElevadores(arrayElevadores);
         
     }
-
+     
+     
+     
+     
+     //Ejecucion de la simulacion
+     public void enviarUT(){
+        vg.getTxt_utContador().setText(String.valueOf(simulador.getUt()));
+     }
+     
+    public void generarPasajeros(){
+        simulador.getEdificio().generarPasajeros();
+    }
+     
+    public void enviarPasajeros(){
+        ArrayList<String> pasajeros = simulador.getEdificio().enviarPasajeros();
+        DefaultListModel listModel = new DefaultListModel();
+        for (int i = 0; i < pasajeros.size(); i++)
+        {
+            listModel.addElement(pasajeros.get(i));
+        }
+        vg.getLst_Pasajeros().setModel(listModel);
+        
+    }
+     public void ejecutarSimulacionUT(){
+         enviarUT();
+         generarPasajeros();
+         enviarPasajeros();
+     }
      
 }
