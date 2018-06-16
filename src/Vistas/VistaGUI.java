@@ -8,6 +8,7 @@ package Vistas;
 
 
 import Controladores.Controlador;
+import Controladores.ControladorSimulador;
 import Modelos.Edificio;
 import Modelos.Simulador;
 import Vistas.Utilidades.BitacoraRenderer;
@@ -54,6 +55,8 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private boolean elevadoresInit = false;
     
     private boolean simPausa = false;
+    
+    private ControladorSimulador controlador = new ControladorSimulador();
     
 
     /**
@@ -1065,11 +1068,12 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private void btn_finActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finActionPerformed
         // TODO add your handling code here:
         
+
         if(validarProbabilidadDestino()){
-            Controlador controlador = new Controlador();
                 
             Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false);
             ArrayList<Object> arrayParametros = new ArrayList<Object>();
+
 
             int cantPisos = (Integer) spn_nPisos.getValue();
             arrayParametros.add(cantPisos);
@@ -1111,13 +1115,13 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             arrayParametros.add(arrayListUTPuertas);
             arrayParametros.add(arrayListCantidadPersonas);
         
- 
+            
+        controlador.configurarSimulacion(arrayParametros);
         
-            controlador.configurarSimulacion(simulador, arrayParametros);
+        //VALIDACIONES AQUI
+        JOptionPane.showMessageDialog(this, "Datos registrados correctamente (ahora es posible guardar la configuración actual)", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
+            //Se cambian aspectos de la interfaz
 
-            //VALIDACIONES AQUI
-            JOptionPane.showMessageDialog(this, "Datos registrados correctamente (ahora es posible guardar la configuración actual)", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
-                //Se cambian aspectos de la interfaz
             
             pnl_scrConfig.setVisible(false);
             pnl_scrPrincipal.setVisible(true);

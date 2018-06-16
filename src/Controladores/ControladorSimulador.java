@@ -14,6 +14,7 @@ import Modelos.PanelLlamada;
 import Modelos.Pasajero;
 import Modelos.Piso;
 import Modelos.Simulador;
+import Modelos.*;
 import java.util.ArrayList;
 
 /**
@@ -22,8 +23,11 @@ import java.util.ArrayList;
  */
 public class ControladorSimulador {
     
+
+    private Simulador simulador;
     
-    public void configurarSimulacion(Simulador simulador,ArrayList<Object> parametrosConfiguracion){
+    
+     public void configurarSimulacion(ArrayList<Object> parametrosConfiguracion){
         /* El ArrayList parametrosConfiguracion contiene todos los parametros que se utilizaran para la configuracion
             del sistema de simulacion. Entre estos parametros estan: cantidad pisos, ArrayList con la probabilidad #1,
             ArrayList con la probabilidad #2, ArrayList con la probabilidad #3, ArrayList con la probabilidad #4, la cantidad de
