@@ -204,6 +204,57 @@ public class Simulador extends Thread{
         sim.setVelocidadActual(1);
         sim.run();// correr simulacion
     }
+    
+    public String numElevadores(){
+        return String.valueOf(cantidadElevadores);
+    }
+    public ArrayList<String> getP3(){
+        ArrayList<Elevador> elevadores = edificio.getArrayElevadores();
+        ArrayList<String> resultado = new ArrayList<>();
+        for(int i = 0; i < elevadores.size(); i++){
+            resultado.add(String.valueOf(elevadores.get(i).getProbabilidadBoton()));
+        }
+        return resultado;
+    }
+    
+    public ArrayList<String> getP4(){
+        ArrayList<Elevador> elevadores = edificio.getArrayElevadores();
+        ArrayList<String> resultado = new ArrayList<>();
+        for(int i = 0; i < elevadores.size(); i++){
+            resultado.add(String.valueOf(elevadores.get(i).getProbabilidadInterruptor()));
+        }
+        return resultado;
+    }
+    
+    
+    public ArrayList<String> getUTPisos(){
+        ArrayList<Elevador> elevadores = edificio.getArrayElevadores();
+        ArrayList<String> resultado = new ArrayList<>();
+        for(int i = 0; i < elevadores.size(); i++){
+            resultado.add(String.valueOf(elevadores.get(i).getUtPorMovimiento()));
+        }
+        return resultado;
+    }
+    
+    
+    public ArrayList<String> getUTPuertas(){
+        ArrayList<Elevador> elevadores = edificio.getArrayElevadores();
+        ArrayList<String> resultado = new ArrayList<>();
+        for(int i = 0; i < elevadores.size(); i++){
+            resultado.add(String.valueOf(elevadores.get(i).getUtPorPuertas()));
+        }
+        return resultado;
+    }
+    
+    
+    public ArrayList<String> getMaxPersonas(){
+        ArrayList<Elevador> elevadores = edificio.getArrayElevadores();
+        ArrayList<String> resultado = new ArrayList<>();
+        for(int i = 0; i < elevadores.size(); i++){
+            resultado.add(String.valueOf(elevadores.get(i).getInterior().getCabina().getSensorPeso().getMaximaCantidadPersonas()));
+        }
+        return resultado;
+    }
 
     public ArrayList<String> getProbabilidadLlamadaPisos(){
 
