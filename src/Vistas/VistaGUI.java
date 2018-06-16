@@ -79,10 +79,8 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         btn_stop.setEnabled(false);
         configSpinner(spn_nPisos,256,2);
         configSpinner(spn_nElevadores, Integer.MAX_VALUE, 1);
-        Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false);
+        Simulador simulador = new Simulador(new Edificio(null,null),0,0,0,false,false,false);
         controlador.setSimulador(simulador);
-        
-        
 
     }
 

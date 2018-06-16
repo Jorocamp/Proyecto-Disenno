@@ -7,6 +7,7 @@ package Vistas;
 
 import Controladores.ControladorSimulador;
 import Modelos.Edificio;
+import Modelos.ManejadorDeArchivos;
 import Modelos.Simulador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,10 +45,9 @@ public class VistaConsola extends Thread implements Vista{
         System.out.println("------------------------------------------------------------------------------------------------------- \n \n");
         System.out.println("Menu Principal: \n");
         System.out.println("1. Configurar simulador \n");
-        System.out.println("2. Guardar archivo de configuración \n");
-        System.out.println("3. Cargar archivo de configuraciónr \n");
-        System.out.println("4. Simular\n");
-        System.out.println("5. Salir\n");
+        System.out.println("2. Cargar archivo de configuraciónr \n");
+        System.out.println("3. Simular\n");
+        System.out.println("4. Salir\n");
         System.out.print("Digite la opción que desea realizar:  ");
         try{
             
@@ -192,109 +192,24 @@ public class VistaConsola extends Thread implements Vista{
                     break; // Break final Caso 1
                 }
                 case 2:{
-                    if(parametros.size() < 8){
-                        System.err.println("\nDebe crear o cargar una configuración para guardarla.\n");
-                        break;
-                    }
-                    else{
-                        System.out.println("\nLa configuración a guardar tiene los siguientes parametros:");
-                        int pisos = (Integer)parametros.get(0);
-                        System.out.print("\nPisos: ");
-                        System.out.println(parametros.get(0));
-                        System.out.println("\nProbabilidades de Solicitud: ");
-                        ArrayList<Float> probs = (ArrayList<Float>)parametros.get(1);
-                        for(int i=0; i< pisos; i++){
-                            System.out.print("\tPiso "+ (i+1) +" : ");
-                            System.out.println(probs.get(i));
-                        }
-                        System.out.println("\nProbabilidades de Destino: ");
-                        probs = (ArrayList<Float>)parametros.get(2);
-                        for(int i=0; i< pisos; i++){
-                            System.out.print("\tPiso "+ (i+1) +" : ");
-                            System.out.println(probs.get(i));
-                        }
-                        
-                        System.out.println("\nProbabilidades de Detenerse: ");
-                        probs = (ArrayList<Float>)parametros.get(4);
-                        int elevadores = probs.size();
-                        for(int i=0; i< elevadores; i++){
-                            System.out.print("\tElevador "+ (i+1) +" : ");
-                            System.out.println(probs.get(i));
-                        }
-                        System.out.println("\nProbabilidades de Emergencia: ");
-                        probs = (ArrayList<Float>)parametros.get(5);
-                        for(int i=0; i< elevadores; i++){
-                            System.out.print("\tElevador "+ (i+1) +" : ");
-                            System.out.println(probs.get(i));
-                        }
-                        System.out.println("\nUTs Entre Pisos: ");
-                        ArrayList<Integer> uts = (ArrayList<Integer>)parametros.get(6);
-                        for(int i=0; i< elevadores; i++){
-                            System.out.print("\tElevador "+ (i+1) +" : ");
-                            System.out.println(probs.get(i));
-                        }
-                        System.out.println("\nUTs Puertas Abiertas: ");
-                        uts = (ArrayList<Integer>)parametros.get(7);
-                        for(int i=0; i< elevadores; i++){
-                            System.out.print("\tElevador "+ (i+1) +" : ");
-                            System.out.println(uts.get(i));
-                        }
-                        System.out.println("\nMaxima Cantidad de Personas: ");
-                        uts = (ArrayList<Integer>)parametros.get(8);
-                        for(int i=0; i< elevadores; i++){
-                            System.out.print("\tElevador "+ (i+1) +" : ");
-                            System.out.println(uts.get(i));
-                        }
-                        System.out.println("\nSi la información es correcta presione 1 para guardar.");
-                        System.out.println("Si no lo es, digite otro numero para volver al menú.\n");
-                        
-                        input = Integer.parseInt(br.readLine());                                    
-                                    
-                        if(input == 1){
-                            System.out.println("Escriba el directorio donde se va a guardar el archivo: ");
-                            String path = br.readLine();
-
-                            System.out.print("\nEscriba el nombre del archivo(sin extensión): ");
-                            String fileName = br.readLine();
-                            
-                            System.out.println("\n1. txt");
-                            System.out.println("2. json");
-                            System.out.println("3. xml");
-                            System.out.print("\nElija la extensión del archivo:");
-                            
-                            input = Integer.parseInt(br.readLine());
-                            switch(input){
-                                case 1:{
-                                    File f = new File(path + File.separator + fileName + ".txt");
-                                    f.getParentFile().mkdir();
-                                    f.createNewFile();
-                                }
-                                case 2:{
-                                    File f = new File(path + File.separator + fileName + ".json");
-                                    f.getParentFile().mkdir();
-                                    f.createNewFile();
-                                }
-                                case 3:{
-                                    File f = new File(path + File.separator + fileName + ".xml");
-                                    f.getParentFile().mkdir();
-                                    f.createNewFile();
-                                }
-                            }
-
-                            System.out.println("\nArchivo de configuracion creado exitosamente!");
-                            break;
-                            //C:\Users\Andres\Desktop\Proyectos Github\Proyecto-Disenno\test.json
-                        }
-                        else{
-                            inicioSimulador();
-                        }
-                    }
+                    //Users/Andres/Desktop/Proyectos Github/Proyecto-Disenno/prueba.txt
+                    System.out.println("\nEscriba el directorio completo del archivo a cargar: ");
+                    String path = br.readLine();
+                    //System.out.println("\nEscriba el nombre del archivo: ");
+                    //String name = br.readLine();
+                    File file = new File(path);
+                    System.out.println(file.getAbsolutePath());
+                    ManejadorDeArchivos manejador = new ManejadorDeArchivos();
+                    manejador.setNombreArchivo(file.getName());
+                    manejador.setUbicacion(file.getParent());
+                    manejador.cargarArchivoConfiguracion();
+                    ArrayList<Object> arrayDatos = manejador.getDatos();
+                    this.cs.configurarSimulacion(arrayDatos);
+                    this.setParametros(arrayDatos);
+                    System.out.println("\nArchivo de configuracion cargado exitosamente!");
                     break;
                 }
                 case 3:{
-                    break;
-                }
-                case 4:{
                     if(parametros.size()<8){
                         System.err.println("\nDebe crear o cargar una configuración para simular.\n");
                         inicioSimulador();
@@ -405,6 +320,20 @@ public class VistaConsola extends Thread implements Vista{
     }
     public void informeSolicitud(int idPasajero,String direccion){
         System.out.println("El pasajero "+idPasajero+" ha solicitado un elevador hacia "+direccion+".");
+    }
+    public void informeMontar(ArrayList<String>msjs){
+        for(int i=0; i<msjs.size(); i++)
+            System.out.println(msjs.get(i));
+    }
+    public void informeDestino(String msjs){
+        System.out.println(msjs);
+    }
+    public void informeEmergencia(String msj){
+        System.out.println(msj);
+    }
+    public void informeBajarse(ArrayList<String>msjs){
+        for(int i=0; i<msjs.size(); i++)
+            System.out.println(msjs.get(i));
     }
     @Override
     public void getConfiguracion() {
@@ -520,18 +449,22 @@ public class VistaConsola extends Thread implements Vista{
 
     public VistaConsola(ControladorSimulador cs) {
         this.cs = cs;
+        Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false);
+        simulador.setCs(cs);
+        cs.setSimulador(simulador);
+        cs.setVc(this);
     }
 
     public VistaConsola() {
     }
     
     public static void main(String[] args) throws InterruptedException {
-        VistaConsola vc = new VistaConsola();
-        Simulador sim = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false);
         
-        ControladorSimulador cs = new ControladorSimulador(sim, vc);
-        vc.setCs(cs);
-        sim.setCs(cs);
+        
+        
+        ControladorSimulador cs = new ControladorSimulador();
+        VistaConsola vc = new VistaConsola(cs);
+        
         vc.inicioSimulador();
         //sim.start();
         //[2,[0.0, 0.0],[0.5, 0.5],[0.0],[0.0],[1],[1],[6]]

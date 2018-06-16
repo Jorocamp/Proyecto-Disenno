@@ -29,25 +29,33 @@ public class Pasajero {
         
     }
     
-    public void seleccionarPiso(ArrayList<Piso> arrayPisos){
+    public String seleccionarPiso(ArrayList<Piso> arrayPisos){
+        String msjs = "";
         for(int i = 0; i<arrayPisos.size(); i++){
             if(arrayPisos.get(i).probabilidad(arrayPisos.get(i).getProbabilidadDestino())){
                 this.setPisoDestino(arrayPisos.get(i).getNumeroPiso());
+                msjs = "El pasajero "+this.getId()+" ha elejido el piso "+i+".";
                 break;
             }
         }
+        return msjs;
     }
     
     public void presionarBotonDetenerse(Elevador elevadorActual){
         elevadorActual.getPuerta().aumentarUT(elevadorActual.getUtPorPuertas());
     }
     
-    public void usarInterruptorEmergencia(Elevador elevadorActual){
+    public String usarInterruptorEmergencia(Elevador elevadorActual){
+        //ArrayList<String>msjs = new ArrayList<String>();
+        String msj = "";
         Random rand = new Random();
         int porcentajeProbabilidad = rand.nextInt(100 + 1);
         if(porcentajeProbabilidad <= (elevadorActual.getProbabilidadInterruptor()*100)){
             elevadorActual.getInterior().getInterruptor().activarAlarma();
+            msj = "El pasajero "+this.getId()+" ha usado el Interruptor de Emergencia.";
+            
         }
+        return msj;
     }
 
     public int getPisoActual() {
