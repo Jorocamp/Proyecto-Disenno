@@ -10,6 +10,13 @@ package Vistas;
 import Controladores.Controlador;
 import Controladores.ControladorSimulador;
 import Modelos.Edificio;
+import Modelos.Elevador;
+import Modelos.ElevadorExterior;
+import Modelos.ManejadorDeArchivos;
+import Modelos.PanelLlamada;
+import Modelos.Pasajero;
+import Modelos.ManejadorDeArchivos;
+import Modelos.Piso;
 import Modelos.Simulador;
 import Vistas.Utilidades.BitacoraRenderer;
 import java.awt.BorderLayout;
@@ -70,8 +77,8 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         btn_guardarA.setEnabled(false);
         btn_fin.setEnabled(false);
         btn_stop.setEnabled(false);
-        configSpinner(spn_nPisos,256);
-        configSpinner(spn_nElevadores, Integer.MAX_VALUE);
+        configSpinner(spn_nPisos,256,2);
+        configSpinner(spn_nElevadores, Integer.MAX_VALUE, 1);
         
         
         
@@ -557,10 +564,10 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(pnl_maxPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(9, 9, 9)
-                                .addGroup(pnl_configLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btn_fin)))))
-                    .addComponent(sep_num1))
+                                .addGroup(pnl_configLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btn_volver, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                                    .addComponent(btn_fin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addComponent(sep_num1, javax.swing.GroupLayout.DEFAULT_SIZE, 825, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -968,6 +975,17 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             //Se abre el archivo
             File file = fc.getSelectedFile();
             //Aqui se valida
+
+            ManejadorDeArchivos manejador = new ManejadorDeArchivos();
+            manejador.setNombreArchivo(file.getName());
+            manejador.setUbicacion(file.getParent());
+            
+            manejador.cargarArchivoConfiguracion();
+            
+            ArrayList<Object> arrayDatos = manejador.getDatos();
+            controlador.configurarSimulacion(arrayDatos);
+            
+            
             JOptionPane.showMessageDialog(this, "Archivo de configuración cargado correctamente", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
             //Se cambian aspectos de la interfaz
             lbl_warning.setVisible(false);
@@ -1003,19 +1021,62 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         if (returnVal != JFileChooser.APPROVE_OPTION) {
             return;
         }
+        
         file = fc.getSelectedFile();
      
+        ManejadorDeArchivos fileManager = new ManejadorDeArchivos();
+        String pPiso = String.valueOf(controlador.getSimulador().getCantidadPisos());
+        ArrayList<String> pP1 = controlador.getSimulador().getProbabilidadLlamadaPisos();
+        ArrayList<String> pP2 = controlador.getSimulador().getProbabilidadDestinoPisos();
+        String pElevadores = controlador.getSimulador().numElevadores();
+        ArrayList<String> pP3 = controlador.getSimulador().getP3();
+        ArrayList<String> pP4 = controlador.getSimulador().getP4();
+        ArrayList<String> pUTEntrePisos = controlador.getSimulador().getUTPisos();
+        ArrayList<String> pUTPuertasAbiertas = controlador.getSimulador().getUTPuertas();
+        ArrayList<String> pMaxPersonas = controlador.getSimulador().getMaxPersonas();
+        
+        fileManager.setUbicacion(file.getParent()+ "/");
+        
+        
+        
+        
+        if(returnVal == JFileChooser.APPROVE_OPTION){
+        
         if (fc.getFileFilter().equals(filterTXT)) {
-            System.out.println(file.getPath()+".txt");
-            //Guardar como txt
+            fileManager.setFormato("txt");
+            fileManager.setNombreArchivo(file.getName() + ".txt");   
+            if(fileManager.guardarArchivoConfiguracion(pPiso, pP1, pP2, pElevadores, pP3, pP4, pUTEntrePisos, pUTPuertasAbiertas, pMaxPersonas)){
+                JOptionPane.showMessageDialog(this, "Archivo creado correctamente", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
+                
+                return;
+            }
         }
         if (fc.getFileFilter().equals(filterJSON)) {
             //Guardar como json
-            System.out.println(file.getPath()+".json");
+            fileManager.setFormato("json");
+            
+            fileManager.setNombreArchivo(file.getName() + ".json");
+            if(fileManager.guardarArchivoConfiguracion(pPiso, pP1, pP2, pElevadores, pP3, pP4, pUTEntrePisos, pUTPuertasAbiertas, pMaxPersonas)){
+                JOptionPane.showMessageDialog(this, "Archivo creado correctamente", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
+                
+                return;
+            }
         }
         if (fc.getFileFilter().equals(filterXML)) {
             //Guardar como xml
-            System.out.println(file.getPath()+".xml");
+            fileManager.setFormato("xml");
+            
+            fileManager.setNombreArchivo(file.getName() + ".xml");
+            
+            if(fileManager.guardarArchivoConfiguracion(pPiso, pP1, pP2, pElevadores, pP3, pP4, pUTEntrePisos, pUTPuertasAbiertas, pMaxPersonas)){
+                JOptionPane.showMessageDialog(this, "Archivo creado correctamente", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
+                
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(this, "Error al crear el archivo", "¡Ups!", JOptionPane.ERROR_MESSAGE);
+                
+        
         }
 
 
@@ -1069,8 +1130,6 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         // TODO add your handling code here:
         
 
-        ControladorSimulador controlador = new ControladorSimulador();
-
         if(validarProbabilidadDestino()){
                 
             Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false);
@@ -1101,27 +1160,29 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             }
 
             int cantElev = (Integer) spn_nElevadores.getValue();
-
+            
             for(int i = 0; i<cantElev; i++){
                 arrayListProbBoton.add((Float) p3Lista.get(i).getValue());
                 arrayListProbPalanca.add((Float) p4Lista.get(i).getValue());
-                arrayListUTMovimiento.add((Integer) utPuertasLista.get(i).getValue());
-                arrayListUTPuertas.add((Integer) utPisosLista.get(i).getValue());
+                arrayListUTMovimiento.add((Integer) utPisosLista.get(i).getValue());
+                arrayListUTPuertas.add((Integer) utPuertasLista.get(i).getValue());
                 arrayListCantidadPersonas.add((Integer) maxPersonasLista.get(i).getValue());
             }
-        
+            
 
             arrayParametros.add(arrayListProbSolicitud);
             arrayParametros.add(arrayListProbDestino);
+            arrayParametros.add(cantElev);
             arrayParametros.add(arrayListProbBoton);
             arrayParametros.add(arrayListProbPalanca);
-            arrayParametros.add(arrayListUTMovimiento);
             arrayParametros.add(arrayListUTPuertas);
+            arrayParametros.add(arrayListUTMovimiento);
             arrayParametros.add(arrayListCantidadPersonas);
         
-            
-        controlador.configurarSimulacion(arrayParametros);
+        
 
+        controlador.configurarSimulacion(arrayParametros);
+        
         
         //VALIDACIONES AQUI
         JOptionPane.showMessageDialog(this, "Datos registrados correctamente (ahora es posible guardar la configuración actual)", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
@@ -1422,10 +1483,9 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         }
     }
     
-    public void configSpinner(JSpinner spin, int max){
+    public void configSpinner(JSpinner spin, int max, int min){
         SpinnerNumberModel m_numberSpinnerModel;
-        int current = 1;
-        int min = 1;
+        int current = min;
         int step = 1;
         m_numberSpinnerModel = new SpinnerNumberModel(current, min, max, step);
         spin.setModel(m_numberSpinnerModel);

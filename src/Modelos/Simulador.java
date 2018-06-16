@@ -9,6 +9,7 @@ import Controladores.ControladorSimulador;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -90,8 +91,8 @@ public class Simulador extends Thread{
             this.edificio.crearPasajero(i);// Crear Pasajeros
             this.cs.getVc().informeCreacionPasajeros(i, this.edificio.getContadorPasajeros()-1);
             Pasajero pasajero = this.edificio.getArrayPisos().get(i).getColaPasajeros().get(0);
-            if(this.edificio.getArrayPisos().get(i).solicitarElevador(pasajero))// Solicitar Elevador
-                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());
+            //if(this.edificio.getArrayPisos().get(i).solicitarElevador(pasajero))// Solicitar Elevador
+              //  this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());
         }
         this.cs.getVc().printFinnalUT(ut);
     }
@@ -214,4 +215,73 @@ public class Simulador extends Thread{
         sim.run();// correr simulacion
     }
 
+
+    public String numElevadores(){
+        return String.valueOf(cantidadElevadores);
+    }
+    public ArrayList<String> getP3(){
+        ArrayList<Elevador> elevadores = edificio.getArrayElevadores();
+        ArrayList<String> resultado = new ArrayList<>();
+        for(int i = 0; i < elevadores.size(); i++){
+            resultado.add(String.valueOf(elevadores.get(i).getProbabilidadBoton()));
+        }
+        return resultado;
+    }
+    
+    public ArrayList<String> getP4(){
+        ArrayList<Elevador> elevadores = edificio.getArrayElevadores();
+        ArrayList<String> resultado = new ArrayList<>();
+        for(int i = 0; i < elevadores.size(); i++){
+            resultado.add(String.valueOf(elevadores.get(i).getProbabilidadInterruptor()));
+        }
+        return resultado;
+    }
+    
+    
+    public ArrayList<String> getUTPisos(){
+        ArrayList<Elevador> elevadores = edificio.getArrayElevadores();
+        ArrayList<String> resultado = new ArrayList<>();
+        for(int i = 0; i < elevadores.size(); i++){
+            resultado.add(String.valueOf(elevadores.get(i).getUtPorMovimiento()));
+        }
+        return resultado;
+    }
+    
+    
+    public ArrayList<String> getUTPuertas(){
+        ArrayList<Elevador> elevadores = edificio.getArrayElevadores();
+        ArrayList<String> resultado = new ArrayList<>();
+        for(int i = 0; i < elevadores.size(); i++){
+            resultado.add(String.valueOf(elevadores.get(i).getUtPorPuertas()));
+        }
+        return resultado;
+    }
+    
+    
+    public ArrayList<String> getMaxPersonas(){
+        ArrayList<Elevador> elevadores = edificio.getArrayElevadores();
+        ArrayList<String> resultado = new ArrayList<>();
+        for(int i = 0; i < elevadores.size(); i++){
+            resultado.add(String.valueOf(elevadores.get(i).getInterior().getCabina().getSensorPeso().getMaximaCantidadPersonas()));
+        }
+        return resultado;
+    }
+
+    public ArrayList<String> getProbabilidadLlamadaPisos(){
+
+        ArrayList<String> arrayProbabilidadLlamada = new ArrayList<String>();
+        for(int i = 0; i<cantidadPisos; i++){
+            arrayProbabilidadLlamada.add(String.valueOf(edificio.getArrayPisos().get(i).getProbabilidadSolicitud()));
+        }
+        return arrayProbabilidadLlamada;
+    }
+    
+    public ArrayList<String> getProbabilidadDestinoPisos(){
+
+        ArrayList<String> arrayProbabilidadDestino = new ArrayList<String>();
+        for(int i = 0; i<cantidadPisos; i++){
+            arrayProbabilidadDestino.add(String.valueOf(edificio.getArrayPisos().get(i).getProbabilidadDestino()));
+        }
+        return arrayProbabilidadDestino;
+    }
 }

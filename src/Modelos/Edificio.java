@@ -78,5 +78,8 @@ public class Edificio {
         this.contadorPasajeros++;
         System.out.println("Pasajero: "+pasajero.getId()+ " Actual: "+pasajero.getPisoActual() + " Destino: " +pasajero.getPisoDestino());
     }
+    
+    
+    
 
 }

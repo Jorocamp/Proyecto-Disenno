@@ -38,21 +38,25 @@ public class ManejadorDeArchivos {
      * Guarda un archivo de acuerdo al formato especificado.
      * @return 
      */
-     private boolean guardarArchivoConfiguracion(String pPiso, ArrayList<String> pP1, ArrayList<String> pP2, String pElevadores, ArrayList<String> pP3,
+     public boolean guardarArchivoConfiguracion(String pPiso, ArrayList<String> pP1, ArrayList<String> pP2, String pElevadores, ArrayList<String> pP3,
             ArrayList<String> pP4, ArrayList<String> pUTEntrePisos,ArrayList<String> pUTPuertasAbiertas, ArrayList<String> pMaxPersonas) {
         if(this.formato.equals("json")){
             JSON jsonFormat = new JSON();
             jsonFormat.guardarArchivo(pPiso, pP1, pP2, pElevadores, pP3, pP4, pUTEntrePisos, pUTPuertasAbiertas, pMaxPersonas, nombreArchivo, ubicacion);
+            return true;
         }
         else{
             if(this.formato.equals("xml")){
                XML xmlFormat = new XML();
                xmlFormat.guardarArchivo(pPiso, pP1, pP2, pElevadores, pP3, pP4, pUTEntrePisos, pUTPuertasAbiertas, pMaxPersonas, nombreArchivo, ubicacion);
+               return true;
             }
             else{
                 if(this.formato.equals("txt")){
+                    
                     Texto txtFormat = new Texto();
                     txtFormat.guardarArchivo(pPiso, pP1, pP2, pElevadores, pP3, pP4, pUTEntrePisos, pUTPuertasAbiertas, pMaxPersonas, nombreArchivo, ubicacion);
+                    
                 }
                 else{
                     return false;
@@ -62,7 +66,7 @@ public class ManejadorDeArchivos {
         return false;
     }
 
-     private boolean cargarArchivoConfiguracion() {
+     public boolean cargarArchivoConfiguracion() {
         JSON jsonFormat = new JSON();
         XML xmlFormat = new XML();
         Texto txtFormat = new Texto();
@@ -89,6 +93,14 @@ public class ManejadorDeArchivos {
         }
         return false;
         
+    }
+
+    public ArrayList<Object> getDatos() {
+        return datos;
+    }
+
+    public void setDatos(ArrayList<Object> datos) {
+        this.datos = datos;
     }
     
     /**

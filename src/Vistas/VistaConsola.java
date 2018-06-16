@@ -102,6 +102,7 @@ public class VistaConsola extends Thread implements Vista{
                     
                     System.out.print("\nDigite el numero de elevadores del edificio: ");
                     int elevadores = Integer.parseInt(br.readLine());
+                    parametros.add(elevadores);
                     if(elevadores < 1){
                         System.err.println("\nDebe haber por lo menos un elevador");
                         break;
@@ -187,7 +188,7 @@ public class VistaConsola extends Thread implements Vista{
                     break; // Break final Caso 1
                 }
                 case 2:{
-                    if(parametros.size() < 7){
+                    if(parametros.size() < 8){
                         System.err.println("\nDebe crear o cargar una configuración para guardarla.\n");
                         break;
                     }
@@ -210,32 +211,32 @@ public class VistaConsola extends Thread implements Vista{
                         }
                         
                         System.out.println("\nProbabilidades de Detenerse: ");
-                        probs = (ArrayList<Float>)parametros.get(3);
+                        probs = (ArrayList<Float>)parametros.get(4);
                         int elevadores = probs.size();
                         for(int i=0; i< elevadores; i++){
                             System.out.print("\tElevador "+ (i+1) +" : ");
                             System.out.println(probs.get(i));
                         }
                         System.out.println("\nProbabilidades de Emergencia: ");
-                        probs = (ArrayList<Float>)parametros.get(4);
+                        probs = (ArrayList<Float>)parametros.get(5);
                         for(int i=0; i< elevadores; i++){
                             System.out.print("\tElevador "+ (i+1) +" : ");
                             System.out.println(probs.get(i));
                         }
                         System.out.println("\nUTs Entre Pisos: ");
-                        ArrayList<Integer> uts = (ArrayList<Integer>)parametros.get(5);
+                        ArrayList<Integer> uts = (ArrayList<Integer>)parametros.get(6);
                         for(int i=0; i< elevadores; i++){
                             System.out.print("\tElevador "+ (i+1) +" : ");
                             System.out.println(probs.get(i));
                         }
                         System.out.println("\nUTs Puertas Abiertas: ");
-                        uts = (ArrayList<Integer>)parametros.get(6);
+                        uts = (ArrayList<Integer>)parametros.get(7);
                         for(int i=0; i< elevadores; i++){
                             System.out.print("\tElevador "+ (i+1) +" : ");
                             System.out.println(uts.get(i));
                         }
                         System.out.println("\nMaxima Cantidad de Personas: ");
-                        uts = (ArrayList<Integer>)parametros.get(7);
+                        uts = (ArrayList<Integer>)parametros.get(8);
                         for(int i=0; i< elevadores; i++){
                             System.out.print("\tElevador "+ (i+1) +" : ");
                             System.out.println(uts.get(i));
@@ -290,12 +291,12 @@ public class VistaConsola extends Thread implements Vista{
                     break;
                 }
                 case 4:{
-                    if(parametros.size()<7){
+                    if(parametros.size()<8){
                         System.err.println("\nDebe crear o cargar una configuración para simular.\n");
                         inicioSimulador();
                     }
                     else{
-                        ArrayList<Float> probs = (ArrayList<Float>)parametros.get(3);
+                        ArrayList<Float> probs = (ArrayList<Float>)parametros.get(4);
                         int elevadores = probs.size();
                         int pisos = (Integer)parametros.get(0);
                         this.cs.getSimulador().setCantidadPisos(pisos);
