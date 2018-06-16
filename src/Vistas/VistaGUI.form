@@ -365,14 +365,14 @@
                                           </Group>
                                       </Group>
                                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="btn_volver" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
-                                          <Component id="btn_fin" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="btn_volver" pref="38" max="32767" attributes="0"/>
+                                          <Component id="btn_fin" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                           </Group>
-                          <Component id="sep_num1" max="32767" attributes="0"/>
+                          <Component id="sep_num1" pref="825" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
