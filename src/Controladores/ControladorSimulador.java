@@ -23,30 +23,28 @@ import java.util.ArrayList;
  * @author MICHA
  */
 public class ControladorSimulador {
-    private Simulador simulador;
-    private VistaConsola vc;
 
-    public ControladorSimulador(Simulador sim, VistaConsola vc) {
-        this.simulador = sim;
+    private VistaConsola vc;
+    private Simulador simulador;
+
+    public ControladorSimulador(Simulador simulador, VistaConsola vc) {
+        this.simulador = simulador;
+
         this.vc = vc;
     }
-
     public ControladorSimulador() {
     }
 
     public VistaConsola getVc() {
         return vc;
     }
-
     public void setVc(VistaConsola vc) {
         this.vc = vc;
     }
-    
 
     public Simulador getSimulador() {
         return simulador;
     }
-
     public void setSimulador(Simulador simulador) {
         this.simulador = simulador;
     }
@@ -69,9 +67,11 @@ public class ControladorSimulador {
         arrayListProbDestino = (ArrayList<Float>) parametrosConfiguracion.get(2);
         
         ArrayList<Piso> arrayPisos = new ArrayList<Piso>();
+            
 
         for(int i=0; i<simulador.getCantidadPisos(); i++){         
-            arrayPisos.add(new Piso(i, arrayListProbSolicitud.get(i), arrayListProbDestino.get(i), new ArrayList<ElevadorExterior>(), new PanelLlamada(), new ArrayList<Pasajero>()));
+            arrayPisos.add(new Piso(i, arrayListProbSolicitud.get(i), arrayListProbDestino.get(i), new ArrayList<ElevadorExterior>(), new PanelLlamada(new BotonLlamadaArriba(new Bombillo(false)),new BotonLlamadaAbajo(new Bombillo(false))), new ArrayList<Pasajero>()));
+
         }
         
         

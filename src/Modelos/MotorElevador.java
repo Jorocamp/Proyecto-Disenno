@@ -5,6 +5,8 @@
  */
 package Modelos;
 
+import Controladores.Controlador;
+
 /**DESCRIPCION:
  * Clase usada para manejar el movimiento de un elevador.
  *
@@ -13,13 +15,18 @@ package Modelos;
 public class MotorElevador {
     
     private Direccion direccionActual;
+    private Elevador elevador;
+    private Controlador controlador;
 
-    public MotorElevador(Direccion direccionActual, Elevador elevador) {
+    public MotorElevador(Direccion direccionActual, Elevador elevador, Controlador controlador) {
         this.direccionActual = direccionActual;
         this.elevador = elevador;
+        this.controlador = controlador;
     }
-    private Elevador elevador;
 
+    public MotorElevador() {
+    }
+   
     
     /**
      * Metodos de la clase
@@ -69,6 +76,14 @@ public class MotorElevador {
 
     public void setElevador(Elevador elevador) {
         this.elevador = elevador;
+    }
+
+    public Controlador getControlador() {
+        return controlador;
+    }
+
+    public void setControlador(Controlador controlador) {
+        this.controlador = controlador;
     }
     
     

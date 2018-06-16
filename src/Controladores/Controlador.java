@@ -21,6 +21,12 @@ public class Controlador {
     private Calendarizador calendarizador;
     private ArrayList<Interrupcion> colaInterrupciones;
 
+    public Controlador(MotorElevador motor, Calendarizador calendarizador, ArrayList<Interrupcion> colaInterrupciones) {
+        this.motor = motor;
+        this.calendarizador = calendarizador;
+        this.colaInterrupciones = colaInterrupciones;
+    }
+
     
     /**
      * Metodos de la clase

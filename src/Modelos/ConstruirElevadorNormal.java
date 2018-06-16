@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Modelos;
+import Controladores.Controlador;
 import Modelos.ConstruirElevador;
 import java.util.ArrayList;
 /**
@@ -55,8 +56,14 @@ public class ConstruirElevadorNormal extends ConstruirElevador{
         this.elevador.setProbabilidadInterruptor(probabilidadInterruptor);
     }
     public void construirMotor(int utPorMovimiento){
-        
-        MotorElevador motorElevador = new MotorElevador(Direccion.ninguna, this.elevador); 
+        ArrayList<Integer>a = new ArrayList<Integer>();
+        Calendarizador calendarizador = new Calendarizador(Direccion.ninguna, a);
+        MotorElevador motorElevador = new MotorElevador();
+        ArrayList<Interrupcion> colaInterrupciones = new ArrayList<Interrupcion>();
+        Controlador controlador = new Controlador(motorElevador, calendarizador, colaInterrupciones);
+        motorElevador.setDireccionActual(Direccion.ninguna);
+        motorElevador.setElevador(elevador); 
+        motorElevador.setControlador(controlador);
         this.elevador.setUtPorMovimiento(utPorMovimiento);
         
     }

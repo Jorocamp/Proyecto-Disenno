@@ -57,12 +57,9 @@ public class Computadora {
     
     
     public void nuevaInterrupcion(Interrupcion nueva){
-        
-        
+  
         //LUEGO LLENO ESTO
-        
-        
-        
+
         colaInterrupciones.add(nueva);
     }
     

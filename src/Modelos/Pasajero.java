@@ -17,11 +17,13 @@ public class Pasajero {
     int pisoActual;
     int pisoDestino;
     Cabina cabinaActual;
+    int id;
     
-    public Pasajero(int pPisoActual, int pPisoDestino, Cabina pCabina){
+    public Pasajero(int pPisoActual, int pPisoDestino, Cabina pCabina, int id){
         this.setPisoActual(pPisoActual);
         this.setPisoDestino(pPisoDestino);
         this.setCabinaActual(pCabina);
+        this.setId(id);
     }
     public Pasajero(){
         
@@ -71,6 +73,18 @@ public class Pasajero {
     public void setCabinaActual(Cabina cabinaActual) {
         this.cabinaActual = cabinaActual;
     }
-    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public String getDireccion(){
+        if(this.pisoDestino>this.pisoActual)
+            return "arriba";
+        return "abajo";
+    }
     
 }
