@@ -58,5 +58,8 @@ public class Edificio {
         Pasajero pasajero = new Pasajero(piso,destinoRandom(piso,this.arrayPisos.size()-1),null);// Creacion
         this.arrayPisos.get(piso).solicitarElevador(pasajero, this.arrayPisos.size()-1);// Solicitud de Elevador
     }
+    
+    
+    
 
 }

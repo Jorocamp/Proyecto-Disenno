@@ -70,8 +70,8 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         btn_guardarA.setEnabled(false);
         btn_fin.setEnabled(false);
         btn_stop.setEnabled(false);
-        configSpinner(spn_nPisos,256);
-        configSpinner(spn_nElevadores, Integer.MAX_VALUE);
+        configSpinner(spn_nPisos,256,2);
+        configSpinner(spn_nElevadores, Integer.MAX_VALUE, 1);
         
         
         
@@ -1005,8 +1005,11 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         }
         file = fc.getSelectedFile();
      
+        
+        
         if (fc.getFileFilter().equals(filterTXT)) {
-            System.out.println(file.getPath()+".txt");
+            System.out.println(file.getPath()+".txt");           
+            
             //Guardar como txt
         }
         if (fc.getFileFilter().equals(filterJSON)) {
@@ -1422,10 +1425,9 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         }
     }
     
-    public void configSpinner(JSpinner spin, int max){
+    public void configSpinner(JSpinner spin, int max, int min){
         SpinnerNumberModel m_numberSpinnerModel;
         int current = 1;
-        int min = 1;
         int step = 1;
         m_numberSpinnerModel = new SpinnerNumberModel(current, min, max, step);
         spin.setModel(m_numberSpinnerModel);
