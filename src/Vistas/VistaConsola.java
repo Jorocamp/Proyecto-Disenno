@@ -39,6 +39,7 @@ public class VistaConsola extends Thread implements Vista{
         System.out.println("1. Configurar simulador \n");
         System.out.println("2. Guardar archivo de configuración \n");
         System.out.println("3. Cargar archivo de configuraciónr \n");
+        System.out.println("4. Simular");
         System.out.print("Digite la opción que desea realizar:  ");
         try{
             
@@ -177,6 +178,7 @@ public class VistaConsola extends Thread implements Vista{
                     parametros.add(maxCantidadPersonasElevadores);
                     System.out.println("\nMaxima cantidad de personas ingresadas correctamente.\n");
                     System.out.println(parametros);
+                    cs.configurarSimulacion(cs.getSim(), parametros);
                     System.out.println("\nConfiguración Exitosa!\n");
                     break; // Break final Caso 1
                 }
@@ -235,11 +237,32 @@ public class VistaConsola extends Thread implements Vista{
                             System.out.println(uts.get(i));
                         }
                         System.out.println("\nSi la información es correcta presione 1 para guardar.");
-                        System.out.println("Si no lo es, presione 2 para voler al menú.\n");
+                        System.out.println("Si no lo es, digite otro numero para voler al menú.\n");
+                        
+                        input = Integer.parseInt(br.readLine());
+                        if(input == 1){
+                            
+                            System.out.println("Datos configurados en la simulacion correctamente. Listo para Simular!");
+                        }
+                        else{
+                            inicioSimulador();
+                        }
                     }
                     break;
                 }
                 case 3:{
+                    break;
+                }
+                case 4:{
+                    if(parametros.size()<8){
+                        this.cs.getSim().start();
+                        this.cs.getVc().start();
+                        return;
+                    }
+                    else{
+                        System.err.println("\nDebe crear o cargar una configuración para simular.\n");
+                        inicioSimulador();
+                    }
                     break;
                 }
             }
@@ -248,9 +271,7 @@ public class VistaConsola extends Thread implements Vista{
         } catch (IOException ex) {
             System.err.println("Error de entrada");
         }
-        if(parametros.size() == 8){
-            
-        }
+
         
         inicioSimulador();
 

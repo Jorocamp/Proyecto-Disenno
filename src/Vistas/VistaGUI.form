@@ -367,7 +367,7 @@
                                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="btn_volver" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
-                                          <Component id="btn_fin" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                                          <Component id="btn_fin" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>

@@ -8,6 +8,8 @@ package Vistas;
 
 
 import Controladores.Controlador;
+import Controladores.ControladorSimulador;
+import Modelos.Edificio;
 import Modelos.Simulador;
 import Vistas.Utilidades.BitacoraRenderer;
 import java.awt.BorderLayout;
@@ -555,7 +557,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
                                 .addGap(9, 9, 9)
                                 .addGroup(pnl_configLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btn_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(btn_fin)))))
                     .addComponent(sep_num1))
                 .addContainerGap())
         );
@@ -1064,9 +1066,9 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private void btn_finActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finActionPerformed
         // TODO add your handling code here:
         
-        Controlador controlador = new Controlador();
+        ControladorSimulador controlador = new ControladorSimulador();
                 
-        Simulador simulador = new Simulador();
+        Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false);
         ArrayList<Object> arrayParametros = new ArrayList<Object>();
 
         int cantPisos = (Integer) spn_nPisos.getValue();
@@ -1089,6 +1091,11 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         for(int i = 0; i<cantPisos; i++){
             arrayListProbSolicitud.add((Float) p1Lista.get(i).getValue());
             arrayListProbDestino.add((Float) p2Lista.get(i).getValue());
+        }
+        
+        int cantElev = (Integer) spn_nElevadores.getValue();
+        
+        for(int i = 0; i<cantElev; i++){
             arrayListProbBoton.add((Float) p3Lista.get(i).getValue());
             arrayListProbPalanca.add((Float) p4Lista.get(i).getValue());
             arrayListUTMovimiento.add((Integer) utPuertasLista.get(i).getValue());
@@ -1103,8 +1110,6 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         arrayParametros.add(arrayListUTMovimiento);
         arrayParametros.add(arrayListUTPuertas);
         arrayParametros.add(arrayListCantidadPersonas);
-        
- 
         
         controlador.configurarSimulacion(simulador, arrayParametros);
         
