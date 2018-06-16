@@ -79,7 +79,8 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         btn_stop.setEnabled(false);
         configSpinner(spn_nPisos,256,2);
         configSpinner(spn_nElevadores, Integer.MAX_VALUE, 1);
-        
+        Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false);
+        controlador.setSimulador(simulador);
         
         
 
@@ -978,12 +979,23 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
 
             ManejadorDeArchivos manejador = new ManejadorDeArchivos();
             manejador.setNombreArchivo(file.getName());
-            manejador.setUbicacion(file.getParent());
+            manejador.setUbicacion(file.getParent()+"/");
             
             manejador.cargarArchivoConfiguracion();
             
             ArrayList<Object> arrayDatos = manejador.getDatos();
             controlador.configurarSimulacion(arrayDatos);
+            
+//        System.out.println(controlador.getSimulador().getCantidadPisos());
+//        System.out.println(controlador.getSimulador().getCantidadElevadores());
+//        System.out.println(controlador.getSimulador().getEdificio().getArrayPisos().get(1).);
+//        System.out.println(controlador.getSimulador().getCantidadPisos());
+//        System.out.println(controlador.getSimulador().getCantidadPisos());
+//        System.out.println(controlador.getSimulador().getCantidadPisos());
+//        System.out.println(controlador.getSimulador().getCantidadPisos());
+//        System.out.println(controlador.getSimulador().getCantidadPisos());
+//        System.out.println(controlador.getSimulador().getCantidadPisos());
+//        System.out.println(controlador.getSimulador().getCantidadPisos());
             
             
             JOptionPane.showMessageDialog(this, "Archivo de configuración cargado correctamente", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
@@ -1132,8 +1144,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
 
         if(validarProbabilidadDestino()){
                 
-            Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false);
-            controlador.setSimulador(simulador);
+            
             ArrayList<Object> arrayParametros = new ArrayList<Object>();
 
 
