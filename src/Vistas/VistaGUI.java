@@ -1072,6 +1072,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         if(validarProbabilidadDestino()){
                 
             Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false);
+            controlador.setSimulador(simulador);
             ArrayList<Object> arrayParametros = new ArrayList<Object>();
 
 

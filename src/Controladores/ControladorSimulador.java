@@ -78,5 +78,14 @@ public class ControladorSimulador {
         edificio.setArrayElevadores(arrayElevadores);
         
     }
+
+    public Simulador getSimulador() {
+        return simulador;
+    }
+
+    public void setSimulador(Simulador simulador) {
+        this.simulador = simulador;
+    }
     
+     
 }
