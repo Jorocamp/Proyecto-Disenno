@@ -56,14 +56,13 @@ public class ManejadorDeArchivos {
                     
                     Texto txtFormat = new Texto();
                     txtFormat.guardarArchivo(pPiso, pP1, pP2, pElevadores, pP3, pP4, pUTEntrePisos, pUTPuertasAbiertas, pMaxPersonas, nombreArchivo, ubicacion);
-                    
+                    return true;
                 }
                 else{
                     return false;
                 }
             }
         }
-        return false;
     }
 
      public boolean cargarArchivoConfiguracion() {
@@ -85,13 +84,13 @@ public class ManejadorDeArchivos {
             }
             else{
                 if(extension.equals("txt") && txtFormat.cargarArchivo(nombreArchivo, ubicacion, datos)){
+                    return true;
                 }
                 else{
                     return false;
                 }
             }
         }
-        return false;
         
     }
 
