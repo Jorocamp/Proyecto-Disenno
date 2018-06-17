@@ -200,13 +200,7 @@ public class Simulador extends Thread{
             temp = temp + String.valueOf(edificio.getPersonas().get(i).pisoActual+1);
             temp = temp + " | Piso Destino: ";
             temp = temp + String.valueOf(edificio.getPersonas().get(i).pisoDestino+1);
-            temp = temp + " | Elevador Actual: ";
-            if(edificio.getPersonas().get(i).elevadorActual == -1){
-                temp = temp + "Esperando elevador ";
-            }
-            else{
-                temp = temp + String.valueOf(edificio.getPersonas().get(i).elevadorActual);
-            }
+
             
             resultado.add(temp);
             

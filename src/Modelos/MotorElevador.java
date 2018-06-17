@@ -6,6 +6,7 @@
 package Modelos;
 
 import Controladores.Controlador;
+import Controladores.ControladorSimulador;
 
 /**DESCRIPCION:
  * Clase usada para manejar el movimiento de un elevador.
@@ -107,8 +108,21 @@ public class MotorElevador {
         elevador.getPuerta().abrirPuertas();
         elevador.getPuerta().setContadorUT(0);
         controlador.setEstadoElevador(1);
+        enviarMensajePuertas();
     }
     
+    public void enviarMensajePuertas(){
+        Computadora compu = Computadora.getInstance();
+        ControladorSimulador conSis = compu.getControladorSim();
+        conSis.recibirPuertas(elevador.getNumElevador());
+    }
+    
+    
+    public void enviarMensajePuertasC(){
+        Computadora compu = Computadora.getInstance();
+        ControladorSimulador conSis = compu.getControladorSim();
+        conSis.recibirPuertasC(elevador.getNumElevador());
+    }
     
     
 }

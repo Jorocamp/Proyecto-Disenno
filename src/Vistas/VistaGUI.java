@@ -173,18 +173,6 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
         pnl_listaNumPasajeros = new javax.swing.JPanel();
         lbl_numPasajeros = new javax.swing.JLabel();
         lbl_Pasajeros = new javax.swing.JLabel();
-        lbl_filtrar = new javax.swing.JLabel();
-        chk_cb01 = new javax.swing.JCheckBox();
-        chk_cb02 = new javax.swing.JCheckBox();
-        chk_cb03 = new javax.swing.JCheckBox();
-        chk_cb04 = new javax.swing.JCheckBox();
-        chk_cb05 = new javax.swing.JCheckBox();
-        chk_cb06 = new javax.swing.JCheckBox();
-        chk_cb07 = new javax.swing.JCheckBox();
-        chk_cb08 = new javax.swing.JCheckBox();
-        chk_cb09 = new javax.swing.JCheckBox();
-        chk_cb10 = new javax.swing.JCheckBox();
-        chk_cb11 = new javax.swing.JCheckBox();
         pnl_Pasajeros = new javax.swing.JScrollPane();
         lst_Pasajeros = new javax.swing.JList<>();
 
@@ -719,108 +707,6 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
         lbl_Pasajeros.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
         lbl_Pasajeros.setText("Detalles pasajeros");
 
-        lbl_filtrar.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
-        lbl_filtrar.setText("Filtrar bitácora");
-
-        chk_cb01.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        chk_cb01.setSelected(true);
-        chk_cb01.setText("CB01: Solicitud de elevador");
-        chk_cb01.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_cb01ActionPerformed(evt);
-            }
-        });
-
-        chk_cb02.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        chk_cb02.setSelected(true);
-        chk_cb02.setText("CB02: Salir de elevador");
-        chk_cb02.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_cb02ActionPerformed(evt);
-            }
-        });
-
-        chk_cb03.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        chk_cb03.setSelected(true);
-        chk_cb03.setText("CB03: Entrar a elevador");
-        chk_cb03.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_cb03ActionPerformed(evt);
-            }
-        });
-
-        chk_cb04.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        chk_cb04.setSelected(true);
-        chk_cb04.setText("CB04: Botón destino");
-        chk_cb04.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_cb04ActionPerformed(evt);
-            }
-        });
-
-        chk_cb05.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        chk_cb05.setSelected(true);
-        chk_cb05.setText("CB05: Luces");
-        chk_cb05.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_cb05ActionPerformed(evt);
-            }
-        });
-
-        chk_cb06.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        chk_cb06.setSelected(true);
-        chk_cb06.setText("CB06: Sensor piso");
-        chk_cb06.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_cb06ActionPerformed(evt);
-            }
-        });
-
-        chk_cb07.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        chk_cb07.setSelected(true);
-        chk_cb07.setText("CB07: Calendarizador");
-        chk_cb07.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_cb07ActionPerformed(evt);
-            }
-        });
-
-        chk_cb08.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        chk_cb08.setSelected(true);
-        chk_cb08.setText("CB08: Puertas");
-        chk_cb08.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_cb08ActionPerformed(evt);
-            }
-        });
-
-        chk_cb09.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        chk_cb09.setSelected(true);
-        chk_cb09.setText("CB09: Emergencia");
-        chk_cb09.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_cb09ActionPerformed(evt);
-            }
-        });
-
-        chk_cb10.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        chk_cb10.setSelected(true);
-        chk_cb10.setText("CB10: Detener");
-        chk_cb10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_cb10ActionPerformed(evt);
-            }
-        });
-
-        chk_cb11.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        chk_cb11.setSelected(true);
-        chk_cb11.setText("CB11: Máxima capacidad");
-        chk_cb11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_cb11ActionPerformed(evt);
-            }
-        });
-
         pnl_Pasajeros.setViewportView(lst_Pasajeros);
 
         javax.swing.GroupLayout pnl_simulacionLayout = new javax.swing.GroupLayout(pnl_simulacion);
@@ -830,9 +716,6 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
             .addGroup(pnl_simulacionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_simulacionLayout.createSequentialGroup()
-                        .addComponent(chk_cb11, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(bnr_sceTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_simulacionLayout.createSequentialGroup()
@@ -860,17 +743,6 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_simulacionLayout.createSequentialGroup()
                         .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_bitacora)
-                            .addComponent(chk_cb01, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_filtrar)
-                            .addComponent(chk_cb02, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chk_cb03, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chk_cb04, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chk_cb05, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chk_cb06, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chk_cb07, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chk_cb08, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chk_cb09, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chk_cb10, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pnl_bitacora, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                         .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -919,41 +791,18 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
                     .addComponent(lbl_direccion)
                     .addComponent(lbl_numPasajeros))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnl_pisoActual)
-                    .addComponent(pnl_bitacora)
-                    .addComponent(pnl_direccion)
-                    .addComponent(pnl_numPasajeros))
-                .addGap(26, 26, 26)
-                .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_Pasajeros)
-                    .addComponent(lbl_filtrar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_simulacionLayout.createSequentialGroup()
-                        .addComponent(chk_cb01)
+                        .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pnl_pisoActual)
+                            .addComponent(pnl_direccion)
+                            .addComponent(pnl_numPasajeros))
+                        .addGap(26, 26, 26)
+                        .addComponent(lbl_Pasajeros)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chk_cb02)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chk_cb03)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chk_cb04)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chk_cb05)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chk_cb06)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chk_cb07)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chk_cb08)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chk_cb09)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chk_cb10))
-                    .addComponent(pnl_Pasajeros, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chk_cb11)
-                .addGap(73, 73, 73))
+                        .addComponent(pnl_Pasajeros, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnl_bitacora, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(103, 103, 103))
         );
 
         pnl_scrSimulacion.setViewportView(pnl_simulacion);
@@ -1323,50 +1172,6 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_velocidadAActionPerformed
 
-    private void chk_cb01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb01ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chk_cb01ActionPerformed
-
-    private void chk_cb02ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb02ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chk_cb02ActionPerformed
-
-    private void chk_cb03ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb03ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chk_cb03ActionPerformed
-
-    private void chk_cb04ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb04ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chk_cb04ActionPerformed
-
-    private void chk_cb05ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb05ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chk_cb05ActionPerformed
-
-    private void chk_cb06ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb06ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chk_cb06ActionPerformed
-
-    private void chk_cb07ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb07ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chk_cb07ActionPerformed
-
-    private void chk_cb08ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb08ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chk_cb08ActionPerformed
-
-    private void chk_cb09ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb09ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chk_cb09ActionPerformed
-
-    private void chk_cb10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chk_cb10ActionPerformed
-
-    private void chk_cb11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cb11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chk_cb11ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -1438,17 +1243,6 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
     private javax.swing.JButton btn_start;
     private javax.swing.JButton btn_stop;
     private javax.swing.JButton btn_volver;
-    private javax.swing.JCheckBox chk_cb01;
-    private javax.swing.JCheckBox chk_cb02;
-    private javax.swing.JCheckBox chk_cb03;
-    private javax.swing.JCheckBox chk_cb04;
-    private javax.swing.JCheckBox chk_cb05;
-    private javax.swing.JCheckBox chk_cb06;
-    private javax.swing.JCheckBox chk_cb07;
-    private javax.swing.JCheckBox chk_cb08;
-    private javax.swing.JCheckBox chk_cb09;
-    private javax.swing.JCheckBox chk_cb10;
-    private javax.swing.JCheckBox chk_cb11;
     private javax.swing.JLabel img_ssce;
     private javax.swing.JLabel img_warning;
     private javax.swing.JLabel jLabel1;
@@ -1456,7 +1250,6 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
     private javax.swing.JLabel lbl_Pasajeros;
     private javax.swing.JLabel lbl_bitacora;
     private javax.swing.JLabel lbl_direccion;
-    private javax.swing.JLabel lbl_filtrar;
     private javax.swing.JLabel lbl_nElevadores;
     private javax.swing.JLabel lbl_nPisos;
     private javax.swing.JLabel lbl_numPasajeros;
@@ -2011,93 +1804,6 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
         this.btn_volver = btn_volver;
     }
 
-    public JCheckBox getChk_cb01() {
-        return chk_cb01;
-    }
-
-    public void setChk_cb01(JCheckBox chk_cb01) {
-        this.chk_cb01 = chk_cb01;
-    }
-
-    public JCheckBox getChk_cb02() {
-        return chk_cb02;
-    }
-
-    public void setChk_cb02(JCheckBox chk_cb02) {
-        this.chk_cb02 = chk_cb02;
-    }
-
-    public JCheckBox getChk_cb03() {
-        return chk_cb03;
-    }
-
-    public void setChk_cb03(JCheckBox chk_cb03) {
-        this.chk_cb03 = chk_cb03;
-    }
-
-    public JCheckBox getChk_cb04() {
-        return chk_cb04;
-    }
-
-    public void setChk_cb04(JCheckBox chk_cb04) {
-        this.chk_cb04 = chk_cb04;
-    }
-
-    public JCheckBox getChk_cb05() {
-        return chk_cb05;
-    }
-
-    public void setChk_cb05(JCheckBox chk_cb05) {
-        this.chk_cb05 = chk_cb05;
-    }
-
-    public JCheckBox getChk_cb06() {
-        return chk_cb06;
-    }
-
-    public void setChk_cb06(JCheckBox chk_cb06) {
-        this.chk_cb06 = chk_cb06;
-    }
-
-    public JCheckBox getChk_cb07() {
-        return chk_cb07;
-    }
-
-    public void setChk_cb07(JCheckBox chk_cb07) {
-        this.chk_cb07 = chk_cb07;
-    }
-
-    public JCheckBox getChk_cb08() {
-        return chk_cb08;
-    }
-
-    public void setChk_cb08(JCheckBox chk_cb08) {
-        this.chk_cb08 = chk_cb08;
-    }
-
-    public JCheckBox getChk_cb09() {
-        return chk_cb09;
-    }
-
-    public void setChk_cb09(JCheckBox chk_cb09) {
-        this.chk_cb09 = chk_cb09;
-    }
-
-    public JCheckBox getChk_cb10() {
-        return chk_cb10;
-    }
-
-    public void setChk_cb10(JCheckBox chk_cb10) {
-        this.chk_cb10 = chk_cb10;
-    }
-
-    public JCheckBox getChk_cb11() {
-        return chk_cb11;
-    }
-
-    public void setChk_cb11(JCheckBox chk_cb11) {
-        this.chk_cb11 = chk_cb11;
-    }
 
     public JLabel getImg_ssce() {
         return img_ssce;
@@ -2155,13 +1861,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
         this.lbl_direccion = lbl_direccion;
     }
 
-    public JLabel getLbl_filtrar() {
-        return lbl_filtrar;
-    }
 
-    public void setLbl_filtrar(JLabel lbl_filtrar) {
-        this.lbl_filtrar = lbl_filtrar;
-    }
 
     public JLabel getLbl_nElevadores() {
         return lbl_nElevadores;
