@@ -139,7 +139,7 @@ public class ControladorSimulador {
     }
      
     public void enviarPasajeros(){
-        ArrayList<String> pasajeros = simulador.getEdificio().enviarPasajeros();
+        ArrayList<String> pasajeros = simulador.enviarPasajeros();
         DefaultListModel listModel = new DefaultListModel();
         for (int i = 0; i < pasajeros.size(); i++)
         {
@@ -148,10 +148,38 @@ public class ControladorSimulador {
         vg.getLst_Pasajeros().setModel(listModel);
         
     }
+    
+    
+    public void enviarBitacota(){
+        ArrayList<String> bitacoraE = simulador.getBitacora();
+        DefaultListModel listModel = new DefaultListModel();
+        for (int i = 0; i < bitacoraE.size(); i++)
+        {
+            listModel.addElement(bitacoraE.get(i));
+            
+        }
+        vg.getLst_bitacora().setModel(listModel);
+        
+    }
+    
+    public void enviarPisoActual(){
+        ArrayList<String> pisosActuales = simulador.enviarPisoActual();
+        for(int i = 0; i < pisosActuales.size(); i++){
+            vg.getPisoActualLista().get(i).setText(pisosActuales.get(i));
+        }
+    }
+    
+    public void enviarDirecciones(){
+        
+    }
+    
      public void ejecutarSimulacionUT(){
          enviarUT();
          generarPasajeros();
          enviarPasajeros();
+         enviarPisoActual();
+         enviarDirecciones();
+         enviarBitacota();
      }
      
 }

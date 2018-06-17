@@ -82,6 +82,7 @@ public class Piso {
  * probSobreCien es la probabilidad sobre 100 que se busca   
  */    
     public boolean probabilidad(float probSobreCien){
+        
         Random rand = new Random();
         return (rand.nextInt(100) + 0) <= probSobreCien*100;
     }
@@ -98,7 +99,7 @@ public class Piso {
     }
     
 
-/*
+/* 
  * Funcion para crear pasajero y solicitar elevador en un piso
  * 
  */ 
