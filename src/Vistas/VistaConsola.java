@@ -55,7 +55,7 @@ public class VistaConsola extends Thread implements Vista{
             switch(input){
                 case 1:{
                     parametros.clear();
-                    System.out.println("\n{==== Configuración del Simulador ====}\n");
+                    System.out.println("\n{===== Configuración del Simulador =====}\n");
                     
                     System.out.print("Digite el número de pisos para el edificio: ");
                     int pisos = Integer.parseInt(br.readLine());

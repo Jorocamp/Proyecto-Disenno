@@ -18,8 +18,9 @@ public class Elevador {
     private ElevadorInterior interior;
     private ElevadorExterior exterior;
     private Puerta puerta;
+    private MotorElevador motorElevador;
 
-    public Elevador(float probabilidadBoton, float probabilidadInterruptor, int utPorMovimiento, int utPorPuertas, ElevadorInterior interior, ElevadorExterior exterior, Puerta puerta) {
+    public Elevador(float probabilidadBoton, float probabilidadInterruptor, int utPorMovimiento, int utPorPuertas, ElevadorInterior interior, ElevadorExterior exterior, Puerta puerta, MotorElevador motorElevador) {
         this.probabilidadBoton = probabilidadBoton;
         this.probabilidadInterruptor = probabilidadInterruptor;
         this.utPorMovimiento = utPorMovimiento;
@@ -27,6 +28,7 @@ public class Elevador {
         this.interior = interior;
         this.exterior = exterior;
         this.puerta = puerta;
+        this.motorElevador = motorElevador;
     }
     
     public Elevador(){
@@ -94,6 +96,14 @@ public class Elevador {
 
     public void setNumElevador(int numElevador) {
         this.numElevador = numElevador;
+    }
+
+    public MotorElevador getMotorElevador() {
+        return motorElevador;
+    }
+
+    public void setMotorElevador(MotorElevador motorElevador) {
+        this.motorElevador = motorElevador;
     }
     
     

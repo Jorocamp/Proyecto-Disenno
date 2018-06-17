@@ -33,6 +33,8 @@ public class Simulador extends Thread{
     private ControladorSimulador cs;
     private boolean consola = true;
     private int ut = 0;
+    private ArrayList<String> bitacora = new ArrayList<>();
+    
     
     /**
      * Metodos de la clase
@@ -59,6 +61,7 @@ public class Simulador extends Thread{
         this.finalizar = finalizar;
         this.next = next;
         this.consola = false;
+        this.edificio.setSimulador(this);
         // TODO implement here
     }
      
@@ -104,14 +107,14 @@ public class Simulador extends Thread{
     
     private void ejecutarUT(int ut){
         this.cs.getVc().printInicioUT(ut);
+        
         for(int i=0; i < cantidadPisos; i++){// Para cada Piso
             
-            this.edificio.crearPasajero(i);// Crear Pasajeros
-            this.cs.getVc().informeCreacionPasajeros(i, this.edificio.getContadorPasajeros()-1);
-            Pasajero pasajero = this.edificio.getArrayPisos().get(i).getColaPasajeros().get(0);
-            
-            if(this.edificio.getArrayPisos().get(i).solicitarElevador(pasajero))// Solicitar Elevador
-                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());
+            Pasajero pasajero = this.edificio.crearPasajero(i); //Crear Pasajero 
+            if(pasajero != null){                                           
+                this.cs.getVc().informeCreacionPasajeros(i,pasajero.getId());// Imprimir Pasajeros Creados
+                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());// Imprimir Solicitudes
+            }
             this.cs.getVc().informeMontar(this.edificio.getArrayPisos().get(i).ingresoElevador());
             ArrayList<Pasajero>pasajeros = new ArrayList<Pasajero>();
             
@@ -121,7 +124,6 @@ public class Simulador extends Thread{
                     //System.out.println("here");
                     this.cs.getVc().informeDestino(pasajeros.get(i).seleccionarPiso());
                     this.cs.getVc().informeEmergencia(pasajeros.get(i).usarInterruptorEmergencia(this.edificio.getArrayElevadores().get(j)));
-                    //System.out.println("there");
                 }
             }
             this.cs.getVc().informeBajarse(this.edificio.getArrayPisos().get(i).salidaElevador());
@@ -129,8 +131,7 @@ public class Simulador extends Thread{
         }
         this.cs.getVc().printFinnalUT(ut);
     }
-    public void run(){
-        
+    public void run(){ 
         if(consola)
             ut = 0;// Contador de UT
         while(!finalizar){
@@ -171,6 +172,40 @@ public class Simulador extends Thread{
         
     }
     
+      public ArrayList<String> enviarPasajeros(){
+        ArrayList<String> resultado = new ArrayList<>();
+        
+        for(int i = 0; i < edificio.getPersonas().size(); i++){
+            String temp = "Pasajero: ";
+            temp = temp + String.valueOf(edificio.getPersonas().get(i).id);
+            temp = temp + " | Piso Actual: ";
+            temp = temp + String.valueOf(edificio.getPersonas().get(i).pisoActual);
+            temp = temp + " | Piso Destino: ";
+            temp = temp + String.valueOf(edificio.getPersonas().get(i).pisoDestino);
+            temp = temp + " | Elevador Actual: ";
+            if(edificio.getPersonas().get(i).elevadorActual == -1){
+                temp = temp + "Esperando elevador ";
+            }
+            else{
+                temp = temp + String.valueOf(edificio.getPersonas().get(i).elevadorActual);
+            }
+            
+            resultado.add(temp);
+            
+        }
+        return resultado; 
+    }
+    
+    
+    public ArrayList<String> enviarPisoActual(){
+        ArrayList<String> resultado = new ArrayList<>();
+        for(int i = 0; i < edificio.getArrayElevadores().size(); i++){
+            String temp = String.valueOf(edificio.getArrayElevadores().get(i).getExterior().getSensorPiso().getPisoActual());
+            resultado.add(temp);
+        }
+        return resultado;
+    }
+
 
 
  
@@ -345,6 +380,14 @@ public class Simulador extends Thread{
 
     public void setUt(int ut) {
         this.ut = ut;
+    }
+
+    public ArrayList<String> getBitacora() {
+        return bitacora;
+    }
+
+    public void setBitacora(ArrayList<String> bitacora) {
+        this.bitacora = bitacora;
     }
     
     
