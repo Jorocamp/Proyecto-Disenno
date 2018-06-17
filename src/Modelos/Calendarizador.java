@@ -40,8 +40,17 @@ public class Calendarizador {
 
 
     public void calendarizarPiso(int piso){
-        pisosCalendarizados.add(piso);
-        Collections.sort(pisosCalendarizados);
+        int banderaRep = 0;
+        for(int i = 0; i<pisosCalendarizados.size(); i++){
+            if(pisosCalendarizados.get(i) == piso){
+                banderaRep = 1;
+                break;
+            }
+        }
+        if(banderaRep == 0){
+            pisosCalendarizados.add(piso);
+        }
+        
     }
     
 }
