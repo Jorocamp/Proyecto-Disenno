@@ -146,8 +146,8 @@ public class Piso {
                 for(int j=0; j<pasajeros.size();j++){
                     if(pasajeros.get(j).getPisoDestino() == this.numeroPiso){
                         this.colaPasajeros.add(pasajeros.get(j));// Agrega el pasajero a la cola de espera
-                        this.elevadores.get(i).getElevador().getInterior().getCabina().getPasajeros().remove(j);// saca el pasajero de la cabina
                         msj = "Desbordaje: [ Pasajero: "+(pasajeros.get(j).getId()+1) +" | Piso: "+(this.numeroPiso+1) +" ]";
+                        this.elevadores.get(i).getElevador().getInterior().getCabina().getPasajeros().remove(j);// saca el pasajero de la cabina
                         msjs.add(msj);
                     }
                 }
