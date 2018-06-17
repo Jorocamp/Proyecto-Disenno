@@ -340,10 +340,12 @@ public class VistaConsola extends Thread implements Vista{
             System.out.println(msjs.get(i));
     }
     public void informeDestino(String msjs){
-        System.out.println(msjs);
+        if(msjs != "")
+            System.out.println(msjs);
     }
     public void informeEmergencia(String msj){
-        System.out.println(msj);
+        if(msj != "")
+            System.out.println(msj);
     }
     public void informeBajarse(ArrayList<String>msjs){
         for(int i=0; i<msjs.size(); i++)
@@ -353,6 +355,10 @@ public class VistaConsola extends Thread implements Vista{
         for(int i=0; i<msjs.size(); i++){
             System.out.println(msjs.get(i));
         }
+    }
+    public void informeDetencion(String msj){
+        if(msj != "")
+            System.out.println(msj);
     }
     @Override
     public void getConfiguracion() {

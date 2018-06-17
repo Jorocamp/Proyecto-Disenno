@@ -68,6 +68,7 @@ public class ConstruirElevadorNormal extends ConstruirElevador{
         motorElevador.setElevador(elevador); 
         motorElevador.setControlador(controlador);
         motorElevador.setInterruptorEmergencia(elevador.getInterior().getInterruptor());
+        elevador.getInterior().getInterruptor().setMotor(motorElevador);
         elevador.setMotorElevador(motorElevador);
         Computadora computadora = Computadora.getInstance();
         computadora.getControladores().add(controlador);

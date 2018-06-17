@@ -10,8 +10,8 @@ package Modelos;
  * @author Raul
  */
 public class InterruptorEmergencia {
-    
-    boolean estado;
+    private MotorElevador motor;
+    private boolean estado;
     
     public InterruptorEmergencia(boolean pEstado){
         this.setEstado(pEstado);
@@ -19,6 +19,7 @@ public class InterruptorEmergencia {
     
     public void activarAlarma(){
         this.estado = true;
+        this.motor.detenerEmergencia();
     }
 
     public boolean isEstado() {
@@ -27,6 +28,14 @@ public class InterruptorEmergencia {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    public MotorElevador getMotor() {
+        return motor;
+    }
+
+    public void setMotor(MotorElevador motor) {
+        this.motor = motor;
     }
     
     

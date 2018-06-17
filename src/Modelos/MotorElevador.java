@@ -18,8 +18,9 @@ public class MotorElevador {
     private Elevador elevador;
     private Controlador controlador;
     private InterruptorEmergencia interruptorEmergencia;
+    
 
-    public MotorElevador(Direccion direccionActual, Elevador elevador, Controlador controlador,InterruptorEmergencia interruptorEmergencia) {
+    public MotorElevador(Direccion direccionActual, Elevador elevador, Controlador controlador,InterruptorEmergencia interruptorEmergencia, int utEmergencia) {
         this.direccionActual = direccionActual;
         this.elevador = elevador;
         this.controlador = controlador;
@@ -57,7 +58,11 @@ public class MotorElevador {
         direccionActual = Direccion.ninguna;
         
     }
-    
+    public void detenerEmergencia() {
+        // TODO implement here
+        direccionActual = Direccion.ninguna;
+        
+    }
     
     /**
      * 
