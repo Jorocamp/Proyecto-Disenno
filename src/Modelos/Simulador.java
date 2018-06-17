@@ -110,20 +110,19 @@ public class Simulador extends Thread{
             Pasajero pasajero = this.edificio.crearPasajero(i); //Crear Pasajero 
             if(pasajero != null){                                           
                 this.cs.getVc().informeCreacionPasajeros(i,pasajero.getId());// Imprimir Pasajeros Creados
-                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());// Imprimir Solicitudes
+                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());// Imprimir Solicitudes !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             }
-            this.cs.getVc().informeMontar(this.edificio.getArrayPisos().get(i).ingresoElevador());
-            ArrayList<Pasajero>pasajeros = new ArrayList<Pasajero>();
-            
-            for(int j=0;j<this.cantidadElevadores;j++){// Para cada Elevador
-                pasajeros = this.edificio.getArrayElevadores().get(j).getInterior().getCabina().getPasajeros();
-                for(int k=0;k<pasajeros.size();k++){// Para cada Pasajero
-                    this.cs.getVc().informeDestino(pasajeros.get(i).seleccionarPiso(this.edificio.getArrayPisos()));
-                    this.cs.getVc().informeEmergencia(pasajeros.get(i).usarInterruptorEmergencia(this.edificio.getArrayElevadores().get(j)));
-                }
-            }
+            this.cs.getVc().informeMontar(this.edificio.getArrayPisos().get(i).ingresoElevador());     
             this.cs.getVc().informeBajarse(this.edificio.getArrayPisos().get(i).salidaElevador());
             
+        }
+        ArrayList<Pasajero>pasajeros = new ArrayList<Pasajero>();
+        for(int j=0;j<this.cantidadElevadores;j++){// Para cada Elevador
+            pasajeros = this.edificio.getArrayElevadores().get(j).getInterior().getCabina().getPasajeros();
+            for(int k=0;k<pasajeros.size();k++){// Para cada Pasajero
+                this.cs.getVc().informeDestino(pasajeros.get(k).seleccionarPiso(this.edificio.getArrayPisos()));
+                this.cs.getVc().informeEmergencia(pasajeros.get(k).usarInterruptorEmergencia(this.edificio.getArrayElevadores().get(j)));
+            }
         }
         this.cs.getVc().printFinnalUT(ut);
     }

@@ -249,16 +249,15 @@ public class VistaConsola extends Thread implements Vista{
                 System.out.println("\nPAUSA\n");
                 
                 cs.getSimulador().pausarSimulacion();
-                
-                System.out.println("Valor de pausa cambiado a:\t" + cs.getSimulador().isPausa());
-                System.out.println("");
-                
+                //System.out.println("Valor de pausa cambiado a:\t" + cs.getSimulador().isPausa());
+                //System.out.println("");              
                 while(cs.getSimulador().isPausa()){// Pausa => Menu de simulador
                     
                     System.out.println("\nMenú de Simulación\n");
                     System.out.println("1. Reanudar");
-                    System.out.println("2. Cambiar Raul");
+                    System.out.println("2. Cambiar Velocidad");
                     System.out.println("3. Cambiar Modalidad");
+                    System.out.println("4. Finalizar Simulación");
                     System.out.println("");
                     System.out.print("Elija una opción: ");
                     input = sc.nextInt();
@@ -291,6 +290,12 @@ public class VistaConsola extends Thread implements Vista{
                             else
                                 System.out.println("\nSe ha cambiado a Modo Normal.\n");
                             break;
+                        }
+                        case 4:{        // FINALIZAR SIMULACION
+                            cs.getSimulador().setFinalizar(true);
+                            System.out.println("\nSimulación Finalizada");
+                            System.out.println("\nAdiós! :)");
+                            return;
                         }
                     }
                 }
