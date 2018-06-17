@@ -20,6 +20,7 @@ import Modelos.Piso;
 import Modelos.Simulador;
 import Vistas.Utilidades.BitacoraRenderer;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import javax.swing.JFileChooser;
 import java.io.File;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -68,6 +70,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
     
     private boolean simPausa = false;
     private boolean first = true;
+    
     
     private ControladorSimulador controlador = new ControladorSimulador();
     
@@ -869,7 +872,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
                             .addComponent(chk_cb09, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(chk_cb10, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pnl_bitacora, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                         .addGroup(pnl_simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lbl_Pasajeros)
                             .addGroup(pnl_simulacionLayout.createSequentialGroup()
@@ -960,6 +963,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void btn_cargarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cargarAActionPerformed
         // TODO add your handling code here:
         Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false, false);

@@ -170,7 +170,17 @@ public class ControladorSimulador {
     }
     
     public void enviarDirecciones(){
-        
+        ArrayList<String> direcciones = simulador.enviarDirecciones();
+        for(int i = 0; i < direcciones.size(); i++){
+            vg.getDireccionesLista().get(i).setText(direcciones.get(i));
+        }  
+    }
+    
+    public void enviarNumPasajeros(){
+        ArrayList<String> direcciones = simulador.enviarNumPasajeros();
+        for(int i = 0; i < direcciones.size(); i++){
+            vg.getNumeroPasajerosLista().get(i).setText(direcciones.get(i));
+        }  
     }
     
      public void ejecutarSimulacionUT(){
@@ -179,6 +189,7 @@ public class ControladorSimulador {
          enviarPasajeros();
          enviarPisoActual();
          enviarDirecciones();
+         enviarNumPasajeros();
          enviarBitacota();
      }
      
