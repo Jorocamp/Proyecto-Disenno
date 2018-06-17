@@ -97,9 +97,9 @@ public class Piso {
         else
             panelLlamada.botonAbajo.crearInterrupcion(pisoActual);// si es menor, pide bajar
     }
-    
 
-/* 
+/*
+>>>>>>> eb709a5277d214be6f5ba9a9f1a53d307d49abc6
  * Funcion para crear pasajero y solicitar elevador en un piso
  * 
  */ 

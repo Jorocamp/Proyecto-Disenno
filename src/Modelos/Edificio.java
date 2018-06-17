@@ -47,6 +47,12 @@ public class Edificio {
     public void setContadorPasajeros(int contadorPasajeros) {
         this.contadorPasajeros = contadorPasajeros;
     }
+    public void pulsarBotonLlamada(int pisoActual,int pisoDestino){
+        if(pisoDestino > pisoActual)
+            this.arrayPisos.get(pisoActual).getPanelLlamada().botonArriba.crearInterrupcion(pisoActual);// si es mayor, pide subir
+        else
+            this.arrayPisos.get(pisoActual).getPanelLlamada().botonAbajo.crearInterrupcion(pisoActual);// si es menor, pide bajar
+    }
     
 /*
   Funcion para asignar un piso destino a un pasajero  
@@ -74,11 +80,16 @@ public class Edificio {
  * Se usan funciones de la clase Piso
  * La cabina se deja en null dado que no ha ingresado a ninguna   
  */     
-    public void crearPasajero(int piso){
-        Pasajero pasajero = new Pasajero(piso,asignarDestino(piso,this.arrayPisos.size()-1),null,this.contadorPasajeros);// Creacion
-        this.arrayPisos.get(piso).getColaPasajeros().add(pasajero);// Agrega el pasajero a la cola de espera del piso respectivo
-        this.contadorPasajeros++;
-        System.out.println("Pasajero: "+pasajero.getId()+ " Actual: "+pasajero.getPisoActual() + " Destino: " +pasajero.getPisoDestino());
+    public Pasajero crearPasajero(int piso){
+        if(this.arrayPisos.get(piso).probabilidad(this.arrayPisos.get(piso).getProbabilidadSolicitud())){// Si se da la probabilidad, se solicita el elevador
+            Pasajero pasajero = new Pasajero(piso,asignarDestino(piso,this.arrayPisos.size()-1),null,this.contadorPasajeros);// Creacion
+            pulsarBotonLlamada(pasajero.pisoActual,pasajero.pisoDestino);// manda la interrupcion a la computadora
+            this.arrayPisos.get(piso).getColaPasajeros().add(pasajero);// Agrega el pasajero a la cola de espera del piso respectivo
+            this.contadorPasajeros++;
+            System.out.println("Pasajero: "+pasajero.getId()+ " Actual: "+pasajero.getPisoActual() + " Destino: " +pasajero.getPisoDestino());
+            return pasajero;
+        }
+        return null;
     }
     
     

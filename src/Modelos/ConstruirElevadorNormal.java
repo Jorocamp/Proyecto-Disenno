@@ -64,6 +64,7 @@ public class ConstruirElevadorNormal extends ConstruirElevador{
         motorElevador.setDireccionActual(Direccion.ninguna);
         motorElevador.setElevador(elevador); 
         motorElevador.setControlador(controlador);
+        elevador.setMotorElevador(motorElevador);
         Computadora computadora = Computadora.getInstance();
         computadora.getControladores().add(controlador);
         this.elevador.setUtPorMovimiento(utPorMovimiento);

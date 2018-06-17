@@ -107,24 +107,22 @@ public class Simulador extends Thread{
     
     private void ejecutarUT(int ut){
         this.cs.getVc().printInicioUT(ut);
+        
         for(int i=0; i < cantidadPisos; i++){// Para cada Piso
             
-            this.edificio.crearPasajero(i);// Crear Pasajeros
-            this.cs.getVc().informeCreacionPasajeros(i, this.edificio.getContadorPasajeros()-1);
-            Pasajero pasajero = this.edificio.getArrayPisos().get(i).getColaPasajeros().get(0);
-            
-            if(this.edificio.getArrayPisos().get(i).solicitarElevador(pasajero))// Solicitar Elevador
-                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());
+            Pasajero pasajero = this.edificio.crearPasajero(i); //Crear Pasajero 
+            if(pasajero != null){                                           
+                this.cs.getVc().informeCreacionPasajeros(i,pasajero.getId());// Imprimir Pasajeros Creados
+                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());// Imprimir Solicitudes
+            }
             this.cs.getVc().informeMontar(this.edificio.getArrayPisos().get(i).ingresoElevador());
             ArrayList<Pasajero>pasajeros = new ArrayList<Pasajero>();
             
             for(int j=0;j<this.cantidadElevadores;j++){// Para cada Elevador
                 pasajeros = this.edificio.getArrayElevadores().get(j).getInterior().getCabina().getPasajeros();
-                for(int k=0;k<pasajeros.size();k++){
-                    //System.out.println("here");
+                for(int k=0;k<pasajeros.size();k++){// Para cada Pasajero
                     this.cs.getVc().informeDestino(pasajeros.get(i).seleccionarPiso(this.edificio.getArrayPisos()));
                     this.cs.getVc().informeEmergencia(pasajeros.get(i).usarInterruptorEmergencia(this.edificio.getArrayElevadores().get(j)));
-                    //System.out.println("there");
                 }
             }
             this.cs.getVc().informeBajarse(this.edificio.getArrayPisos().get(i).salidaElevador());
@@ -132,8 +130,7 @@ public class Simulador extends Thread{
         }
         this.cs.getVc().printFinnalUT(ut);
     }
-    public void run(){
-        
+    public void run(){ 
         if(consola)
             ut = 0;// Contador de UT
         while(!finalizar){
