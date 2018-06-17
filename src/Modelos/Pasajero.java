@@ -30,16 +30,11 @@ public class Pasajero {
         
     }
     
-    public String seleccionarPiso(ArrayList<Piso> arrayPisos){
-        String msjs = "";
-        for(int i = 0; i<arrayPisos.size(); i++){
-            if(arrayPisos.get(i).probabilidad(arrayPisos.get(i).getProbabilidadDestino())){
-                this.setPisoDestino(arrayPisos.get(i).getNumeroPiso());
-                msjs = "El pasajero "+this.getId()+" ha elejido el piso "+i+".";
-                break;
-            }
-        }
-        return msjs;
+    public String seleccionarPiso(){
+        BotonDestino boton = cabinaActual.getElevador().getPanelDestino().getBotones().get(pisoDestino);
+        boton.crearInterrupcion(pisoDestino, cabinaActual.getElevador().getElevador().getNumElevador());
+        
+        return new String("Solicitud Destino: [ Pasajero: "+ (id+1) +" | Piso: "+ (pisoDestino+1)+" ]");
     }
     
     public void presionarBotonDetenerse(Elevador elevadorActual){
@@ -53,7 +48,7 @@ public class Pasajero {
         int porcentajeProbabilidad = rand.nextInt(100 + 1);
         if(porcentajeProbabilidad <= (elevadorActual.getProbabilidadInterruptor()*100)){
             elevadorActual.getInterior().getInterruptor().activarAlarma();
-            msj = "El pasajero "+this.getId()+" ha usado el Interruptor de Emergencia.";
+            msj = "Emergencia: [ Pasajero: "+(this.getId()+1) +" ha usado el Interruptor de Emergencia ]";
             
         }
         return msj;

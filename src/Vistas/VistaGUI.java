@@ -25,6 +25,7 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -659,11 +660,6 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
         });
 
         lst_bitacora.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-        lst_bitacora.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "CB01", "CB02", "CB03", "CB04", "CB05", "CB06", "CB07", "CB08", "CB09", "CB10", "CB11" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         pnl_bitacora.setViewportView(lst_bitacora);
 
         lbl_bitacora.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
@@ -1122,9 +1118,6 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
         crearUTPuertas(numElevadores);
         crearMaxPersonas(numElevadores);
         
-        crearPisoActual(numElevadores);
-        crearDireccionE(numElevadores);
-        crearNumPersonas(numElevadores);
         
         
         if(pisosInit)
@@ -1279,6 +1272,19 @@ public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
         txt_utContador.setText("0");
         txt_velocidadA.setText("0");
         lst_bitacora.setCellRenderer(new BitacoraRenderer());
+        lst_Pasajeros.setModel(new DefaultListModel());
+        lst_bitacora.setModel(new DefaultListModel());
+        DefaultListModel model2 = (DefaultListModel) lst_bitacora.getModel();
+        model2.removeAllElements();
+        DefaultListModel model = (DefaultListModel) lst_Pasajeros.getModel();
+        model.removeAllElements();
+        int numElevadores = controlador.getSimulador().getCantidadElevadores();
+        
+        crearPisoActual(numElevadores);
+        crearDireccionE(numElevadores);
+        crearNumPersonas(numElevadores);
+        
+        
         
     }//GEN-LAST:event_btn_iniciarSActionPerformed
 

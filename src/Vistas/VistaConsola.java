@@ -8,15 +8,20 @@ package Vistas;
 import Controladores.ControladorSimulador;
 import Modelos.Edificio;
 import Modelos.ManejadorDeArchivos;
+import Modelos.Pasajero;
 import Modelos.Simulador;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Timer;
 
 /**
  *
@@ -285,17 +290,24 @@ public class VistaConsola extends Thread implements Vista{
                         }
                         case 3:{        // CAMBIAR MODALIDAD
                             cs.getSimulador().setDebug(!cs.getSimulador().isDebug());
+                            cs.getSimulador().setNext(false);
                             if(cs.getSimulador().isDebug())
                                 System.out.println("\nSe ha cambiado a Modo Depurador.\n");
                             else
                                 System.out.println("\nSe ha cambiado a Modo Normal.\n");
                             break;
                         }
-                        case 4:{        // FINALIZAR SIMULACION
+                        case 4:{        try {
+                            // FINALIZAR SIMULACION
                             cs.getSimulador().setFinalizar(true);
                             System.out.println("\nSimulación Finalizada");
                             System.out.println("\nAdiós! :)");
+                            this.join();
+                            cs.getSimulador().join();
                             return;
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(VistaConsola.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         }
                     }
                 }
@@ -306,21 +318,21 @@ public class VistaConsola extends Thread implements Vista{
                     cs.getSimulador().setNext(false);
                 }
             }
-            }
+            }  
         }
     }
 
     public void printInicioUT(int ut){
-        System.out.println("==== Empezando a ejecutar UT: "+ut+" ====");
+        System.out.println("[========================[ UT "+ut+" INICIO ]========================]");
     }
     public void printFinnalUT(int ut){
-        System.out.println("Terminando de ejecutar UT: "+ut);
+        System.out.println("[========================[ UT "+ut+"  FINAL ]========================]");
     }
-    public void informeCreacionPasajeros(int piso, int idPasajero){
-        System.out.println("Se ha creado el pasajero "+idPasajero+" en el piso "+piso+".");
+    public void informeCreacionPasajeros(int piso, Pasajero pasajero){
+        System.out.println("Creación: [ Pasajero: "+(pasajero.getId()+1)+ " | Piso Actual: "+ (pasajero.getPisoActual()+1) + " | Piso Destino: " +(pasajero.getPisoDestino()+1)+" ]");
     }
     public void informeSolicitud(int idPasajero,String direccion){
-        System.out.println("El pasajero "+idPasajero+" ha solicitado un elevador hacia "+direccion+".");
+        System.out.println("Solicitud Llamada: [ Pasajero: "+(idPasajero+1)+" | Dirección: "+direccion+" ]");
     }
     public void informeMontar(ArrayList<String>msjs){
         for(int i=0; i<msjs.size(); i++)
@@ -335,6 +347,11 @@ public class VistaConsola extends Thread implements Vista{
     public void informeBajarse(ArrayList<String>msjs){
         for(int i=0; i<msjs.size(); i++)
             System.out.println(msjs.get(i));
+    }
+    public void informeElevadores(ArrayList<String>msjs){
+        for(int i=0; i<msjs.size(); i++){
+            System.out.println(msjs.get(i));
+        }
     }
     @Override
     public void getConfiguracion() {
@@ -467,6 +484,8 @@ public class VistaConsola extends Thread implements Vista{
         VistaConsola vc = new VistaConsola(cs);
         
         vc.inicioSimulador();
+        System.out.println("Done");
+        return;
         //sim.start();
         //[2,[0.0, 0.0],[0.5, 0.5],[0.0],[0.0],[1],[1],[6]]
         //vc.start();

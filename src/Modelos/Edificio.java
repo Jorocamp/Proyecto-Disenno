@@ -17,6 +17,7 @@ public class Edificio {
     private ArrayList<Elevador> arrayElevadores;
     private int contadorPasajeros = 0;
     private ArrayList<Pasajero> personas = new ArrayList<>();
+    private Simulador simulador;
     
     public Edificio(ArrayList<Piso> arrayPisos,ArrayList<Elevador> arrayElevadores) {
         this.arrayPisos = arrayPisos;
@@ -85,7 +86,6 @@ public class Edificio {
             pulsarBotonLlamada(pasajero.pisoActual,pasajero.pisoDestino);// manda la interrupcion a la computadora
             this.arrayPisos.get(piso).getColaPasajeros().add(pasajero);// Agrega el pasajero a la cola de espera del piso respectivo
             this.contadorPasajeros++;
-            System.out.println("Pasajero: "+pasajero.getId()+ " Actual: "+pasajero.getPisoActual() + " Destino: " +pasajero.getPisoDestino());
             return pasajero;
         }
         return null;
@@ -93,43 +93,58 @@ public class Edificio {
     
     
     public void generarPasajeros(){
+        if(personas.size() > 1000){
+                    personas.subList(499,personas.size()).clear();
+        }
+        
+        if(simulador.getBitacora().size() > 1000){
+                    simulador.getBitacora().subList(499, simulador.getBitacora().size()).clear();
+        }
         for(int i = 0; i < arrayPisos.size(); i++){
             if(arrayPisos.get(i).probabilidad(arrayPisos.get(i).getProbabilidadSolicitud())){
                 Pasajero temp = new Pasajero(i,asignarDestino(i,this.arrayPisos.size()-1),null,this.contadorPasajeros);
-                if(personas.size() > 500){
-                    personas.remove(0);
-                }
-                personas.add(temp);
+                
+                personas.add(0, temp);
                 this.arrayPisos.get(i).getColaPasajeros().add(temp);// Agrega el pasajero a la cola de espera del piso respectivo
                 this.contadorPasajeros++;
-        
+                
+                arrayPisos.get(i).pulsarBotonLlamada(temp.pisoActual, temp.pisoDestino);
+                String sTemp = "CB01 (UT "+ String.valueOf(simulador.getUt()) +"): El pasajero " + String.valueOf(temp.getId()) + " solicitó un elevador en el piso " + String.valueOf(temp.getPisoActual()+1) + " hacia " + temp.getDireccion();
+                String sTemp1 = "CB05 (UT "+ String.valueOf(simulador.getUt()) +"): La computadora recibió una interrupción, luz del boton de llamada  " + temp.getDireccion() + " del piso " + String.valueOf(temp.getPisoActual()+1) + " encendida" ;
+                
+                
+                simulador.getBitacora().add(0, sTemp);
+                simulador.getBitacora().add(0, sTemp1);
+                
             }
         }
     }
     
-    public ArrayList<String> enviarPasajeros(){
-        ArrayList<String> resultado = new ArrayList<>();
-        
-        for(int i = 0; i < personas.size(); i++){
-            String temp = "Pasajero: ";
-            temp = temp + String.valueOf(personas.get(i).id);
-            temp = temp + " | Piso Actual: ";
-            temp = temp + String.valueOf(personas.get(i).pisoActual);
-            temp = temp + " | Piso Destino: ";
-            temp = temp + String.valueOf(personas.get(i).pisoDestino);
-            temp = temp + " | Elevador Actual: ";
-            if(personas.get(i).elevadorActual == -1){
-                temp = temp + "Esperando elevador ";
-            }
-            else{
-                temp = temp + String.valueOf(personas.get(i).elevadorActual);
-            }
-            
-            resultado.add(0, temp);
-            
-        }
-        return resultado; 
+  
+    public ArrayList<Pasajero> getPersonas() {
+        return personas;
     }
-    
 
+    public void setPersonas(ArrayList<Pasajero> personas) {
+        this.personas = personas;
+    }
+
+    public Simulador getSimulador() {
+        return simulador;
+    }
+
+    public void setSimulador(Simulador simulador) {
+        this.simulador = simulador;
+    }
+    
+    public ArrayList<String> estadoElevadores(){
+        ArrayList<String> msjs = new ArrayList<String>();
+        String msj = "";
+        for(int i=0; i<this.arrayElevadores.size(); i++){
+            Elevador elevador = this.arrayElevadores.get(i);
+            msj = "Elevador "+(i+1)+": [ Piso Actual: "+elevador.getExterior().getSensorPiso().getPisoActual()+1 +" | Direccion Actual: "+elevador.getMotorElevador().getDireccionActual()+" | Prevista: "+ elevador.getMotorElevador().getControlador().getCalendarizador().getDireccionPrevista() +" ]";
+            msjs.add(msj);
+        }
+        return msjs;
+    }
 }

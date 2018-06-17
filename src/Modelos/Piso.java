@@ -82,6 +82,7 @@ public class Piso {
  * probSobreCien es la probabilidad sobre 100 que se busca   
  */    
     public boolean probabilidad(float probSobreCien){
+        
         Random rand = new Random();
         return (rand.nextInt(100) + 0) <= probSobreCien*100;
     }
@@ -96,7 +97,9 @@ public class Piso {
         else
             panelLlamada.botonAbajo.crearInterrupcion(pisoActual);// si es menor, pide bajar
     }
+
 /*
+>>>>>>> eb709a5277d214be6f5ba9a9f1a53d307d49abc6
  * Funcion para crear pasajero y solicitar elevador en un piso
  * 
  */ 
@@ -122,7 +125,7 @@ public class Piso {
                     this.elevadores.get(i).getElevador().getInterior().getCabina().getPasajeros().add(pasajero);
                     // Remueve el pasajero de la cola de espera
                     this.colaPasajeros.remove(0);
-                    mensaje = "El pasajero "+pasajero.getId()+" se ha montado al elevador "+i+".";
+                    mensaje = "Abordaje: [ Pasajero: "+(pasajero.getId()+1)+" | Elevador: "+(i+1)+" ]";
                     mensajes.add(mensaje);
                 }
             }
@@ -142,7 +145,7 @@ public class Piso {
                     if(pasajeros.get(j).getPisoDestino() == this.numeroPiso){
                         this.colaPasajeros.add(pasajeros.get(j));// Agrega el pasajero a la cola de espera
                         this.elevadores.get(i).getElevador().getInterior().getCabina().getPasajeros().remove(j);// saca el pasajero de la cabina
-                        msj = "El pasajero "+pasajeros.get(j).getId()+" se ha bajado en el piso "+this.numeroPiso+".";
+                        msj = "Desbordaje: [ Pasajero: "+(pasajeros.get(j).getId()+1) +" | Piso: "+(this.numeroPiso+1) +" ]";
                         msjs.add(msj);
                     }
                 }

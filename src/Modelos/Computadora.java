@@ -49,10 +49,73 @@ public class Computadora {
     
     public void asignarInterrupcionDestino() {
         // TODO implement here
+        ArrayList<Interrupcion> interrupciones = null;
+        interrupciones = colaInterrupciones;
+        for(int i = 0; i<interrupciones.size(); i++){
+            InterrupcionDestino inter = (InterrupcionDestino) interrupciones.get(i);
+            if(inter.getTipo() == 1){
+                for(int j = 0; j<controladores.size(); j++){
+                    Controlador contr = controladores.get(j);
+                    if(contr.getMotor().getElevador().getNumElevador() == inter.getNumElev()){
+                        contr.getColaInterrupciones().add(inter);
+                        contr.getCalendarizador().calendarizarPiso(inter.getPiso());
+                        colaInterrupciones.remove(i);
+                    }
+                }
+            }
+            
+        }
     }
 
+    // Lo hace con todas la interrupciones de solicitud de la computadora
     public void asignarInterrupcionLlamada() {
         // TODO implement here
+        ArrayList<Interrupcion> interrupciones = null;
+        interrupciones = colaInterrupciones;
+        for(int i = 0; i<interrupciones.size(); i++){
+            InterrupcionLlamada inter = (InterrupcionLlamada) interrupciones.get(i);
+            if(inter.getTipo() == 0){
+                int calificacion = 0;
+                int calificacionMax = 0;
+                int mejorElevador = 0;
+                for(int j = 0; j<controladores.size(); j++){
+                    Controlador contr = controladores.get(j);
+                    int pisoElevador = contr.getMotor().getElevador().getExterior().getSensorPiso().getPisoActual();
+                    if(contr.getMotor().getDireccionActual() == inter.getDireccion()){
+                        calificacion += 40;
+                    }
+                    int difPisos = (pisoElevador - inter.getPiso());
+                    if(difPisos < 0)
+                        difPisos = difPisos * -1;
+                    calificacion += 30 - (difPisos * 3);
+                    difPisos = 0;
+                    for(int n = 0; n<contr.getCalendarizador().getPisosCalendarizados().size(); n++){
+                        int pisoCalendarizado = contr.getCalendarizador().getPisosCalendarizados().get(n);
+                        if(contr.getMotor().getDireccionActual() == Direccion.abajo){
+                            if(pisoCalendarizado < pisoElevador && pisoCalendarizado > inter.getPiso()){
+                                difPisos++;
+                            }
+                        }else if(contr.getMotor().getDireccionActual() == Direccion.arriba){
+                            if(pisoCalendarizado > pisoElevador && pisoCalendarizado < inter.getPiso()){
+                                difPisos++;
+                            }
+                        }
+                    }
+                    calificacion += 30 - (difPisos * 3);
+                    
+                    if(calificacion > calificacionMax){
+                        calificacionMax = calificacion;
+                        mejorElevador = j;
+                    }
+                }
+                Controlador contr = controladores.get(mejorElevador);
+                contr.getColaInterrupciones().add(inter);
+                contr.getCalendarizador().calendarizarPiso(inter.getPiso());
+                colaInterrupciones.remove(i);
+            }
+            
+        }
+        
     }
     
     

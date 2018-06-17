@@ -33,6 +33,8 @@ public class Simulador extends Thread{
     private ControladorSimulador cs;
     private boolean consola = true;
     private int ut = 0;
+    private ArrayList<String> bitacora = new ArrayList<>();
+    
     
     /**
      * Metodos de la clase
@@ -59,6 +61,7 @@ public class Simulador extends Thread{
         this.finalizar = finalizar;
         this.next = next;
         this.consola = false;
+        this.edificio.setSimulador(this);
         // TODO implement here
     }
      
@@ -109,26 +112,41 @@ public class Simulador extends Thread{
             
             Pasajero pasajero = this.edificio.crearPasajero(i); //Crear Pasajero 
             if(pasajero != null){                                           
-                this.cs.getVc().informeCreacionPasajeros(i,pasajero.getId());// Imprimir Pasajeros Creados
-                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());// Imprimir Solicitudes !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                this.cs.getVc().informeCreacionPasajeros(i,pasajero);// Imprimir Pasajeros Creados
+                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());// Llamadas por Piso
             }
-            this.cs.getVc().informeMontar(this.edificio.getArrayPisos().get(i).ingresoElevador());     
-            this.cs.getVc().informeBajarse(this.edificio.getArrayPisos().get(i).salidaElevador());
-            
+        }
+        for(int i=0; i < cantidadPisos; i++){// Para cada Piso
+            this.cs.getVc().informeMontar(this.edificio.getArrayPisos().get(i).ingresoElevador());// Se montan personas
+        }
+        for(int i=0; i < cantidadPisos; i++){// Para cada Piso
+            this.cs.getVc().informeBajarse(this.edificio.getArrayPisos().get(i).salidaElevador());// Se bajan personas   
         }
         ArrayList<Pasajero>pasajeros = new ArrayList<Pasajero>();
-        for(int j=0;j<this.cantidadElevadores;j++){// Para cada Elevador
+        for(int j=0;j<this.cantidadElevadores;j++){// Para cada Elevador Destinos
             pasajeros = this.edificio.getArrayElevadores().get(j).getInterior().getCabina().getPasajeros();
             for(int k=0;k<pasajeros.size();k++){// Para cada Pasajero
-                this.cs.getVc().informeDestino(pasajeros.get(k).seleccionarPiso(this.edificio.getArrayPisos()));
-                this.cs.getVc().informeEmergencia(pasajeros.get(k).usarInterruptorEmergencia(this.edificio.getArrayElevadores().get(j)));
+                this.cs.getVc().informeDestino(pasajeros.get(k).seleccionarPiso());// Personas piden Destino
             }
         }
+        for(int j=0;j<this.cantidadElevadores;j++){// Para cada Elevador Emergencias
+            pasajeros = this.edificio.getArrayElevadores().get(j).getInterior().getCabina().getPasajeros();
+            for(int k=0;k<pasajeros.size();k++){// Para cada Pasajero
+                this.cs.getVc().informeEmergencia(pasajeros.get(k).usarInterruptorEmergencia(this.edificio.getArrayElevadores().get(j)));// Hay emergencias
+            }
+        }
+        this.cs.getVc().informeElevadores(this.edificio.estadoElevadores());// Estado de Elevadores
+        
+        Computadora compu = Computadora.getInstance();
+        for(int i =0; i<compu.getControladores().size(); i++)
+            System.out.println(compu.getControladores().get(i).getCalendarizador().getPisosCalendarizados());
+        
         this.cs.getVc().printFinnalUT(ut);
     }
+    
     public void run(){ 
         if(consola)
-            ut = 0;// Contador de UT
+            ut = 1;// Contador de UT
         while(!finalizar){
             try {
                 Thread.sleep(this.velocidadActual*1000);// Lag
@@ -139,9 +157,7 @@ public class Simulador extends Thread{
                 }
                 if(debug){
                     while(this.isNext()){
-                        
                         while(pausa){// En PAUSA dentro de debug
-                            
                             Thread.sleep(1000);// Lag para sincronizar prints
                         }
                         Thread.sleep(1000);// Lag para sincronizar prints
@@ -167,6 +183,40 @@ public class Simulador extends Thread{
         
     }
     
+      public ArrayList<String> enviarPasajeros(){
+        ArrayList<String> resultado = new ArrayList<>();
+        
+        for(int i = 0; i < edificio.getPersonas().size(); i++){
+            String temp = "Pasajero: ";
+            temp = temp + String.valueOf(edificio.getPersonas().get(i).id);
+            temp = temp + " | Piso Actual: ";
+            temp = temp + String.valueOf(edificio.getPersonas().get(i).pisoActual);
+            temp = temp + " | Piso Destino: ";
+            temp = temp + String.valueOf(edificio.getPersonas().get(i).pisoDestino);
+            temp = temp + " | Elevador Actual: ";
+            if(edificio.getPersonas().get(i).elevadorActual == -1){
+                temp = temp + "Esperando elevador ";
+            }
+            else{
+                temp = temp + String.valueOf(edificio.getPersonas().get(i).elevadorActual);
+            }
+            
+            resultado.add(temp);
+            
+        }
+        return resultado; 
+    }
+    
+    
+    public ArrayList<String> enviarPisoActual(){
+        ArrayList<String> resultado = new ArrayList<>();
+        for(int i = 0; i < edificio.getArrayElevadores().size(); i++){
+            String temp = String.valueOf(edificio.getArrayElevadores().get(i).getExterior().getSensorPiso().getPisoActual());
+            resultado.add(temp);
+        }
+        return resultado;
+    }
+
 
 
  
@@ -341,6 +391,14 @@ public class Simulador extends Thread{
 
     public void setUt(int ut) {
         this.ut = ut;
+    }
+
+    public ArrayList<String> getBitacora() {
+        return bitacora;
+    }
+
+    public void setBitacora(ArrayList<String> bitacora) {
+        this.bitacora = bitacora;
     }
     
     

@@ -32,7 +32,10 @@ CB11 - Maxima capacidad
 */
 public class BitacoraRenderer extends DefaultListCellRenderer {
     public Component getListCellRendererComponent( JList list, Object value, int index, boolean isSelected, boolean cellHasFocus ) {
-            Component c = super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );
+           
+         Component c = super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );
+           
+        try{
             if (list.getModel().getElementAt(index).toString().substring(0,4).equals("CB01")) {
                 c.setBackground( Color.BLUE );
                 c.setForeground(Color.WHITE);
@@ -66,6 +69,10 @@ public class BitacoraRenderer extends DefaultListCellRenderer {
             }if (list.getModel().getElementAt(index).toString().substring(0,4).equals("CB11")) {
                 c.setBackground( Color.BLACK );
                 c.setForeground(Color.WHITE);
+            }
+            }
+            catch(Exception e){
+                
             }
 
             return c;

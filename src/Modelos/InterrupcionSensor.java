@@ -13,7 +13,8 @@ public class InterrupcionSensor extends Interrupcion {
     
     private int piso;
 
-    public InterrupcionSensor(int piso) {
+    public InterrupcionSensor(int piso, int tipo) {
+        super(tipo);
         this.piso = piso;
     }
     

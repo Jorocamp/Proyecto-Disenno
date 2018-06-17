@@ -26,5 +26,12 @@ public class BotonDestino extends Boton {
         this.pisoDestino = pisoDestino;
     }
     
+    public void crearInterrupcion(int piso, int numElev) {
+        InterrupcionDestino inter = new InterrupcionDestino(piso, 1, numElev);
+        Computadora compu = Computadora.getInstance();
+        compu.nuevaInterrupcion(inter);
+        compu.asignarInterrupcionDestino();
+    }
+    
     
 }

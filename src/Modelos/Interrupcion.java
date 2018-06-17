@@ -10,7 +10,19 @@ package Modelos;
  * @author Raul
  */
 public class Interrupcion {
-
+    private int tipo;
+    //0 para InterrupcionLlamada, 1 para InterrupcionDestino y 2 para InterrupcionSensor
     
+    public Interrupcion(int tipo){
+        this.tipo = tipo;
+    }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
     
 }
