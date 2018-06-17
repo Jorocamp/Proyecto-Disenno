@@ -31,6 +31,8 @@ public class Simulador extends Thread{
     private boolean next;
     private boolean finalizar;
     private ControladorSimulador cs;
+    private boolean consola = true;
+    private int ut = 0;
     
     /**
      * Metodos de la clase
@@ -48,6 +50,18 @@ public class Simulador extends Thread{
         // TODO implement here
     }
 
+     public Simulador(Edificio edificio, int cantidadPisos, int cantidadElevadores, int velocidadActual, boolean pausa, boolean finalizar,boolean next, boolean consola) {
+        this.edificio = edificio;
+        this.cantidadPisos = cantidadPisos;
+        this.cantidadElevadores = cantidadElevadores;
+        this.velocidadActual = velocidadActual;
+        this.pausa = pausa;
+        this.finalizar = finalizar;
+        this.next = next;
+        this.consola = false;
+        // TODO implement here
+    }
+     
     public Simulador() {
     }
     private void iniciarSimulacion(){
@@ -82,31 +96,30 @@ public class Simulador extends Thread{
         }
     }
 
-    private void ejecutarPaso(){
+    public void ejecutarPaso(){
         
-    }
+        ut++;
+        cs.ejecutarSimulacionUT();
+     }
     
     private void ejecutarUT(int ut){
         this.cs.getVc().printInicioUT(ut);
         
         for(int i=0; i < cantidadPisos; i++){// Para cada Piso
             
-            this.edificio.crearPasajero(i);// Crear Pasajeros
-            this.cs.getVc().informeCreacionPasajeros(i, this.edificio.getContadorPasajeros()-1);
-            Pasajero pasajero = this.edificio.getArrayPisos().get(i).getColaPasajeros().get(0);
-            
-            if(this.edificio.getArrayPisos().get(i).solicitarElevador(pasajero))// Solicitar Elevador
-                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());
+            Pasajero pasajero = this.edificio.crearPasajero(i); //Crear Pasajero 
+            if(pasajero != null){                                           
+                this.cs.getVc().informeCreacionPasajeros(i,pasajero.getId());// Imprimir Pasajeros Creados
+                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());// Imprimir Solicitudes
+            }
             this.cs.getVc().informeMontar(this.edificio.getArrayPisos().get(i).ingresoElevador());
             ArrayList<Pasajero>pasajeros = new ArrayList<Pasajero>();
             
             for(int j=0;j<this.cantidadElevadores;j++){// Para cada Elevador
                 pasajeros = this.edificio.getArrayElevadores().get(j).getInterior().getCabina().getPasajeros();
                 for(int k=0;k<pasajeros.size();k++){// Para cada Pasajero
-                    //System.out.println("here");
-                    //this.cs.getVc().informeDestino(pasajeros.get(i).seleccionarPiso(this.edificio.getArrayPisos()));
+                    this.cs.getVc().informeDestino(pasajeros.get(i).seleccionarPiso(this.edificio.getArrayPisos()));
                     this.cs.getVc().informeEmergencia(pasajeros.get(i).usarInterruptorEmergencia(this.edificio.getArrayElevadores().get(j)));
-                    //System.out.println("there");
                 }
             }
             this.cs.getVc().informeBajarse(this.edificio.getArrayPisos().get(i).salidaElevador());
@@ -114,9 +127,9 @@ public class Simulador extends Thread{
         }
         this.cs.getVc().printFinnalUT(ut);
     }
-    public void run(){
-        int ut = 0;// Contador de UT
-        int utCrearPersonas = 0;// 
+    public void run(){ 
+        if(consola)
+            ut = 0;// Contador de UT
         while(!finalizar){
             try {
                 Thread.sleep(this.velocidadActual*1000);// Lag
@@ -136,7 +149,13 @@ public class Simulador extends Thread{
                     }
                     this.setNext(true);
                 }
-                ejecutarUT(ut);// Ejecutar Acciones en la UT
+                if(consola){
+                    ejecutarUT(ut);// Ejecutar Acciones en la UT
+                
+                }
+                else{
+                    cs.ejecutarSimulacionUT();
+                }
                 
             } catch (InterruptedException ex) {
                 Logger.getLogger(Simulador.class.getName()).log(Level.SEVERE, null, ex); 
@@ -149,6 +168,9 @@ public class Simulador extends Thread{
         
     }
     
+
+
+ 
     
     /**
      * Getters and Setters para los atributos para la clase
@@ -161,6 +183,8 @@ public class Simulador extends Thread{
     public void setEdificio(Edificio edificio) {
         this.edificio = edificio;
     }
+    
+    
 
     public int getCantidadPisos() {
         return cantidadPisos;
@@ -303,4 +327,24 @@ public class Simulador extends Thread{
         }
         return arrayProbabilidadDestino;
     }
+
+    public boolean isConsola() {
+        return consola;
+    }
+
+    public void setConsola(boolean consola) {
+        this.consola = consola;
+    }
+
+    public int getUt() {
+        return ut;
+    }
+
+    public void setUt(int ut) {
+        this.ut = ut;
+    }
+    
+    
+    
+    
 }

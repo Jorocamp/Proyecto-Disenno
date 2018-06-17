@@ -26,10 +26,14 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -39,7 +43,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author MICHA
  */
-public class VistaGUI extends javax.swing.JFrame implements Vista{
+public class VistaGUI extends javax.swing.JFrame implements Vista, Runnable{
     
     //Se crea un array para almacenar las probabilidades
     private ArrayList<JSpinner> p1Lista = new ArrayList<>();
@@ -62,6 +66,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private boolean elevadoresInit = false;
     
     private boolean simPausa = false;
+    private boolean first = true;
     
     private ControladorSimulador controlador = new ControladorSimulador();
     
@@ -79,9 +84,9 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
         btn_stop.setEnabled(false);
         configSpinner(spn_nPisos,256,2);
         configSpinner(spn_nElevadores, Integer.MAX_VALUE, 1);
-        Simulador simulador = new Simulador(new Edificio(null,null),0,0,0,false,false,false);
-        controlador.setSimulador(simulador);
-
+        controlador.setVg(this);
+        lst_bitacora.ensureIndexIsVisible( lst_bitacora.getModel().getSize() -1 );
+      
     }
 
     /**
@@ -961,7 +966,10 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
 
     private void btn_cargarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cargarAActionPerformed
         // TODO add your handling code here:
-        
+        Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false, false);
+        simulador.setCs(controlador);
+        controlador.setSimulador(simulador);
+            
         
         FileNameExtensionFilter filter = new FileNameExtensionFilter("*.json, *.txt, *.xml", "json", "txt", "xml");
         JFileChooser fc = new JFileChooser();
@@ -986,20 +994,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             ArrayList<Object> arrayDatos = manejador.getDatos();
             controlador.configurarSimulacion(arrayDatos);
                 
-            
-            
-//        System.out.println(controlador.getSimulador().getCantidadPisos());
-//        System.out.println(controlador.getSimulador().getCantidadElevadores());
-//        System.out.println(controlador.getSimulador().getEdificio().getArrayPisos().get(1).);
-//        System.out.println(controlador.getSimulador().getCantidadPisos());
-//        System.out.println(controlador.getSimulador().getCantidadPisos());
-//        System.out.println(controlador.getSimulador().getCantidadPisos());
-//        System.out.println(controlador.getSimulador().getCantidadPisos());
-//        System.out.println(controlador.getSimulador().getCantidadPisos());
-//        System.out.println(controlador.getSimulador().getCantidadPisos());
-//        System.out.println(controlador.getSimulador().getCantidadPisos());
-            
-            
+
             JOptionPane.showMessageDialog(this, "Archivo de configuración cargado correctamente", "¡Ok!", JOptionPane.INFORMATION_MESSAGE);
             //Se cambian aspectos de la interfaz
             lbl_warning.setVisible(false);
@@ -1147,7 +1142,11 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
     private void btn_finActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finActionPerformed
         // TODO add your handling code here:
         
-
+        Simulador simulador = new Simulador(new Edificio(null, null), 0, 0, 0, false,false,false, false);
+        simulador.setCs(controlador);
+        
+        controlador.setSimulador(simulador);
+            
         if(validarProbabilidadDestino()){
                 
 
@@ -1212,6 +1211,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             img_warning.setVisible(false);
             btn_iniciarS.setEnabled(true);
             btn_guardarA.setEnabled(true);
+            
         }
         else{
             JOptionPane.showMessageDialog(this, "Probabilidad de destino de los pisos no es igual a 1\n Por favor corregir este detalle", "¡Error!", JOptionPane.ERROR_MESSAGE);
@@ -1227,11 +1227,23 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             btn_start.setIcon(new ImageIcon("src/Imagenes/play.png"));
             btn_next.setEnabled(true);            
             simPausa = false;
+            controlador.getSimulador().pausarSimulacion();
+           
         }
         else{
             btn_start.setIcon(new ImageIcon("src/Imagenes/pause.png"));
             btn_next.setEnabled(false);
             simPausa = true;
+            if(first){
+                controlador.getSimulador().start();
+                first = false;
+           
+            }
+            else{
+                controlador.getSimulador().reanudarSimulacion();
+           
+            }
+            
         }
 
         
@@ -1239,6 +1251,7 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
 
     private void btn_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nextActionPerformed
         // TODO add your handling code here:
+        controlador.getSimulador().ejecutarPaso();
     }//GEN-LAST:event_btn_nextActionPerformed
 
     private void btn_stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_stopActionPerformed
@@ -1248,20 +1261,23 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
          btn_speeddown.setEnabled(false);
          btn_speedup.setEnabled(false);
          btn_config.setEnabled(true);
+         controlador.getSimulador().stop();
+         
     }//GEN-LAST:event_btn_stopActionPerformed
 
     private void btn_iniciarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarSActionPerformed
         pnl_scrPrincipal.setVisible(false);
         pnl_scrSimulacion.setVisible(true);
         btn_start.setEnabled(true);
-        btn_next.setEnabled(false);
+        btn_next.setEnabled(true);
         btn_config.setEnabled(true);
         btn_stop.setEnabled(false);
         btn_speeddown.setEnabled(true);
         btn_speedup.setEnabled(true);
-         
+        first = true;
         btn_start.setIcon(new ImageIcon("src/Imagenes/play.png"));
-        
+        txt_utContador.setText("0");
+        txt_velocidadA.setText("0");
         lst_bitacora.setCellRenderer(new BitacoraRenderer());
         
     }//GEN-LAST:event_btn_iniciarSActionPerformed
@@ -1281,10 +1297,16 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
 
     private void btn_speeddownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_speeddownActionPerformed
         // TODO add your handling code here:
+        controlador.getSimulador().setVelocidadActual(controlador.getSimulador().getVelocidadActual() + 1); 
+        txt_velocidadA.setText(String.valueOf(controlador.getSimulador().getVelocidadActual()));
     }//GEN-LAST:event_btn_speeddownActionPerformed
 
     private void btn_speedupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_speedupActionPerformed
         // TODO add your handling code here:
+        if(controlador.getSimulador().getVelocidadActual() != 0){
+           controlador.getSimulador().setVelocidadActual(controlador.getSimulador().getVelocidadActual() - 1); 
+           txt_velocidadA.setText(String.valueOf(controlador.getSimulador().getVelocidadActual()));
+        }
     }//GEN-LAST:event_btn_speedupActionPerformed
 
     private void txt_velocidadAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_velocidadAActionPerformed
@@ -1715,6 +1737,815 @@ public class VistaGUI extends javax.swing.JFrame implements Vista{
             pnl_listaDireccion.repaint();
         }
     }
+
+    @Override
+    public void run() {
+        
+    }
+        
+    ///////////////////////////GETTERS AND SETTERS/////////////////////////////////////////'
+
+    public ArrayList<JSpinner> getP1Lista() {
+        return p1Lista;
+    }
+
+    public void setP1Lista(ArrayList<JSpinner> p1Lista) {
+        this.p1Lista = p1Lista;
+    }
+
+    public ArrayList<JSpinner> getP2Lista() {
+        return p2Lista;
+    }
+
+    public void setP2Lista(ArrayList<JSpinner> p2Lista) {
+        this.p2Lista = p2Lista;
+    }
+
+    public ArrayList<JSpinner> getP3Lista() {
+        return p3Lista;
+    }
+
+    public void setP3Lista(ArrayList<JSpinner> p3Lista) {
+        this.p3Lista = p3Lista;
+    }
+
+    public ArrayList<JSpinner> getP4Lista() {
+        return p4Lista;
+    }
+
+    public void setP4Lista(ArrayList<JSpinner> p4Lista) {
+        this.p4Lista = p4Lista;
+    }
+
+    public ArrayList<JSpinner> getUtPuertasLista() {
+        return utPuertasLista;
+    }
+
+    public void setUtPuertasLista(ArrayList<JSpinner> utPuertasLista) {
+        this.utPuertasLista = utPuertasLista;
+    }
+
+    public ArrayList<JSpinner> getUtPisosLista() {
+        return utPisosLista;
+    }
+
+    public void setUtPisosLista(ArrayList<JSpinner> utPisosLista) {
+        this.utPisosLista = utPisosLista;
+    }
+
+    public ArrayList<JSpinner> getMaxPersonasLista() {
+        return maxPersonasLista;
+    }
+
+    public void setMaxPersonasLista(ArrayList<JSpinner> maxPersonasLista) {
+        this.maxPersonasLista = maxPersonasLista;
+    }
+
+    public ArrayList<JTextField> getPisoActualLista() {
+        return pisoActualLista;
+    }
+
+    public void setPisoActualLista(ArrayList<JTextField> pisoActualLista) {
+        this.pisoActualLista = pisoActualLista;
+    }
+
+    public ArrayList<JTextField> getDireccionesLista() {
+        return direccionesLista;
+    }
+
+    public void setDireccionesLista(ArrayList<JTextField> direccionesLista) {
+        this.direccionesLista = direccionesLista;
+    }
+
+    public ArrayList<JTextField> getNumeroPasajerosLista() {
+        return numeroPasajerosLista;
+    }
+
+    public void setNumeroPasajerosLista(ArrayList<JTextField> numeroPasajerosLista) {
+        this.numeroPasajerosLista = numeroPasajerosLista;
+    }
+
+    public boolean isPisosInit() {
+        return pisosInit;
+    }
+
+    public void setPisosInit(boolean pisosInit) {
+        this.pisosInit = pisosInit;
+    }
+
+    public boolean isElevadoresInit() {
+        return elevadoresInit;
+    }
+
+    public void setElevadoresInit(boolean elevadoresInit) {
+        this.elevadoresInit = elevadoresInit;
+    }
+
+    public boolean isSimPausa() {
+        return simPausa;
+    }
+
+    public void setSimPausa(boolean simPausa) {
+        this.simPausa = simPausa;
+    }
+
+    public boolean isFirst() {
+        return first;
+    }
+
+    public void setFirst(boolean first) {
+        this.first = first;
+    }
+
+    public ControladorSimulador getControlador() {
+        return controlador;
+    }
+
+    public void setControlador(ControladorSimulador controlador) {
+        this.controlador = controlador;
+    }
+
+    public JLabel getBnr_configTitle() {
+        return bnr_configTitle;
+    }
+
+    public void setBnr_configTitle(JLabel bnr_configTitle) {
+        this.bnr_configTitle = bnr_configTitle;
+    }
+
+    public JLabel getBnr_sceTitle() {
+        return bnr_sceTitle;
+    }
+
+    public void setBnr_sceTitle(JLabel bnr_sceTitle) {
+        this.bnr_sceTitle = bnr_sceTitle;
+    }
+
+    public JLabel getBnr_sceTitle1() {
+        return bnr_sceTitle1;
+    }
+
+    public void setBnr_sceTitle1(JLabel bnr_sceTitle1) {
+        this.bnr_sceTitle1 = bnr_sceTitle1;
+    }
+
+    public JButton getBtn_cargarA() {
+        return btn_cargarA;
+    }
+
+    public void setBtn_cargarA(JButton btn_cargarA) {
+        this.btn_cargarA = btn_cargarA;
+    }
+
+    public JButton getBtn_config() {
+        return btn_config;
+    }
+
+    public void setBtn_config(JButton btn_config) {
+        this.btn_config = btn_config;
+    }
+
+    public JButton getBtn_configS() {
+        return btn_configS;
+    }
+
+    public void setBtn_configS(JButton btn_configS) {
+        this.btn_configS = btn_configS;
+    }
+
+    public JButton getBtn_fin() {
+        return btn_fin;
+    }
+
+    public void setBtn_fin(JButton btn_fin) {
+        this.btn_fin = btn_fin;
+    }
+
+    public JButton getBtn_guardarA() {
+        return btn_guardarA;
+    }
+
+    public void setBtn_guardarA(JButton btn_guardarA) {
+        this.btn_guardarA = btn_guardarA;
+    }
+
+    public JButton getBtn_iniciarS() {
+        return btn_iniciarS;
+    }
+
+    public void setBtn_iniciarS(JButton btn_iniciarS) {
+        this.btn_iniciarS = btn_iniciarS;
+    }
+
+    public JButton getBtn_nElevadores() {
+        return btn_nElevadores;
+    }
+
+    public void setBtn_nElevadores(JButton btn_nElevadores) {
+        this.btn_nElevadores = btn_nElevadores;
+    }
+
+    public JButton getBtn_nPisos() {
+        return btn_nPisos;
+    }
+
+    public void setBtn_nPisos(JButton btn_nPisos) {
+        this.btn_nPisos = btn_nPisos;
+    }
+
+    public JButton getBtn_next() {
+        return btn_next;
+    }
+
+    public void setBtn_next(JButton btn_next) {
+        this.btn_next = btn_next;
+    }
+
+    public JButton getBtn_speeddown() {
+        return btn_speeddown;
+    }
+
+    public void setBtn_speeddown(JButton btn_speeddown) {
+        this.btn_speeddown = btn_speeddown;
+    }
+
+    public JButton getBtn_speedup() {
+        return btn_speedup;
+    }
+
+    public void setBtn_speedup(JButton btn_speedup) {
+        this.btn_speedup = btn_speedup;
+    }
+
+    public JButton getBtn_start() {
+        return btn_start;
+    }
+
+    public void setBtn_start(JButton btn_start) {
+        this.btn_start = btn_start;
+    }
+
+    public JButton getBtn_stop() {
+        return btn_stop;
+    }
+
+    public void setBtn_stop(JButton btn_stop) {
+        this.btn_stop = btn_stop;
+    }
+
+    public JButton getBtn_volver() {
+        return btn_volver;
+    }
+
+    public void setBtn_volver(JButton btn_volver) {
+        this.btn_volver = btn_volver;
+    }
+
+    public JCheckBox getChk_cb01() {
+        return chk_cb01;
+    }
+
+    public void setChk_cb01(JCheckBox chk_cb01) {
+        this.chk_cb01 = chk_cb01;
+    }
+
+    public JCheckBox getChk_cb02() {
+        return chk_cb02;
+    }
+
+    public void setChk_cb02(JCheckBox chk_cb02) {
+        this.chk_cb02 = chk_cb02;
+    }
+
+    public JCheckBox getChk_cb03() {
+        return chk_cb03;
+    }
+
+    public void setChk_cb03(JCheckBox chk_cb03) {
+        this.chk_cb03 = chk_cb03;
+    }
+
+    public JCheckBox getChk_cb04() {
+        return chk_cb04;
+    }
+
+    public void setChk_cb04(JCheckBox chk_cb04) {
+        this.chk_cb04 = chk_cb04;
+    }
+
+    public JCheckBox getChk_cb05() {
+        return chk_cb05;
+    }
+
+    public void setChk_cb05(JCheckBox chk_cb05) {
+        this.chk_cb05 = chk_cb05;
+    }
+
+    public JCheckBox getChk_cb06() {
+        return chk_cb06;
+    }
+
+    public void setChk_cb06(JCheckBox chk_cb06) {
+        this.chk_cb06 = chk_cb06;
+    }
+
+    public JCheckBox getChk_cb07() {
+        return chk_cb07;
+    }
+
+    public void setChk_cb07(JCheckBox chk_cb07) {
+        this.chk_cb07 = chk_cb07;
+    }
+
+    public JCheckBox getChk_cb08() {
+        return chk_cb08;
+    }
+
+    public void setChk_cb08(JCheckBox chk_cb08) {
+        this.chk_cb08 = chk_cb08;
+    }
+
+    public JCheckBox getChk_cb09() {
+        return chk_cb09;
+    }
+
+    public void setChk_cb09(JCheckBox chk_cb09) {
+        this.chk_cb09 = chk_cb09;
+    }
+
+    public JCheckBox getChk_cb10() {
+        return chk_cb10;
+    }
+
+    public void setChk_cb10(JCheckBox chk_cb10) {
+        this.chk_cb10 = chk_cb10;
+    }
+
+    public JCheckBox getChk_cb11() {
+        return chk_cb11;
+    }
+
+    public void setChk_cb11(JCheckBox chk_cb11) {
+        this.chk_cb11 = chk_cb11;
+    }
+
+    public JLabel getImg_ssce() {
+        return img_ssce;
+    }
+
+    public void setImg_ssce(JLabel img_ssce) {
+        this.img_ssce = img_ssce;
+    }
+
+    public JLabel getImg_warning() {
+        return img_warning;
+    }
+
+    public void setImg_warning(JLabel img_warning) {
+        this.img_warning = img_warning;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JSeparator getjSeparator1() {
+        return jSeparator1;
+    }
+
+    public void setjSeparator1(JSeparator jSeparator1) {
+        this.jSeparator1 = jSeparator1;
+    }
+
+    public JLabel getLbl_Pasajeros() {
+        return lbl_Pasajeros;
+    }
+
+    public void setLbl_Pasajeros(JLabel lbl_Pasajeros) {
+        this.lbl_Pasajeros = lbl_Pasajeros;
+    }
+
+    public JLabel getLbl_bitacora() {
+        return lbl_bitacora;
+    }
+
+    public void setLbl_bitacora(JLabel lbl_bitacora) {
+        this.lbl_bitacora = lbl_bitacora;
+    }
+
+    public JLabel getLbl_direccion() {
+        return lbl_direccion;
+    }
+
+    public void setLbl_direccion(JLabel lbl_direccion) {
+        this.lbl_direccion = lbl_direccion;
+    }
+
+    public JLabel getLbl_filtrar() {
+        return lbl_filtrar;
+    }
+
+    public void setLbl_filtrar(JLabel lbl_filtrar) {
+        this.lbl_filtrar = lbl_filtrar;
+    }
+
+    public JLabel getLbl_nElevadores() {
+        return lbl_nElevadores;
+    }
+
+    public void setLbl_nElevadores(JLabel lbl_nElevadores) {
+        this.lbl_nElevadores = lbl_nElevadores;
+    }
+
+    public JLabel getLbl_nPisos() {
+        return lbl_nPisos;
+    }
+
+    public void setLbl_nPisos(JLabel lbl_nPisos) {
+        this.lbl_nPisos = lbl_nPisos;
+    }
+
+    public JLabel getLbl_numPasajeros() {
+        return lbl_numPasajeros;
+    }
+
+    public void setLbl_numPasajeros(JLabel lbl_numPasajeros) {
+        this.lbl_numPasajeros = lbl_numPasajeros;
+    }
+
+    public JLabel getLbl_p1() {
+        return lbl_p1;
+    }
+
+    public void setLbl_p1(JLabel lbl_p1) {
+        this.lbl_p1 = lbl_p1;
+    }
+
+    public JLabel getLbl_p2() {
+        return lbl_p2;
+    }
+
+    public void setLbl_p2(JLabel lbl_p2) {
+        this.lbl_p2 = lbl_p2;
+    }
+
+    public JLabel getLbl_p3() {
+        return lbl_p3;
+    }
+
+    public void setLbl_p3(JLabel lbl_p3) {
+        this.lbl_p3 = lbl_p3;
+    }
+
+    public JLabel getLbl_p4() {
+        return lbl_p4;
+    }
+
+    public void setLbl_p4(JLabel lbl_p4) {
+        this.lbl_p4 = lbl_p4;
+    }
+
+    public JLabel getLbl_p5() {
+        return lbl_p5;
+    }
+
+    public void setLbl_p5(JLabel lbl_p5) {
+        this.lbl_p5 = lbl_p5;
+    }
+
+    public JLabel getLbl_p6() {
+        return lbl_p6;
+    }
+
+    public void setLbl_p6(JLabel lbl_p6) {
+        this.lbl_p6 = lbl_p6;
+    }
+
+    public JLabel getLbl_p8() {
+        return lbl_p8;
+    }
+
+    public void setLbl_p8(JLabel lbl_p8) {
+        this.lbl_p8 = lbl_p8;
+    }
+
+    public JLabel getLbl_pisoActual() {
+        return lbl_pisoActual;
+    }
+
+    public void setLbl_pisoActual(JLabel lbl_pisoActual) {
+        this.lbl_pisoActual = lbl_pisoActual;
+    }
+
+    public JLabel getLbl_veocidadA() {
+        return lbl_veocidadA;
+    }
+
+    public void setLbl_veocidadA(JLabel lbl_veocidadA) {
+        this.lbl_veocidadA = lbl_veocidadA;
+    }
+
+    public JLabel getLbl_warning() {
+        return lbl_warning;
+    }
+
+    public void setLbl_warning(JLabel lbl_warning) {
+        this.lbl_warning = lbl_warning;
+    }
+
+    public JLabel getLbl_welcome() {
+        return lbl_welcome;
+    }
+
+    public void setLbl_welcome(JLabel lbl_welcome) {
+        this.lbl_welcome = lbl_welcome;
+    }
+
+    public JList<String> getLst_Pasajeros() {
+        return lst_Pasajeros;
+    }
+
+    public void setLst_Pasajeros(JList<String> lst_Pasajeros) {
+        this.lst_Pasajeros = lst_Pasajeros;
+    }
+
+    public JList<String> getLst_bitacora() {
+        return lst_bitacora;
+    }
+
+    public void setLst_bitacora(JList<String> lst_bitacora) {
+        this.lst_bitacora = lst_bitacora;
+    }
+
+    public JScrollPane getPnl_Pasajeros() {
+        return pnl_Pasajeros;
+    }
+
+    public void setPnl_Pasajeros(JScrollPane pnl_Pasajeros) {
+        this.pnl_Pasajeros = pnl_Pasajeros;
+    }
+
+    public JScrollPane getPnl_bitacora() {
+        return pnl_bitacora;
+    }
+
+    public void setPnl_bitacora(JScrollPane pnl_bitacora) {
+        this.pnl_bitacora = pnl_bitacora;
+    }
+
+    public JPanel getPnl_config() {
+        return pnl_config;
+    }
+
+    public void setPnl_config(JPanel pnl_config) {
+        this.pnl_config = pnl_config;
+    }
+
+    public JScrollPane getPnl_configP1() {
+        return pnl_configP1;
+    }
+
+    public void setPnl_configP1(JScrollPane pnl_configP1) {
+        this.pnl_configP1 = pnl_configP1;
+    }
+
+    public JScrollPane getPnl_configP2() {
+        return pnl_configP2;
+    }
+
+    public void setPnl_configP2(JScrollPane pnl_configP2) {
+        this.pnl_configP2 = pnl_configP2;
+    }
+
+    public JScrollPane getPnl_configP3() {
+        return pnl_configP3;
+    }
+
+    public void setPnl_configP3(JScrollPane pnl_configP3) {
+        this.pnl_configP3 = pnl_configP3;
+    }
+
+    public JScrollPane getPnl_configP4() {
+        return pnl_configP4;
+    }
+
+    public void setPnl_configP4(JScrollPane pnl_configP4) {
+        this.pnl_configP4 = pnl_configP4;
+    }
+
+    public JScrollPane getPnl_direccion() {
+        return pnl_direccion;
+    }
+
+    public void setPnl_direccion(JScrollPane pnl_direccion) {
+        this.pnl_direccion = pnl_direccion;
+    }
+
+    public JPanel getPnl_listaDireccion() {
+        return pnl_listaDireccion;
+    }
+
+    public void setPnl_listaDireccion(JPanel pnl_listaDireccion) {
+        this.pnl_listaDireccion = pnl_listaDireccion;
+    }
+
+    public JPanel getPnl_listaMaxP() {
+        return pnl_listaMaxP;
+    }
+
+    public void setPnl_listaMaxP(JPanel pnl_listaMaxP) {
+        this.pnl_listaMaxP = pnl_listaMaxP;
+    }
+
+    public JPanel getPnl_listaNumPasajeros() {
+        return pnl_listaNumPasajeros;
+    }
+
+    public void setPnl_listaNumPasajeros(JPanel pnl_listaNumPasajeros) {
+        this.pnl_listaNumPasajeros = pnl_listaNumPasajeros;
+    }
+
+    public JPanel getPnl_listaP1() {
+        return pnl_listaP1;
+    }
+
+    public void setPnl_listaP1(JPanel pnl_listaP1) {
+        this.pnl_listaP1 = pnl_listaP1;
+    }
+
+    public JPanel getPnl_listaP2() {
+        return pnl_listaP2;
+    }
+
+    public void setPnl_listaP2(JPanel pnl_listaP2) {
+        this.pnl_listaP2 = pnl_listaP2;
+    }
+
+    public JPanel getPnl_listaP3() {
+        return pnl_listaP3;
+    }
+
+    public void setPnl_listaP3(JPanel pnl_listaP3) {
+        this.pnl_listaP3 = pnl_listaP3;
+    }
+
+    public JPanel getPnl_listaP4() {
+        return pnl_listaP4;
+    }
+
+    public void setPnl_listaP4(JPanel pnl_listaP4) {
+        this.pnl_listaP4 = pnl_listaP4;
+    }
+
+    public JPanel getPnl_listaPisoActual() {
+        return pnl_listaPisoActual;
+    }
+
+    public void setPnl_listaPisoActual(JPanel pnl_listaPisoActual) {
+        this.pnl_listaPisoActual = pnl_listaPisoActual;
+    }
+
+    public JPanel getPnl_listaPisos() {
+        return pnl_listaPisos;
+    }
+
+    public void setPnl_listaPisos(JPanel pnl_listaPisos) {
+        this.pnl_listaPisos = pnl_listaPisos;
+    }
+
+    public JPanel getPnl_listaPuertas() {
+        return pnl_listaPuertas;
+    }
+
+    public void setPnl_listaPuertas(JPanel pnl_listaPuertas) {
+        this.pnl_listaPuertas = pnl_listaPuertas;
+    }
+
+    public JScrollPane getPnl_maxPersonas() {
+        return pnl_maxPersonas;
+    }
+
+    public void setPnl_maxPersonas(JScrollPane pnl_maxPersonas) {
+        this.pnl_maxPersonas = pnl_maxPersonas;
+    }
+
+    public JScrollPane getPnl_numPasajeros() {
+        return pnl_numPasajeros;
+    }
+
+    public void setPnl_numPasajeros(JScrollPane pnl_numPasajeros) {
+        this.pnl_numPasajeros = pnl_numPasajeros;
+    }
+
+    public JScrollPane getPnl_pisoActual() {
+        return pnl_pisoActual;
+    }
+
+    public void setPnl_pisoActual(JScrollPane pnl_pisoActual) {
+        this.pnl_pisoActual = pnl_pisoActual;
+    }
+
+    public JPanel getPnl_principal() {
+        return pnl_principal;
+    }
+
+    public void setPnl_principal(JPanel pnl_principal) {
+        this.pnl_principal = pnl_principal;
+    }
+
+    public JScrollPane getPnl_scrConfig() {
+        return pnl_scrConfig;
+    }
+
+    public void setPnl_scrConfig(JScrollPane pnl_scrConfig) {
+        this.pnl_scrConfig = pnl_scrConfig;
+    }
+
+    public JScrollPane getPnl_scrPrincipal() {
+        return pnl_scrPrincipal;
+    }
+
+    public void setPnl_scrPrincipal(JScrollPane pnl_scrPrincipal) {
+        this.pnl_scrPrincipal = pnl_scrPrincipal;
+    }
+
+    public JScrollPane getPnl_scrSimulacion() {
+        return pnl_scrSimulacion;
+    }
+
+    public void setPnl_scrSimulacion(JScrollPane pnl_scrSimulacion) {
+        this.pnl_scrSimulacion = pnl_scrSimulacion;
+    }
+
+    public JPanel getPnl_simulacion() {
+        return pnl_simulacion;
+    }
+
+    public void setPnl_simulacion(JPanel pnl_simulacion) {
+        this.pnl_simulacion = pnl_simulacion;
+    }
+
+    public JScrollPane getPnl_utPisos() {
+        return pnl_utPisos;
+    }
+
+    public void setPnl_utPisos(JScrollPane pnl_utPisos) {
+        this.pnl_utPisos = pnl_utPisos;
+    }
+
+    public JScrollPane getPnl_utPuertas() {
+        return pnl_utPuertas;
+    }
+
+    public void setPnl_utPuertas(JScrollPane pnl_utPuertas) {
+        this.pnl_utPuertas = pnl_utPuertas;
+    }
+
+    public JSeparator getSep_num1() {
+        return sep_num1;
+    }
+
+    public void setSep_num1(JSeparator sep_num1) {
+        this.sep_num1 = sep_num1;
+    }
+
+    public JSpinner getSpn_nElevadores() {
+        return spn_nElevadores;
+    }
+
+    public void setSpn_nElevadores(JSpinner spn_nElevadores) {
+        this.spn_nElevadores = spn_nElevadores;
+    }
+
+    public JSpinner getSpn_nPisos() {
+        return spn_nPisos;
+    }
+
+    public void setSpn_nPisos(JSpinner spn_nPisos) {
+        this.spn_nPisos = spn_nPisos;
+    }
+
+    public JTextField getTxt_utContador() {
+        return txt_utContador;
+    }
+
+    public void setTxt_utContador(JTextField txt_utContador) {
+        this.txt_utContador = txt_utContador;
+    }
+
+    public JTextField getTxt_velocidadA() {
+        return txt_velocidadA;
+    }
+
+    public void setTxt_velocidadA(JTextField txt_velocidadA) {
+        this.txt_velocidadA = txt_velocidadA;
+    }
+    
+    
     
  
 }
