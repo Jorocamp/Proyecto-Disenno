@@ -491,8 +491,6 @@ public class VistaConsola extends Thread implements Vista{
         VistaConsola vc = new VistaConsola(cs);
         
         vc.inicioSimulador();
-        System.out.println("Done");
-        return;
         //sim.start();
         //[2,[0.0, 0.0],[0.5, 0.5],[0.0],[0.0],[1],[1],[6]]
         //vc.start();

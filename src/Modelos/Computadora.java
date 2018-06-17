@@ -75,6 +75,7 @@ public class Computadora {
         // TODO implement here
         ArrayList<Interrupcion> interrupciones = null;
         interrupciones = colaInterrupciones;
+        
         for(int i = 0; i<interrupciones.size(); i++){
   
             Interrupcion inter2 = interrupciones.get(i);
@@ -87,6 +88,9 @@ public class Computadora {
                 for(int j = 0; j<controladores.size(); j++){
                     Controlador contr = controladores.get(j);
                     int pisoElevador = contr.getMotor().getElevador().getExterior().getSensorPiso().getPisoActual();
+                    if(contr.getCalendarizador().getPisosCalendarizados().size() == 0){
+                        calificacion += 100;
+                    }
                     if(contr.getMotor().getDireccionActual() == inter.getDireccion()){
                         calificacion += 40;
                     }

@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -107,13 +108,14 @@ public class Simulador extends Thread{
     
     private void ejecutarUT(int ut){
         this.cs.getVc().printInicioUT(ut);
-        for(int i=0; i < cantidadPisos; i++){// Para cada Piso
+        Random rand = new Random();
+        int piso = (rand.nextInt(this.cantidadPisos-1) + 0); 
             
-            Pasajero pasajero = this.edificio.crearPasajero(i); //Crear Pasajero 
-            if(pasajero != null){                                           
-                this.cs.getVc().informeCreacionPasajeros(i,pasajero);// Imprimir Pasajeros Creados
-                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());// Llamadas por Piso
-            }
+        Pasajero pasajero = this.edificio.crearPasajero(piso); //Crear Pasajero 
+        if(pasajero != null){                                           
+            this.cs.getVc().informeCreacionPasajeros(piso,pasajero);// Imprimir Pasajeros Creados
+            this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());// Llamadas por Piso
+            
         }
         for(int i=0; i < cantidadPisos; i++){// Para cada Piso
             this.cs.getVc().informeMontar(this.edificio.getArrayPisos().get(i).ingresoElevador());// Se montan personas
@@ -141,9 +143,10 @@ public class Simulador extends Thread{
         this.cs.getVc().informeElevadores(this.edificio.estadoElevadores());// Estado de Elevadores
         
         Computadora compu = Computadora.getInstance();
-        for(int i =0; i<compu.getControladores().size(); i++)
+        System.out.println("\nCalendarizadores de Pisos:");
+        for(int i =0; i<compu.getControladores().size(); i++){  
             System.out.println(compu.getControladores().get(i).getCalendarizador().getPisosCalendarizados());
-        
+        }
         this.cs.getVc().printFinnalUT(ut);
     }
     

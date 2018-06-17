@@ -144,13 +144,21 @@ public class Edificio {
     public void setSimulador(Simulador simulador) {
         this.simulador = simulador;
     }
-    
+    public String pasajerosElevador(Elevador elev){
+        String msj = "\n{ Pasajeros";
+        for(int i=0; i<elev.getInterior().getCabina().getPasajeros().size(); i++){
+            
+            msj += "\n\tPasajero: "+(elev.getInterior().getCabina().getPasajeros().get(i).getId()+1)+" | Destino: "+(elev.getInterior().getCabina().getPasajeros().get(i).getPisoDestino()+1);
+        }
+        return msj+"\n}";
+    }
     public ArrayList<String> estadoElevadores(){
         ArrayList<String> msjs = new ArrayList<String>();
         String msj = "";
         for(int i=0; i<this.arrayElevadores.size(); i++){
             Elevador elevador = this.arrayElevadores.get(i);
             msj = "Elevador "+(i+1)+": [ Piso Actual: "+(elevador.getExterior().getSensorPiso().getPisoActual()+1) +" | Direccion Actual: "+elevador.getMotorElevador().getDireccionActual()+" | Prevista: "+ elevador.getMotorElevador().getControlador().getCalendarizador().getDireccionPrevista() +" ]";
+            msj += pasajerosElevador(this.arrayElevadores.get(i));
             msjs.add(msj);
         }
         return msjs;
