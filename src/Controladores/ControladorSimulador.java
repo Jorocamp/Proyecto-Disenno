@@ -72,6 +72,7 @@ public class ControladorSimulador {
         Computadora computadora = Computadora.getInstance();
         computadora.setColaInterrupciones(interrupciones);
         computadora.setControladores(controladores);
+        computadora.setControladorSim(this);
         simulador.setCantidadPisos((Integer)parametrosConfiguracion.get(0));
         simulador.setCantidadElevadores((Integer) parametrosConfiguracion.get(3));
         Edificio edificio = simulador.getEdificio();
@@ -149,6 +150,15 @@ public class ControladorSimulador {
         
     }
     
+    public void recibirMejorElevador(int mejor, int piso){
+        
+        String sTemp1 = "CB07 (UT "+ String.valueOf(simulador.getUt()) +"): El calenzarizador eligió al elevador " + String.valueOf(mejor) + " para ir al piso " + String.valueOf(piso);
+                
+                
+        simulador.getBitacora().add(0, sTemp1);
+    }
+
+    
     
     public void enviarBitacota(){
         ArrayList<String> bitacoraE = simulador.getBitacora();
@@ -183,6 +193,10 @@ public class ControladorSimulador {
         }  
     }
     
+    public void accionarElevador(){
+        
+    }
+    
      public void ejecutarSimulacionUT(){
          enviarUT();
          generarPasajeros();
@@ -190,6 +204,7 @@ public class ControladorSimulador {
          enviarPisoActual();
          enviarDirecciones();
          enviarNumPasajeros();
+         accionarElevador();
          enviarBitacota();
      }
      

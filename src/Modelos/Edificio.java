@@ -121,6 +121,12 @@ public class Edificio {
         }
     }
     
+    public void accionarElevadores(){
+        for(int i = 0; i < arrayElevadores.size(); i++){
+            arrayElevadores.get(i).getMotorElevador().getControlador().revisarSiguienteMovimiento();
+        }
+    }
+    
   
     public ArrayList<Pasajero> getPersonas() {
         return personas;

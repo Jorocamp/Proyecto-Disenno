@@ -59,7 +59,7 @@ public class Controlador {
         // TODO implement here
     }
 
-    private void revisarSiguienteMovimiento() {
+    public void revisarSiguienteMovimiento() {
         // TODO implement here
         switch(estadoElevador){
             case 0: //Moviendose

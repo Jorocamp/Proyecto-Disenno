@@ -9,6 +9,7 @@ package Modelos;
 
 //Imports************************************************************
 import Controladores.Controlador;
+import Controladores.ControladorSimulador;
 import java.util.*;
 
 /**DESCRIPCION:
@@ -27,7 +28,7 @@ public class Computadora {
     private ArrayList<Controlador> controladores;
     private ArrayList<Interrupcion> colaInterrupciones;
     private static final Computadora INSTANCE = new Computadora();
-
+    private ControladorSimulador controladorSim;
 
 
     /**
@@ -103,12 +104,13 @@ public class Computadora {
                     calificacion += 30 - (difPisos * 3);
                     
                     if(calificacion > calificacionMax){
-                        calificacion = calificacionMax;
+                        calificacionMax = calificacion;
                         mejorElevador = j;
                     }
                 }
                 Controlador contr = controladores.get(mejorElevador);
                 contr.getColaInterrupciones().add(inter);
+                controladorSim.recibirMejorElevador(contr.getMotor().getElevador().getNumElevador(), inter.getPiso());
                 contr.getCalendarizador().calendarizarPiso(inter.getPiso());
                 colaInterrupciones.remove(i);
             }
@@ -117,6 +119,7 @@ public class Computadora {
         
     }
     
+
     
     public void nuevaInterrupcion(Interrupcion nueva){
   
@@ -145,6 +148,16 @@ public class Computadora {
     public void setColaInterrupciones(ArrayList<Interrupcion> colaInterrupciones) {
         this.colaInterrupciones = colaInterrupciones;
     }
+
+    public ControladorSimulador getControladorSim() {
+        return controladorSim;
+    }
+
+    public void setControladorSim(ControladorSimulador controladorSim) {
+        this.controladorSim = controladorSim;
+    }
+    
+    
     
     
 }
