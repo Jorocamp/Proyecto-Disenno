@@ -152,9 +152,7 @@ public class ControladorSimulador {
     
     public void recibirMejorElevador(int mejor, int piso){
         
-        String sTemp1 = "CB07 (UT "+ String.valueOf(simulador.getUt()) +"): El calenzarizador eligió al elevador " + String.valueOf(mejor) + " para ir al piso " + String.valueOf(piso);
-                
-                
+        String sTemp1 = "CB07 (UT "+ String.valueOf(simulador.getUt()) +"): El calenzarizador eligió al elevador " + String.valueOf(mejor+1) + " para ir al piso " + String.valueOf(piso+1);     
         simulador.getBitacora().add(0, sTemp1);
     }
 
@@ -194,7 +192,7 @@ public class ControladorSimulador {
     }
     
     public void accionarElevador(){
-        
+        simulador.getEdificio().accionarElevadores();
     }
     
      public void ejecutarSimulacionUT(){

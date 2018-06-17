@@ -8,6 +8,7 @@ package Controladores;
 
 import java.util.*;
 import Modelos.*;
+import java.util.function.Predicate;
 
 /**DESCRIPCION:
  * 
@@ -63,9 +64,15 @@ public class Controlador {
         // TODO implement here
         switch(estadoElevador){
             case 0: //Moviendose
+                System.out.println("Elevador: " + motor.getElevador().getNumElevador());
+                System.out.println(calendarizador.getPisosCalendarizados().size());
                 if(calendarizador.comprobarPiso(motor.getElevador().getExterior().getSensorPiso().getPisoActual())){
-                    motor.permisoAbrirPuertas();
-                    return;
+                    //motor.permisoAbrirPuertas();
+                    int actual = motor.getElevador().getExterior().getSensorPiso().getPisoActual();
+                    Predicate<Integer> predicate = p-> p == actual;
+                    calendarizador.getPisosCalendarizados().removeIf(predicate);
+                    motor.setDireccionActual(Direccion.ninguna);
+                    break;
                 }
                 calendarizador.siguientePiso(motor.getElevador().getExterior().getSensorPiso().getPisoActual(), motor.getDireccionActual());
                 Direccion prevista = calendarizador.getDireccionPrevista();

@@ -182,9 +182,9 @@ public class Simulador extends Thread{
             String temp = "Pasajero: ";
             temp = temp + String.valueOf(edificio.getPersonas().get(i).id);
             temp = temp + " | Piso Actual: ";
-            temp = temp + String.valueOf(edificio.getPersonas().get(i).pisoActual);
+            temp = temp + String.valueOf(edificio.getPersonas().get(i).pisoActual+1);
             temp = temp + " | Piso Destino: ";
-            temp = temp + String.valueOf(edificio.getPersonas().get(i).pisoDestino);
+            temp = temp + String.valueOf(edificio.getPersonas().get(i).pisoDestino+1);
             temp = temp + " | Elevador Actual: ";
             if(edificio.getPersonas().get(i).elevadorActual == -1){
                 temp = temp + "Esperando elevador ";
@@ -203,7 +203,7 @@ public class Simulador extends Thread{
     public ArrayList<String> enviarPisoActual(){
         ArrayList<String> resultado = new ArrayList<>();
         for(int i = 0; i < edificio.getArrayElevadores().size(); i++){
-            String temp = String.valueOf(edificio.getArrayElevadores().get(i).getExterior().getSensorPiso().getPisoActual());
+            String temp = String.valueOf(edificio.getArrayElevadores().get(i).getExterior().getSensorPiso().getPisoActual()+1);
             resultado.add(temp);
         }
         return resultado;

@@ -72,6 +72,7 @@ public class ConstruirElevadorNormal extends ConstruirElevador{
     }
     public void construirPuerta(int utPorPuertas){
         Puerta puerta = new Puerta(true, 0);// Empieza en 0. Se debe cambiar en algun momento
+        this.elevador.setPuerta(puerta);
         this.elevador.setUtPorPuertas(utPorPuertas);
     }
 }

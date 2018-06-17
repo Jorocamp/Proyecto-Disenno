@@ -84,6 +84,7 @@ public class Calendarizador {
     }
     
     public int cercano(int piActual){
+        
         int distance = Math.abs(pisosCalendarizados.get(0) - piActual);
         int idx = 0;
         for(int c = 1; c < pisosCalendarizados.size(); c++){
@@ -102,7 +103,7 @@ public class Calendarizador {
                 if(dirActual.equals(Direccion.abajo)){
                     revisarPisosAbajo(piActual);
                 }
-                if(dirActual.equals(Direccion.abajo)){
+                if(dirActual.equals(Direccion.arriba)){
                     revisarPisosArriba(piActual);
                 }
                 else{
