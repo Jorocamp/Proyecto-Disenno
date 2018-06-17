@@ -145,6 +145,10 @@ public class ControladorSimulador {
     public void generarPasajeros(){
         simulador.getEdificio().generarPasajeros();
     }
+    
+    public void ingresarPasajeros(){
+        simulador.getEdificio().ingresarPasajeros();
+    }
      
     public void enviarPasajeros(){
         ArrayList<String> pasajeros = simulador.enviarPasajeros();
@@ -160,6 +164,18 @@ public class ControladorSimulador {
     public void recibirMejorElevador(int mejor, int piso){
         
         String sTemp1 = "CB07 (UT "+ String.valueOf(simulador.getUt()) +"): El calenzarizador eligió al elevador " + String.valueOf(mejor+1) + " para ir al piso " + String.valueOf(piso+1);     
+        simulador.getBitacora().add(0, sTemp1);
+    }
+    
+        public void recibirPuertas(int elevador){
+        
+        String sTemp1 = "CB08 (UT "+ String.valueOf(simulador.getUt()) +"): Se abrieron las puertas del elevador " + String.valueOf(elevador+1);     
+        simulador.getBitacora().add(0, sTemp1);
+    }
+        
+                public void recibirPuertasC(int elevador){
+        
+        String sTemp1 = "CB08 (UT "+ String.valueOf(simulador.getUt()) +"): Se cerraron las puertas del elevador " + String.valueOf(elevador+1);     
         simulador.getBitacora().add(0, sTemp1);
     }
 
@@ -209,6 +225,7 @@ public class ControladorSimulador {
          enviarPisoActual();
          enviarDirecciones();
          enviarNumPasajeros();
+         ingresarPasajeros();
          accionarElevador();
          enviarBitacota();
      }

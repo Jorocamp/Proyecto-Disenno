@@ -92,6 +92,12 @@ public class Edificio {
     }
     
     
+    public void ingresarPasajeros(){
+        for(int i = 0; i < arrayPisos.size(); i++){
+            arrayPisos.get(i).ingresoElevador();
+        }
+    }
+    
     public void generarPasajeros(){
         if(personas.size() > 1000){
                     personas.subList(499,personas.size()).clear();

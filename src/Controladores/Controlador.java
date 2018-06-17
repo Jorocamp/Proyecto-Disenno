@@ -82,6 +82,7 @@ public class Controlador {
                 }
                 else{
                     motor.getElevador().getPuerta().cerrarPuertas();
+                    motor.enviarMensajePuertasC();
                     estadoElevador = 3;
                 }
                 break;
