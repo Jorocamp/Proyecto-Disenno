@@ -70,6 +70,7 @@ public class Computadora {
         }
     }
 
+    // Lo hace con todas la interrupciones de solicitud de la computadora
     public void asignarInterrupcionLlamada() {
         // TODO implement here
         ArrayList<Interrupcion> interrupciones = null;

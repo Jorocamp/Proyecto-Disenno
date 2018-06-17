@@ -124,7 +124,14 @@ public class ControladorSimulador {
         }
         edificio.setArrayPisos(arrayPisos);
         edificio.setArrayElevadores(arrayElevadores);
-        
+        ArrayList<ElevadorExterior>elev = new ArrayList<ElevadorExterior>();
+        for(int i=0; i<arrayElevadores.size(); i++){
+            elev.add(arrayElevadores.get(i).getExterior());
+        }
+        for(int j = 0; j<arrayPisos.size(); j++){
+            arrayPisos.get(j).setElevadores(elev);
+            
+        }
     }
      
      

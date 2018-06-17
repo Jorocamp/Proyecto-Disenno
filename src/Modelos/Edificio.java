@@ -86,7 +86,6 @@ public class Edificio {
             pulsarBotonLlamada(pasajero.pisoActual,pasajero.pisoDestino);// manda la interrupcion a la computadora
             this.arrayPisos.get(piso).getColaPasajeros().add(pasajero);// Agrega el pasajero a la cola de espera del piso respectivo
             this.contadorPasajeros++;
-            System.out.println("Pasajero: "+pasajero.getId()+ " Actual: "+pasajero.getPisoActual() + " Destino: " +pasajero.getPisoDestino());
             return pasajero;
         }
         return null;
@@ -146,5 +145,14 @@ public class Edificio {
         this.simulador = simulador;
     }
     
-
+    public ArrayList<String> estadoElevadores(){
+        ArrayList<String> msjs = new ArrayList<String>();
+        String msj = "";
+        for(int i=0; i<this.arrayElevadores.size(); i++){
+            Elevador elevador = this.arrayElevadores.get(i);
+            msj = "Elevador "+(i+1)+": [ Piso Actual: "+(elevador.getExterior().getSensorPiso().getPisoActual()+1) +" | Direccion Actual: "+elevador.getMotorElevador().getDireccionActual()+" | Prevista: "+ elevador.getMotorElevador().getControlador().getCalendarizador().getDireccionPrevista() +" ]";
+            msjs.add(msj);
+        }
+        return msjs;
+    }
 }

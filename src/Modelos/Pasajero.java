@@ -34,7 +34,7 @@ public class Pasajero {
         BotonDestino boton = cabinaActual.getElevador().getPanelDestino().getBotones().get(pisoDestino);
         boton.crearInterrupcion(pisoDestino, cabinaActual.getElevador().getElevador().getNumElevador());
         
-        return new String("El pasajero "+ id +" seleccionó el piso "+ pisoDestino);
+        return new String("Solicitud Destino: [ Pasajero: "+ (id+1) +" | Piso: "+ (pisoDestino+1)+" ]");
     }
     
     public String presionarBotonDetenerse(Elevador elevadorActual){
@@ -56,7 +56,7 @@ public class Pasajero {
         int porcentajeProbabilidad = rand.nextInt(100 + 1);
         if(porcentajeProbabilidad <= (elevadorActual.getProbabilidadInterruptor()*100)){
             elevadorActual.getInterior().getInterruptor().activarAlarma();
-            msj = "El pasajero "+this.getId()+" ha usado el Interruptor de Emergencia.";
+            msj = "Emergencia: [ Pasajero: "+(this.getId()+1) +" ha usado el Interruptor de Emergencia ]";
             
         }
         return msj;

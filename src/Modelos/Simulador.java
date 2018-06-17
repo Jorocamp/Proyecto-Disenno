@@ -109,34 +109,47 @@ public class Simulador extends Thread{
         this.cs.getVc().printInicioUT(ut);
         for(int i=0; i < cantidadPisos; i++){// Para cada Piso
             
-            this.edificio.crearPasajero(i);// Crear Pasajeros
-            this.cs.getVc().informeCreacionPasajeros(i, this.edificio.getContadorPasajeros()-1);
-            Pasajero pasajero = this.edificio.getArrayPisos().get(i).getColaPasajeros().get(0);
-            
-            if(this.edificio.getArrayPisos().get(i).solicitarElevador(pasajero))// Solicitar Elevador
-                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());
-            this.cs.getVc().informeMontar(this.edificio.getArrayPisos().get(i).ingresoElevador());
-            ArrayList<Pasajero>pasajeros = new ArrayList<Pasajero>();
-            
-            for(int j=0;j<this.cantidadElevadores;j++){// Para cada Elevador
-                pasajeros = this.edificio.getArrayElevadores().get(j).getInterior().getCabina().getPasajeros();
-                for(int k=0;k<pasajeros.size();k++){
-                    //System.out.println("here");
-
-                    this.cs.getVc().informeDestino(pasajeros.get(i).seleccionarPiso());
-                    this.cs.getVc().informeEmergencia(pasajeros.get(i).usarInterruptorEmergencia(this.edificio.getArrayElevadores().get(j)));
-                    //System.out.println("there");
-                }
+            Pasajero pasajero = this.edificio.crearPasajero(i); //Crear Pasajero 
+            if(pasajero != null){                                           
+                this.cs.getVc().informeCreacionPasajeros(i,pasajero);// Imprimir Pasajeros Creados
+                this.cs.getVc().informeSolicitud(pasajero.getId(), pasajero.getDireccion());// Llamadas por Piso
             }
-            this.cs.getVc().informeBajarse(this.edificio.getArrayPisos().get(i).salidaElevador());
-            
         }
+        for(int i=0; i < cantidadPisos; i++){// Para cada Piso
+            this.cs.getVc().informeMontar(this.edificio.getArrayPisos().get(i).ingresoElevador());// Se montan personas
+        }
+        for(int i=0; i < cantidadPisos; i++){// Para cada Piso
+            this.cs.getVc().informeBajarse(this.edificio.getArrayPisos().get(i).salidaElevador());// Se bajan personas   
+        }
+        ArrayList<Pasajero>pasajeros = new ArrayList<Pasajero>();
+        for(int j=0;j<this.cantidadElevadores;j++){// Para cada Elevador Destinos
+            pasajeros = this.edificio.getArrayElevadores().get(j).getInterior().getCabina().getPasajeros();
+            for(int k=0;k<pasajeros.size();k++){// Para cada Pasajero
+                this.cs.getVc().informeDestino(pasajeros.get(k).seleccionarPiso());// Personas piden Destino
+            }
+        }
+        for(int j=0;j<this.cantidadElevadores;j++){// Para cada Elevador Emergencias
+            pasajeros = this.edificio.getArrayElevadores().get(j).getInterior().getCabina().getPasajeros();
+            for(int k=0;k<pasajeros.size();k++){// Para cada Pasajero
+                this.cs.getVc().informeEmergencia(pasajeros.get(k).usarInterruptorEmergencia(this.edificio.getArrayElevadores().get(j)));// Hay emergencias
+            }
+        }
+        for(int j=0;j<this.cantidadElevadores;j++){
+            this.edificio.getArrayElevadores().get(j).getMotorElevador().getControlador().revisarSiguienteMovimiento();
+        }
+        this.cs.getVc().informeElevadores(this.edificio.estadoElevadores());// Estado de Elevadores
+        
+        Computadora compu = Computadora.getInstance();
+        for(int i =0; i<compu.getControladores().size(); i++)
+            System.out.println(compu.getControladores().get(i).getCalendarizador().getPisosCalendarizados());
+        
         this.cs.getVc().printFinnalUT(ut);
     }
-    public void run(){
-        
+    
+    public void run(){ 
+
         if(consola)
-            ut = 0;// Contador de UT
+            ut = 1;// Contador de UT
         while(!finalizar){
             try {
                 Thread.sleep(this.velocidadActual*1000);// Lag
@@ -147,9 +160,7 @@ public class Simulador extends Thread{
                 }
                 if(debug){
                     while(this.isNext()){
-                        
                         while(pausa){// En PAUSA dentro de debug
-                            
                             Thread.sleep(1000);// Lag para sincronizar prints
                         }
                         Thread.sleep(1000);// Lag para sincronizar prints

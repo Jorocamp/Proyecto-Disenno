@@ -64,6 +64,7 @@ public class Controlador {
     public void revisarSiguienteMovimiento() {
         // TODO implement here
         switch(estadoElevador){
+
             case 0: //Prevista
                  if(calendarizador.comprobarPiso(motor.getElevador().getExterior().getSensorPiso().getPisoActual())){
                     motor.permisoAbrirPuertas();

@@ -115,18 +115,20 @@ public class Piso {
     public ArrayList<String> ingresoElevador(){
         ArrayList<String> mensajes = new ArrayList<String>();
         String mensaje = "";
-        for(int i = 0;i < this.elevadores.size() ;i ++){// Para cada elevador del piso:
+        for(int i = 0;i < this.elevadores.size() ;i++){// Para cada elevador del piso:
             // Revisa todos los que estan con puerta abierta y con espacio para mas personas
-            if(this.elevadores.get(i).getSensorPiso().getPisoActual()==this.numeroPiso && this.elevadores.get(i).getElevador().getPuerta().isEstado() && this.elevadores.get(i).getElevador().getInterior().getCabina().getPasajeros().size() < this.elevadores.get(i).getElevador().getInterior().getCabina().getSensorPeso().getMaximaCantidadPersonas()){
-                // Mientras la capacidad maxima no sea alcanzada:
-                while(this.elevadores.get(i).getElevador().getInterior().getCabina().getPasajeros().size() < this.elevadores.get(i).getElevador().getInterior().getCabina().getSensorPeso().getMaximaCantidadPersonas()){
+            if(this.elevadores.get(i).getSensorPiso().getPisoActual()==this.numeroPiso && this.elevadores.get(i).getElevador().getPuerta().isEstado() && this.elevadores.get(i).getElevador().getInterior().getCabina().getPasajeros().size() < this.elevadores.get(i).getElevador().getInterior().getCabina().getSensorPeso().getMaximaCantidadPersonas() && this.elevadores.get(i).getElevador().getMotorElevador().getDireccionActual()==Direccion.ninguna){
+// Mientras la capacidad maxima no sea alcanzada:
+                while(this.colaPasajeros.size()>0 && this.elevadores.get(i).getElevador().getInterior().getCabina().getPasajeros().size() < this.elevadores.get(i).getElevador().getInterior().getCabina().getSensorPeso().getMaximaCantidadPersonas()){
                     // Agrega el pasajero a la cabina
                     Pasajero pasajero = this.colaPasajeros.get(0);
                     this.elevadores.get(i).getElevador().getInterior().getCabina().getPasajeros().add(pasajero);
+                    pasajero.setCabinaActual(this.elevadores.get(i).getElevador().getInterior().getCabina());
                     // Remueve el pasajero de la cola de espera
                     this.colaPasajeros.remove(0);
-                    mensaje = "El pasajero "+pasajero.getId()+" se ha montado al elevador "+i+".";
+                    mensaje = "Abordaje: [ Pasajero: "+(pasajero.getId()+1)+" | Elevador: "+(i+1)+" ]";
                     mensajes.add(mensaje);
+
                 }
             }
         }
@@ -145,7 +147,7 @@ public class Piso {
                     if(pasajeros.get(j).getPisoDestino() == this.numeroPiso){
                         this.colaPasajeros.add(pasajeros.get(j));// Agrega el pasajero a la cola de espera
                         this.elevadores.get(i).getElevador().getInterior().getCabina().getPasajeros().remove(j);// saca el pasajero de la cabina
-                        msj = "El pasajero "+pasajeros.get(j).getId()+" se ha bajado en el piso "+this.numeroPiso+".";
+                        msj = "Desbordaje: [ Pasajero: "+(pasajeros.get(j).getId()+1) +" | Piso: "+(this.numeroPiso+1) +" ]";
                         msjs.add(msj);
                     }
                 }

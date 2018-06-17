@@ -17,11 +17,13 @@ public class MotorElevador {
     private Direccion direccionActual;
     private Elevador elevador;
     private Controlador controlador;
+    private InterruptorEmergencia interruptorEmergencia;
 
-    public MotorElevador(Direccion direccionActual, Elevador elevador, Controlador controlador) {
+    public MotorElevador(Direccion direccionActual, Elevador elevador, Controlador controlador,InterruptorEmergencia interruptorEmergencia) {
         this.direccionActual = direccionActual;
         this.elevador = elevador;
         this.controlador = controlador;
+        this.interruptorEmergencia = interruptorEmergencia;
     }
 
     public MotorElevador() {
@@ -85,6 +87,14 @@ public class MotorElevador {
 
     public void setControlador(Controlador controlador) {
         this.controlador = controlador;
+    }
+
+    public InterruptorEmergencia getInterruptorEmergencia() {
+        return interruptorEmergencia;
+    }
+
+    public void setInterruptorEmergencia(InterruptorEmergencia interruptorEmergencia) {
+        this.interruptorEmergencia = interruptorEmergencia;
     }
     
     
