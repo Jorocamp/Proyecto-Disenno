@@ -22,6 +22,7 @@ public class Controlador {
     private Calendarizador calendarizador;
     private ArrayList<Interrupcion> colaInterrupciones;
     private int estadoElevador = 0;
+    
 
     public Controlador(MotorElevador motor, Calendarizador calendarizador, ArrayList<Interrupcion> colaInterrupciones) {
         this.motor = motor;
@@ -64,15 +65,11 @@ public class Controlador {
         // TODO implement here
         switch(estadoElevador){
             case 0: //Prevista
-                //System.out.println("Elevador: " + motor.getElevador().getNumElevador());
-                //System.out.println(calendarizador.getPisosCalendarizados().size());
-                if(calendarizador.comprobarPiso(motor.getElevador().getExterior().getSensorPiso().getPisoActual())){
-                    int actual = motor.getElevador().getExterior().getSensorPiso().getPisoActual();
-                    Predicate<Integer> predicate = p-> p == actual;
-                    calendarizador.getPisosCalendarizados().removeIf(predicate);
-                    motor.setDireccionActual(Direccion.ninguna);   
+                 if(calendarizador.comprobarPiso(motor.getElevador().getExterior().getSensorPiso().getPisoActual())){
                     motor.permisoAbrirPuertas();
-                    calendarizador.setDireccionPrevista(Direccion.ninguna);
+                    int actual = motor.getElevador().getExterior().getSensorPiso().getPisoActual();
+                    calendarizador.eliminarPisosActual(actual);
+                    motor.detener();
                     break;
                 }
                 calendarizador.siguientePiso(motor.getElevador().getExterior().getSensorPiso().getPisoActual(), motor.getDireccionActual());
@@ -81,20 +78,21 @@ public class Controlador {
             case 1: //puertas abiertas   
                 if(motor.getElevador().getPuerta().getContadorUT() < motor.getElevador().getUtPorPuertas()){
                     motor.getElevador().getPuerta().aumentarUT();
-                    calendarizador.setDireccionPrevista(Direccion.ninguna);
                 }
                 else{
                     motor.getElevador().getPuerta().cerrarPuertas();
-                    estadoElevador = 0;
+                    estadoElevador = 3;
                 }
                 break;
             case 2: //Hacer movimiento
                 Direccion prevista = calendarizador.getDireccionPrevista();
                 this.mover(prevista);
-                
                 estadoElevador = 0;
                 break;
-
+            case 3:
+                calendarizador.siguientePiso(motor.getElevador().getExterior().getSensorPiso().getPisoActual(), motor.getDireccionActual());
+                estadoElevador = 2;
+                break;
                 
         }
         

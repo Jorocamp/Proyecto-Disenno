@@ -84,7 +84,7 @@ public class Calendarizador {
     }
     
     public int cercano(int piActual){
-        
+
         int distance = Math.abs(pisosCalendarizados.get(0) - piActual);
         int idx = 0;
         for(int c = 1; c < pisosCalendarizados.size(); c++){
@@ -95,6 +95,7 @@ public class Calendarizador {
             }
         }
         return pisosCalendarizados.get(idx);
+        
     }
     
     public void siguientePiso(int piActual, Direccion dirActual){
@@ -102,9 +103,11 @@ public class Calendarizador {
         if(pisosCalendarizados.size() != 0){
                 if(dirActual.equals(Direccion.abajo)){
                     revisarPisosAbajo(piActual);
+                    return;
                 }
                 if(dirActual.equals(Direccion.arriba)){
                     revisarPisosArriba(piActual);
+                    return;
                 }
                 else{
                     revisarPisosNinguna(piActual);
@@ -125,6 +128,14 @@ public class Calendarizador {
             }
         }
         return false;
+    }
+    
+    
+    public void eliminarPisosActual(int actual){
+        for(int i = 0; i < pisosCalendarizados.size(); i++){
+            if(pisosCalendarizados.get(i) == actual)
+                pisosCalendarizados.remove(i);
+        }
     }
     
 }
