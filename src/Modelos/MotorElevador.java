@@ -53,6 +53,7 @@ public class MotorElevador {
     public void detener() {
         // TODO implement here
         direccionActual = Direccion.ninguna;
+        
     }
     
     
@@ -86,6 +87,12 @@ public class MotorElevador {
         this.controlador = controlador;
     }
     
+    
+    public void permisoAbrirPuertas(){
+        elevador.getPuerta().abrirPuertas();
+        elevador.getPuerta().setContadorUT(0);
+        controlador.setEstadoElevador(1);
+    }
     
     
     

@@ -20,6 +20,7 @@ public class Controlador {
     private MotorElevador motor;
     private Calendarizador calendarizador;
     private ArrayList<Interrupcion> colaInterrupciones;
+    private int estadoElevador = 0;
 
     public Controlador(MotorElevador motor, Calendarizador calendarizador, ArrayList<Interrupcion> colaInterrupciones) {
         this.motor = motor;
@@ -60,8 +61,29 @@ public class Controlador {
 
     private void revisarSiguienteMovimiento() {
         // TODO implement here
-        Direccion prevista = calendarizador.getDireccionPrevista();
-        this.mover(prevista);
+        switch(estadoElevador){
+            case 0: //Moviendose
+                if(calendarizador.comprobarPiso(motor.getElevador().getExterior().getSensorPiso().getPisoActual())){
+                    motor.permisoAbrirPuertas();
+                    return;
+                }
+                calendarizador.siguientePiso(motor.getElevador().getExterior().getSensorPiso().getPisoActual(), motor.getDireccionActual());
+                Direccion prevista = calendarizador.getDireccionPrevista();
+                this.mover(prevista);
+                break;
+            case 1: //puertas abiertas   
+                if(motor.getElevador().getPuerta().getContadorUT() < motor.getElevador().getUtPorPuertas()){
+                    motor.getElevador().getPuerta().aumentarUT();
+                }
+                else{
+                    motor.getElevador().getPuerta().cerrarPuertas();
+                    estadoElevador = 0;
+                }
+                break;
+
+                
+        }
+        
         
         
     }
@@ -91,6 +113,14 @@ public class Controlador {
 
     public void setColaInterrupciones(ArrayList<Interrupcion> colaInterrupciones) {
         this.colaInterrupciones = colaInterrupciones;
+    }
+
+    public int getEstadoElevador() {
+        return estadoElevador;
+    }
+
+    public void setEstadoElevador(int estadoElevador) {
+        this.estadoElevador = estadoElevador;
     }
       
     
