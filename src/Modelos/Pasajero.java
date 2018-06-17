@@ -32,7 +32,7 @@ public class Pasajero {
     
     public String seleccionarPiso(){
         BotonDestino boton = cabinaActual.getElevador().getPanelDestino().getBotones().get(pisoDestino);
-        boton.crearInterrupcion(pisoDestino);
+        boton.crearInterrupcion(pisoDestino, cabinaActual.getElevador().getElevador().getNumElevador());
         
         return new String("El pasajero "+ id +" seleccionó el piso "+ pisoDestino);
     }

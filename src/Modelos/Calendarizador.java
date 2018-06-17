@@ -7,6 +7,7 @@ package Modelos;
 
 import Modelos.Direccion;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -38,8 +39,9 @@ public class Calendarizador {
     }
 
 
-    private void calendarizarPiso(){
-        
+    public void calendarizarPiso(int piso){
+        pisosCalendarizados.add(piso);
+        Collections.sort(pisosCalendarizados);
     }
     
 }

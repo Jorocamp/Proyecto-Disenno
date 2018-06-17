@@ -12,10 +12,12 @@ package Modelos;
 public class InterrupcionDestino extends Interrupcion {
     
     private int piso;
+    private int numElev;
     
-    public InterrupcionDestino(int piso, int tipo){
+    public InterrupcionDestino(int piso, int tipo, int numElev){
         super(tipo);
         this.piso = piso;
+        this.numElev = numElev;
     }
 
     public int getPiso() {
@@ -24,6 +26,14 @@ public class InterrupcionDestino extends Interrupcion {
 
     public void setPiso(int piso) {
         this.piso = piso;
+    }
+
+    public int getNumElev() {
+        return numElev;
+    }
+
+    public void setNumElev(int numElev) {
+        this.numElev = numElev;
     }
     
     
