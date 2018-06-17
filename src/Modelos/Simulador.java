@@ -88,6 +88,7 @@ public class Simulador extends Thread{
     
     private void ejecutarUT(int ut){
         this.cs.getVc().printInicioUT(ut);
+        
         for(int i=0; i < cantidadPisos; i++){// Para cada Piso
             
             this.edificio.crearPasajero(i);// Crear Pasajeros
@@ -101,9 +102,9 @@ public class Simulador extends Thread{
             
             for(int j=0;j<this.cantidadElevadores;j++){// Para cada Elevador
                 pasajeros = this.edificio.getArrayElevadores().get(j).getInterior().getCabina().getPasajeros();
-                for(int k=0;k<pasajeros.size();k++){
+                for(int k=0;k<pasajeros.size();k++){// Para cada Pasajero
                     //System.out.println("here");
-                    this.cs.getVc().informeDestino(pasajeros.get(i).seleccionarPiso(this.edificio.getArrayPisos()));
+                    //this.cs.getVc().informeDestino(pasajeros.get(i).seleccionarPiso(this.edificio.getArrayPisos()));
                     this.cs.getVc().informeEmergencia(pasajeros.get(i).usarInterruptorEmergencia(this.edificio.getArrayElevadores().get(j)));
                     //System.out.println("there");
                 }
@@ -115,6 +116,7 @@ public class Simulador extends Thread{
     }
     public void run(){
         int ut = 0;// Contador de UT
+        int utCrearPersonas = 0;// 
         while(!finalizar){
             try {
                 Thread.sleep(this.velocidadActual*1000);// Lag
