@@ -9,14 +9,18 @@ import Controladores.ControladorSimulador;
 import Modelos.Edificio;
 import Modelos.ManejadorDeArchivos;
 import Modelos.Simulador;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Timer;
 
 /**
  *
@@ -301,7 +305,7 @@ public class VistaConsola extends Thread implements Vista{
                     cs.getSimulador().setNext(false);
                 }
             }
-            }
+            }  
         }
     }
 

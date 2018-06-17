@@ -122,7 +122,8 @@ public class Simulador extends Thread{
                 pasajeros = this.edificio.getArrayElevadores().get(j).getInterior().getCabina().getPasajeros();
                 for(int k=0;k<pasajeros.size();k++){
                     //System.out.println("here");
-                    this.cs.getVc().informeDestino(pasajeros.get(i).seleccionarPiso(this.edificio.getArrayPisos()));
+
+                    this.cs.getVc().informeDestino(pasajeros.get(i).seleccionarPiso());
                     this.cs.getVc().informeEmergencia(pasajeros.get(i).usarInterruptorEmergencia(this.edificio.getArrayElevadores().get(j)));
                     //System.out.println("there");
                 }
