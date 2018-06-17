@@ -149,6 +149,11 @@ public class ControladorSimulador {
     public void ingresarPasajeros(){
         simulador.getEdificio().ingresarPasajeros();
     }
+    
+    
+    public void sacarPasajeros(){
+        simulador.getEdificio().sacarPasajeros();
+    }
      
     public void enviarPasajeros(){
         ArrayList<String> pasajeros = simulador.enviarPasajeros();
@@ -167,15 +172,48 @@ public class ControladorSimulador {
         simulador.getBitacora().add(0, sTemp1);
     }
     
-        public void recibirPuertas(int elevador){
+    
+    
+    public void recibirPasajeroAdentro(int id, int elevador){
+        
+        String sTemp1 = "CB03 (UT "+ String.valueOf(simulador.getUt()) +"): El pasajero " + String.valueOf(id+1) + " ingresó al elevador " + String.valueOf(elevador+1);     
+        simulador.getBitacora().add(0, sTemp1);
+    }
+    
+    public void recibirPasajeroAfuera(int id, int elevador){
+        
+        String sTemp1 = "CB02 (UT "+ String.valueOf(simulador.getUt()) +"): El pasajero " + String.valueOf(id+1) + " salió del elevador al piso " + String.valueOf(elevador+1);     
+        simulador.getBitacora().add(0, sTemp1);
+    }
+    
+    public void recibirPuertas(int elevador){
         
         String sTemp1 = "CB08 (UT "+ String.valueOf(simulador.getUt()) +"): Se abrieron las puertas del elevador " + String.valueOf(elevador+1);     
         simulador.getBitacora().add(0, sTemp1);
     }
         
-                public void recibirPuertasC(int elevador){
+    public void recibirPuertasC(int elevador){
         
         String sTemp1 = "CB08 (UT "+ String.valueOf(simulador.getUt()) +"): Se cerraron las puertas del elevador " + String.valueOf(elevador+1);     
+        simulador.getBitacora().add(0, sTemp1);
+    }
+    
+    public void enviarDetener(int id, int elevador){
+        
+        String sTemp1 = "CB10 (UT "+ String.valueOf(simulador.getUt()) +"): El pasajero " + String.valueOf(id) + " presiono el botón de detenerse en el elevador " + String.valueOf(elevador+1);     
+        simulador.getBitacora().add(0, sTemp1);
+    }
+    
+        public void enviarDestino(int id, int piso){
+        
+        String sTemp1 = "CB04 (UT "+ String.valueOf(simulador.getUt()) +"): El pasajero " + String.valueOf(id) + " presiono el botón de destino del piso " + String.valueOf(piso);     
+        simulador.getBitacora().add(0, sTemp1);
+    }
+    
+    
+        public void enviarEmergencia(int id, int elevador){
+        
+        String sTemp1 = "CB09 (UT "+ String.valueOf(simulador.getUt()) +"): El pasajero " + String.valueOf(id) + " usó el interruptor de emergencia en el elevador " + String.valueOf(elevador+1);     
         simulador.getBitacora().add(0, sTemp1);
     }
 
@@ -218,14 +256,20 @@ public class ControladorSimulador {
         simulador.getEdificio().accionarElevadores();
     }
     
+    public void detenerElevador(){
+        simulador.getEdificio().detenerElevador();
+    }
+    
      public void ejecutarSimulacionUT(){
          enviarUT();
          generarPasajeros();
          enviarPasajeros();
          enviarPisoActual();
          enviarDirecciones();
+         detenerElevador();
          enviarNumPasajeros();
          ingresarPasajeros();
+         sacarPasajeros();
          accionarElevador();
          enviarBitacota();
      }

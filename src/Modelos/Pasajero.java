@@ -33,7 +33,8 @@ public class Pasajero {
     public String seleccionarPiso(){
         BotonDestino boton = cabinaActual.getElevador().getPanelDestino().getBotones().get(pisoDestino);
         boton.crearInterrupcion(pisoDestino, cabinaActual.getElevador().getElevador().getNumElevador());
-        
+        Computadora compu = Computadora.getInstance();
+        compu.getControladorSim().enviarDestino(id, (pisoDestino+1));
         return new String("Solicitud Destino: [ Pasajero: "+ (id+1) +" | Piso: "+ (pisoDestino+1)+" ]");
     }
     
@@ -44,6 +45,8 @@ public class Pasajero {
         if(porcentajeProbabilidad <= (elevadorActual.getProbabilidadBoton()*100)){
             elevadorActual.getPuerta().setContadorUT(0);
             msj = "Detención: [ Pasajero: "+(this.getId()+1)+" | Elevador: "+ (elevadorActual.getNumElevador()+1) +" ]";
+            Computadora compu = Computadora.getInstance();
+            compu.getControladorSim().enviarDetener(this.getId(),elevadorActual.getNumElevador());
             
         }
         return msj;
@@ -58,6 +61,8 @@ public class Pasajero {
             elevadorActual.getInterior().getInterruptor().activarAlarma();
             
             msj = "Emergencia: [ Pasajero: "+(this.getId()+1) +" ha usado el Interruptor de Emergencia ]";
+            Computadora compu = Computadora.getInstance();
+            compu.getControladorSim().enviarEmergencia(this.getId(),elevadorActual.getNumElevador());
             
         }
         return msj;

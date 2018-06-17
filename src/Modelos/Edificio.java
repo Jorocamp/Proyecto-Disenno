@@ -98,12 +98,30 @@ public class Edificio {
         }
     }
     
+    
+    public void sacarPasajeros(){
+        for(int i = 0; i < arrayPisos.size(); i++){
+            arrayPisos.get(i).salidaElevador();
+        }
+    }
+    
+    public void detenerElevador(){
+        for(int i = 0; i < arrayElevadores.size(); i ++){
+            for(int j = 0; j < arrayElevadores.get(i).getInterior().getCabina().getPasajeros().size();j++){
+                Pasajero temp = arrayElevadores.get(i).getInterior().getCabina().getPasajeros().get(j);
+                temp.presionarBotonDetenerse(arrayElevadores.get(i));
+                temp.usarInterruptorEmergencia(arrayElevadores.get(i));
+                
+            }
+        }
+    }
+    
     public void generarPasajeros(){
-        if(personas.size() > 1000){
+        if(personas.size() > 700){
                     personas.subList(499,personas.size()).clear();
         }
         
-        if(simulador.getBitacora().size() > 1000){
+        if(simulador.getBitacora().size() > 700){
                     simulador.getBitacora().subList(499, simulador.getBitacora().size()).clear();
         }
         for(int i = 0; i < arrayPisos.size(); i++){
