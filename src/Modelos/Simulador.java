@@ -107,7 +107,6 @@ public class Simulador extends Thread{
     
     private void ejecutarUT(int ut){
         this.cs.getVc().printInicioUT(ut);
-        
         for(int i=0; i < cantidadPisos; i++){// Para cada Piso
             
             Pasajero pasajero = this.edificio.crearPasajero(i); //Crear Pasajero 
@@ -135,6 +134,9 @@ public class Simulador extends Thread{
                 this.cs.getVc().informeEmergencia(pasajeros.get(k).usarInterruptorEmergencia(this.edificio.getArrayElevadores().get(j)));// Hay emergencias
             }
         }
+        for(int j=0;j<this.cantidadElevadores;j++){
+            this.edificio.getArrayElevadores().get(j).getMotorElevador().getControlador().revisarSiguienteMovimiento();
+        }
         this.cs.getVc().informeElevadores(this.edificio.estadoElevadores());// Estado de Elevadores
         
         Computadora compu = Computadora.getInstance();
@@ -145,6 +147,7 @@ public class Simulador extends Thread{
     }
     
     public void run(){ 
+
         if(consola)
             ut = 1;// Contador de UT
         while(!finalizar){
@@ -190,9 +193,9 @@ public class Simulador extends Thread{
             String temp = "Pasajero: ";
             temp = temp + String.valueOf(edificio.getPersonas().get(i).id);
             temp = temp + " | Piso Actual: ";
-            temp = temp + String.valueOf(edificio.getPersonas().get(i).pisoActual);
+            temp = temp + String.valueOf(edificio.getPersonas().get(i).pisoActual+1);
             temp = temp + " | Piso Destino: ";
-            temp = temp + String.valueOf(edificio.getPersonas().get(i).pisoDestino);
+            temp = temp + String.valueOf(edificio.getPersonas().get(i).pisoDestino+1);
             temp = temp + " | Elevador Actual: ";
             if(edificio.getPersonas().get(i).elevadorActual == -1){
                 temp = temp + "Esperando elevador ";
@@ -211,7 +214,7 @@ public class Simulador extends Thread{
     public ArrayList<String> enviarPisoActual(){
         ArrayList<String> resultado = new ArrayList<>();
         for(int i = 0; i < edificio.getArrayElevadores().size(); i++){
-            String temp = String.valueOf(edificio.getArrayElevadores().get(i).getExterior().getSensorPiso().getPisoActual());
+            String temp = String.valueOf(edificio.getArrayElevadores().get(i).getExterior().getSensorPiso().getPisoActual()+1);
             resultado.add(temp);
         }
         return resultado;
@@ -219,7 +222,25 @@ public class Simulador extends Thread{
 
 
 
- 
+    public ArrayList<String> enviarDirecciones(){
+        ArrayList<String> resultado = new ArrayList<>();
+        for(int i = 0; i < edificio.getArrayElevadores().size(); i++){
+            String temp = String.valueOf(edificio.getArrayElevadores().get(i).getMotorElevador().getDireccionActual().toString()) + " / " + 
+                    String.valueOf(edificio.getArrayElevadores().get(i).getMotorElevador().getControlador().getCalendarizador().getDireccionPrevista().toString());
+            resultado.add(temp);
+        }
+        return resultado;
+    }
+    
+    
+    public ArrayList<String> enviarNumPasajeros(){
+        ArrayList<String> resultado = new ArrayList<>();
+        for(int i = 0; i < edificio.getArrayElevadores().size(); i++){
+            String temp = String.valueOf(edificio.getArrayElevadores().get(i).getInterior().getCabina().getPasajeros().size());
+            resultado.add(temp);
+        }
+        return resultado;
+    }
     
     /**
      * Getters and Setters para los atributos para la clase

@@ -47,9 +47,12 @@ public class ConstruirElevadorNormal extends ConstruirElevador{
         
         Cabina cabina = new Cabina(pasajeros,elevadorInterior,sensorPeso);// Cabina tiene el elevador interior y los pasajeros
         
+        InterruptorEmergencia interruptorEmergencia = new InterruptorEmergencia(false);
+                
         elevadorInterior.setPanelDestino(panelDestino);
         elevadorInterior.setElevador(this.elevador);
         elevadorInterior.setCabina(cabina);// elevador interior tiene a la cabina
+        elevadorInterior.setInterruptor(interruptorEmergencia);
         
         this.elevador.setInterior(elevadorInterior);
         this.elevador.setProbabilidadBoton(probabilidadBoton);
@@ -64,6 +67,7 @@ public class ConstruirElevadorNormal extends ConstruirElevador{
         motorElevador.setDireccionActual(Direccion.ninguna);
         motorElevador.setElevador(elevador); 
         motorElevador.setControlador(controlador);
+        motorElevador.setInterruptorEmergencia(elevador.getInterior().getInterruptor());
         elevador.setMotorElevador(motorElevador);
         Computadora computadora = Computadora.getInstance();
         computadora.getControladores().add(controlador);

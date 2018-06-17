@@ -11,7 +11,7 @@ package Modelos;
  */
 public class Puerta {
     private boolean estado;
-    private int contadorUT;
+    private int contadorUT = 0;
 
     public Puerta(boolean estado, int contadorUT) {
         this.estado = estado;
@@ -34,10 +34,19 @@ public class Puerta {
         this.contadorUT = contadorUT;
     }
     
-    public void aumentarUT(int uT){
-        
+    public void abrirPuertas(){
+        this.estado = true;
+    }
+    
+    public void cerrarPuertas(){
+        this.estado = false;
+    }
+    
+    public void aumentarUT(){
+        this.contadorUT = this.contadorUT + 1;
     }
     public void disminuirUT(){
         
+        this.contadorUT = this.contadorUT - 1;
     }
 }

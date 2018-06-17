@@ -37,8 +37,16 @@ public class Pasajero {
         return new String("Solicitud Destino: [ Pasajero: "+ (id+1) +" | Piso: "+ (pisoDestino+1)+" ]");
     }
     
-    public void presionarBotonDetenerse(Elevador elevadorActual){
-        elevadorActual.getPuerta().aumentarUT(elevadorActual.getUtPorPuertas());
+    public String presionarBotonDetenerse(Elevador elevadorActual){
+        String msj = "";
+        Random rand = new Random();
+        int porcentajeProbabilidad = rand.nextInt(100 + 1);
+        if(porcentajeProbabilidad <= (elevadorActual.getProbabilidadBoton()*100)){
+            elevadorActual.getPuerta().setContadorUT(0);
+            msj = "El pasajero "+this.getId()+" ha presionado el botón de detenerse en el elevador "+ elevadorActual.getNumElevador() +".";
+            
+        }
+        return msj;
     }
     
     public String usarInterruptorEmergencia(Elevador elevadorActual){

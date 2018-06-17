@@ -9,6 +9,7 @@ package Modelos;
 
 //Imports************************************************************
 import Controladores.Controlador;
+import Controladores.ControladorSimulador;
 import java.util.*;
 
 /**DESCRIPCION:
@@ -27,7 +28,7 @@ public class Computadora {
     private ArrayList<Controlador> controladores;
     private ArrayList<Interrupcion> colaInterrupciones;
     private static final Computadora INSTANCE = new Computadora();
-
+    private ControladorSimulador controladorSim;
 
 
     /**
@@ -52,8 +53,10 @@ public class Computadora {
         ArrayList<Interrupcion> interrupciones = null;
         interrupciones = colaInterrupciones;
         for(int i = 0; i<interrupciones.size(); i++){
-            InterrupcionDestino inter = (InterrupcionDestino) interrupciones.get(i);
-            if(inter.getTipo() == 1){
+            Interrupcion inter2 = interrupciones.get(i);
+            if(inter2.getTipo() == 1){
+                InterrupcionDestino inter = (InterrupcionDestino) interrupciones.get(i);
+            
                 for(int j = 0; j<controladores.size(); j++){
                     Controlador contr = controladores.get(j);
                     if(contr.getMotor().getElevador().getNumElevador() == inter.getNumElev()){
@@ -73,8 +76,11 @@ public class Computadora {
         ArrayList<Interrupcion> interrupciones = null;
         interrupciones = colaInterrupciones;
         for(int i = 0; i<interrupciones.size(); i++){
-            InterrupcionLlamada inter = (InterrupcionLlamada) interrupciones.get(i);
-            if(inter.getTipo() == 0){
+  
+            Interrupcion inter2 = interrupciones.get(i);
+            
+            if(inter2.getTipo() == 0){
+                InterrupcionLlamada inter = (InterrupcionLlamada) interrupciones.get(i);
                 int calificacion = 0;
                 int calificacionMax = 0;
                 int mejorElevador = 0;
@@ -83,6 +89,9 @@ public class Computadora {
                     int pisoElevador = contr.getMotor().getElevador().getExterior().getSensorPiso().getPisoActual();
                     if(contr.getMotor().getDireccionActual() == inter.getDireccion()){
                         calificacion += 40;
+                    }
+                    else if(contr.getMotor().getDireccionActual() == Direccion.ninguna){
+                        calificacion += 30;
                     }
                     int difPisos = (pisoElevador - inter.getPiso());
                     if(difPisos < 0)
@@ -98,6 +107,7 @@ public class Computadora {
                         }else if(contr.getMotor().getDireccionActual() == Direccion.arriba){
                             if(pisoCalendarizado > pisoElevador && pisoCalendarizado < inter.getPiso()){
                                 difPisos++;
+                                
                             }
                         }
                     }
@@ -106,10 +116,13 @@ public class Computadora {
                     if(calificacion > calificacionMax){
                         calificacionMax = calificacion;
                         mejorElevador = j;
+                        calificacion = 0;
                     }
+                    difPisos = 0;
                 }
                 Controlador contr = controladores.get(mejorElevador);
                 contr.getColaInterrupciones().add(inter);
+                controladorSim.recibirMejorElevador(contr.getMotor().getElevador().getNumElevador(), inter.getPiso());
                 contr.getCalendarizador().calendarizarPiso(inter.getPiso());
                 colaInterrupciones.remove(i);
             }
@@ -118,6 +131,7 @@ public class Computadora {
         
     }
     
+
     
     public void nuevaInterrupcion(Interrupcion nueva){
   
@@ -146,6 +160,16 @@ public class Computadora {
     public void setColaInterrupciones(ArrayList<Interrupcion> colaInterrupciones) {
         this.colaInterrupciones = colaInterrupciones;
     }
+
+    public ControladorSimulador getControladorSim() {
+        return controladorSim;
+    }
+
+    public void setControladorSim(ControladorSimulador controladorSim) {
+        this.controladorSim = controladorSim;
+    }
+    
+    
     
     
 }

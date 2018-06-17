@@ -108,15 +108,23 @@ public class Edificio {
                 this.arrayPisos.get(i).getColaPasajeros().add(temp);// Agrega el pasajero a la cola de espera del piso respectivo
                 this.contadorPasajeros++;
                 
-                arrayPisos.get(i).pulsarBotonLlamada(temp.pisoActual, temp.pisoDestino);
                 String sTemp = "CB01 (UT "+ String.valueOf(simulador.getUt()) +"): El pasajero " + String.valueOf(temp.getId()) + " solicitó un elevador en el piso " + String.valueOf(temp.getPisoActual()+1) + " hacia " + temp.getDireccion();
+                
                 String sTemp1 = "CB05 (UT "+ String.valueOf(simulador.getUt()) +"): La computadora recibió una interrupción, luz del boton de llamada  " + temp.getDireccion() + " del piso " + String.valueOf(temp.getPisoActual()+1) + " encendida" ;
                 
                 
                 simulador.getBitacora().add(0, sTemp);
+                arrayPisos.get(i).pulsarBotonLlamada(temp.pisoActual, temp.pisoDestino);
+                
                 simulador.getBitacora().add(0, sTemp1);
                 
             }
+        }
+    }
+    
+    public void accionarElevadores(){
+        for(int i = 0; i < arrayElevadores.size(); i++){
+            arrayElevadores.get(i).getMotorElevador().getControlador().revisarSiguienteMovimiento();
         }
     }
     
@@ -142,7 +150,7 @@ public class Edificio {
         String msj = "";
         for(int i=0; i<this.arrayElevadores.size(); i++){
             Elevador elevador = this.arrayElevadores.get(i);
-            msj = "Elevador "+(i+1)+": [ Piso Actual: "+elevador.getExterior().getSensorPiso().getPisoActual()+1 +" | Direccion Actual: "+elevador.getMotorElevador().getDireccionActual()+" | Prevista: "+ elevador.getMotorElevador().getControlador().getCalendarizador().getDireccionPrevista() +" ]";
+            msj = "Elevador "+(i+1)+": [ Piso Actual: "+(elevador.getExterior().getSensorPiso().getPisoActual()+1) +" | Direccion Actual: "+elevador.getMotorElevador().getDireccionActual()+" | Prevista: "+ elevador.getMotorElevador().getControlador().getCalendarizador().getDireccionPrevista() +" ]";
             msjs.add(msj);
         }
         return msjs;

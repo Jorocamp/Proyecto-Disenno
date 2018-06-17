@@ -72,6 +72,7 @@ public class ControladorSimulador {
         Computadora computadora = Computadora.getInstance();
         computadora.setColaInterrupciones(interrupciones);
         computadora.setControladores(controladores);
+        computadora.setControladorSim(this);
         simulador.setCantidadPisos((Integer)parametrosConfiguracion.get(0));
         simulador.setCantidadElevadores((Integer) parametrosConfiguracion.get(3));
         Edificio edificio = simulador.getEdificio();
@@ -123,7 +124,14 @@ public class ControladorSimulador {
         }
         edificio.setArrayPisos(arrayPisos);
         edificio.setArrayElevadores(arrayElevadores);
-        
+        ArrayList<ElevadorExterior>elev = new ArrayList<ElevadorExterior>();
+        for(int i=0; i<arrayElevadores.size(); i++){
+            elev.add(arrayElevadores.get(i).getExterior());
+        }
+        for(int j = 0; j<arrayPisos.size(); j++){
+            arrayPisos.get(j).setElevadores(elev);
+            
+        }
     }
      
      
@@ -149,6 +157,13 @@ public class ControladorSimulador {
         
     }
     
+    public void recibirMejorElevador(int mejor, int piso){
+        
+        String sTemp1 = "CB07 (UT "+ String.valueOf(simulador.getUt()) +"): El calenzarizador eligió al elevador " + String.valueOf(mejor+1) + " para ir al piso " + String.valueOf(piso+1);     
+        simulador.getBitacora().add(0, sTemp1);
+    }
+
+    
     
     public void enviarBitacota(){
         ArrayList<String> bitacoraE = simulador.getBitacora();
@@ -170,7 +185,21 @@ public class ControladorSimulador {
     }
     
     public void enviarDirecciones(){
-        
+        ArrayList<String> direcciones = simulador.enviarDirecciones();
+        for(int i = 0; i < direcciones.size(); i++){
+            vg.getDireccionesLista().get(i).setText(direcciones.get(i));
+        }  
+    }
+    
+    public void enviarNumPasajeros(){
+        ArrayList<String> direcciones = simulador.enviarNumPasajeros();
+        for(int i = 0; i < direcciones.size(); i++){
+            vg.getNumeroPasajerosLista().get(i).setText(direcciones.get(i));
+        }  
+    }
+    
+    public void accionarElevador(){
+        simulador.getEdificio().accionarElevadores();
     }
     
      public void ejecutarSimulacionUT(){
@@ -179,6 +208,8 @@ public class ControladorSimulador {
          enviarPasajeros();
          enviarPisoActual();
          enviarDirecciones();
+         enviarNumPasajeros();
+         accionarElevador();
          enviarBitacota();
      }
      

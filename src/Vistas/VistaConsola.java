@@ -222,6 +222,7 @@ public class VistaConsola extends Thread implements Vista{
                         this.cs.getSimulador().setCantidadPisos(pisos);
                         this.cs.getSimulador().setCantidadElevadores(elevadores);
                         this.cs.getSimulador().setVelocidadActual(1);
+                        this.cs.getSimulador().setPausa(true);
                         this.cs.getSimulador().start();
                         this.cs.getVc().start();
                         return;
