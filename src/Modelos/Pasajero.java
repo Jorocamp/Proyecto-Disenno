@@ -42,7 +42,7 @@ public class Pasajero {
         Random rand = new Random();
         int porcentajeProbabilidad = rand.nextInt(100 + 1);
         if(porcentajeProbabilidad <= (elevadorActual.getProbabilidadBoton()*100)){
-            elevadorActual.getPuerta().aumentarUT(elevadorActual.getUtPorPuertas());
+            elevadorActual.getPuerta().setContadorUT(0);
             msj = "El pasajero "+this.getId()+" ha presionado el botón de detenerse en el elevador "+ elevadorActual.getNumElevador() +".";
             
         }
