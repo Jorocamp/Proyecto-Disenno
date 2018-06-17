@@ -63,28 +63,37 @@ public class Controlador {
     public void revisarSiguienteMovimiento() {
         // TODO implement here
         switch(estadoElevador){
-            case 0: //Moviendose
 
+            case 0: //Prevista
+                //System.out.println("Elevador: " + motor.getElevador().getNumElevador());
+                //System.out.println(calendarizador.getPisosCalendarizados().size());
                 if(calendarizador.comprobarPiso(motor.getElevador().getExterior().getSensorPiso().getPisoActual())){
-                    //motor.permisoAbrirPuertas();
                     int actual = motor.getElevador().getExterior().getSensorPiso().getPisoActual();
                     Predicate<Integer> predicate = p-> p == actual;
                     calendarizador.getPisosCalendarizados().removeIf(predicate);
-                    motor.setDireccionActual(Direccion.ninguna);
+                    motor.setDireccionActual(Direccion.ninguna);   
+                    motor.permisoAbrirPuertas();
+                    calendarizador.setDireccionPrevista(Direccion.ninguna);
                     break;
                 }
                 calendarizador.siguientePiso(motor.getElevador().getExterior().getSensorPiso().getPisoActual(), motor.getDireccionActual());
-                Direccion prevista = calendarizador.getDireccionPrevista();
-                this.mover(prevista);
+                estadoElevador = 2;
                 break;
             case 1: //puertas abiertas   
                 if(motor.getElevador().getPuerta().getContadorUT() < motor.getElevador().getUtPorPuertas()){
                     motor.getElevador().getPuerta().aumentarUT();
+                    calendarizador.setDireccionPrevista(Direccion.ninguna);
                 }
                 else{
                     motor.getElevador().getPuerta().cerrarPuertas();
                     estadoElevador = 0;
                 }
+                break;
+            case 2: //Hacer movimiento
+                Direccion prevista = calendarizador.getDireccionPrevista();
+                this.mover(prevista);
+                
+                estadoElevador = 0;
                 break;
 
                 

@@ -116,8 +116,9 @@ public class Computadora {
                     if(calificacion > calificacionMax){
                         calificacionMax = calificacion;
                         mejorElevador = j;
-                        calificacion = 0;
+                        
                     }
+                    calificacion = 0;
                     difPisos = 0;
                 }
                 Controlador contr = controladores.get(mejorElevador);
